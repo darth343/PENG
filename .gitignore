@@ -114,3 +114,10 @@ proj.win32/Release.*/
 
 # others
 cocos2d/
+*.tlog
+*.exp
+*.sdf
+*.opensdf
+*.write.1.tlog
+*.read.1.tlog
+*.lastbuildstate
