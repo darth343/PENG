@@ -121,3 +121,5 @@ cocos2d/
 *.write.1.tlog
 *.read.1.tlog
 *.lastbuildstate
+*.idb
+*.command.1.tlog
