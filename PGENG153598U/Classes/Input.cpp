@@ -2,8 +2,6 @@
 #include <string>
 using namespace cocos2d;
 
-//bool* Input::_keys = nullptr;
-
 bool Input::init()
 {
 	if (!Node::init())
@@ -11,7 +9,6 @@ bool Input::init()
 		return false;
 	}
 
-	//_keys = new bool[NUM_KEYS];
 	_keys.reset();
 	_Prevkeys.reset();
 
@@ -25,31 +22,50 @@ bool Input::init()
 	this->scheduleUpdateWithPriority(1);
 	this->retain();
 
-	//std::memset(_keys, 0, NUM_KEYS);
 	CCLOG("Input Initialized");
 	return true;
 }
 
+void Input::RegisterFunctionToKeyPress(EventKeyboard::KeyCode keyCode,	std::function<void()> fptr)
+{
+	std::string keyStr = "KP_";
+	keyStr += (int)keyCode;
+	GetInstance()->FunctionMaps[keyStr].push_back(fptr);
+}
+
+void Input::RegisterFunctionToKeyRelease(EventKeyboard::KeyCode keyCode, std::function<void()> fptr)
+{
+	std::string keyStr = "KR_";
+	keyStr += (int)keyCode;
+	GetInstance()->FunctionMaps[keyStr].push_back(fptr);
+}
+
 void Input::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 {
-	//std::string str = "Key Pressed";
-	//str += (char)keyCode;
-	//CCLOG(str.c_str());
 	_keys[(int)keyCode] = 1;
+
+	std::string keyStr = "KP_";
+	keyStr += (int)keyCode;
+	for (std::vector< std::function<void()> >::iterator itr = FunctionMaps[keyStr].begin(); itr != FunctionMaps[keyStr].end(); itr++)
+	{
+		(*itr)();
+	}
 }
 
 void Input::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
 {
-	//CCLOG("Key Released " + (int)keyCode);
-	//std::string str = "Key Released";
-	//str += (char)keyCode;
-	//CCLOG(str.c_str());
 	_keys[(int)keyCode] = 0;
+
+	std::string keyStr = "KR_";
+	keyStr += (int)keyCode;
+	for (std::vector< std::function<void()> >::iterator itr = FunctionMaps[keyStr].begin(); itr != FunctionMaps[keyStr].end(); itr++)
+	{
+		(*itr)();
+	}
 }
 
 bool Input::GetKey(cocos2d::EventKeyboard::KeyCode key)
 {
-	//CCLOG("Get Key " + (int)keyCode);
 	return GetInstance()->_keys[(int)key];
 }
 
