@@ -109,6 +109,8 @@ bool BaseScene::init()
 	RootNode->retain();
 	this->scheduleUpdate();
 
+	SceneName = "";
+
     return true;
 }
 

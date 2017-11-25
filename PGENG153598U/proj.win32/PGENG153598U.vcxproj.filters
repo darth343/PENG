@@ -31,7 +31,11 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\SpriteManager.cpp">
+    <ClCompile Include="..\Classes\SceneManager.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SceneSplashScreen.cpp">
+     <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -66,7 +70,11 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\SpriteManager.h">
+    <ClInclude Include="..\Classes\SceneManager.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SceneSplashScreen.h">
+     <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

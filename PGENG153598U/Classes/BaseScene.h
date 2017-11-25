@@ -27,6 +27,8 @@ public:
 
     // implement the "static create()" method manually
 	CREATE_FUNC(BaseScene);
+
+	std::string SceneName;
 };
 
 #endif // __HELLOWORLD_SCENE_H__
