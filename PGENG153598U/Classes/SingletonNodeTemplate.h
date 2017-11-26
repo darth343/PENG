@@ -1,5 +1,5 @@
-#ifndef SINGLETON_TEMPLATE_H
-#define SINGLETON_TEMPLATE_H
+#ifndef SINGLETON_NODE_TEMPLATE_H
+#define SINGLETON_NODE_TEMPLATE_H
 #include "cocos2d.h"
 
 
@@ -43,4 +43,4 @@ private:
 template <typename T>
 T* SingletonNode<T>::s_mInstance = nullptr;
 
-#endif // SINGLETON_TEMPLATE_H
+#endif // SINGLETON_NODE_TEMPLATE_H

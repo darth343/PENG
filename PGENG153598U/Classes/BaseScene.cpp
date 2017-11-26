@@ -1,6 +1,9 @@
 #include "BaseScene.h"
 #include "SimpleAudioEngine.h"
 #include "Input.h"
+#include "SpriteManager.h"
+#include "AnimationManager.h"
+#include "Entity.h"
 
 USING_NS_CC;
 
@@ -43,6 +46,49 @@ bool BaseScene::init()
 	sprite->setPosition(visibleSize * 0.5f);
 	sprite->setScale(2.0);
 
+	{//Generates sprites for repititve uses
+		SpriteManager::GetInstance()->GenerateSprite("sprite2.png", 6, 1);
+		SpriteManager::GetInstance()->GenerateSprite("trump_run.png", 6, 4);
+	}
+	{//Setup animations for sprites
+		AnimationManager::GetInstance("sprite2.png")->AddAnimate("RUN", 0, 5, 2.0f);
+		AnimationManager::GetInstance("trump_run.png")->AddAnimate("RUN_LEFT", 18, 23, 0.5f);
+		AnimationManager::GetInstance("trump_run.png")->AddAnimate("RUN_RIGHT", 6, 11, 0.5f);
+		AnimationManager::GetInstance("trump_run.png")->AddAnimate("RUN_UP", 12, 17, 0.5f);
+		AnimationManager::GetInstance("trump_run.png")->AddAnimate("RUN_DOWN", 0, 5, 0.5f);
+	}
+	{//Creation of entities
+		Entity* test1;
+		test1 = Entity::Create("sprite2.png");
+		test1->setPosition(300, 150);
+		cocos2d::log("entity content size: %f", test1->getContentSize().width);
+		cocos2d::log("entity display size: %f", test1->GetDisplay()->getContentSize().width);
+		cocos2d::log("entity displayFrame rect: %f", test1->GetDisplayFrame()->getRect().size.width);
+		test1->RunAnimate(AnimationManager::GetInstance("sprite2.png")->GetAnimate("RUN"));
+		RootNode->addChild(test1);
+
+		Vec2 halfWorldPos = Vec2(visibleSize.width * 0.5f, visibleSize.height * 0.5f);
+		test1 = Entity::Create("trump_run.png");
+		test1->setPosition(halfWorldPos + Vec2(-150, 0));
+		test1->RunAnimate(AnimationManager::GetInstance("trump_run.png")->GetAnimate("RUN_LEFT"));
+		RootNode->addChild(test1);
+
+		test1 = Entity::Create("trump_run.png");
+		test1->setPosition(halfWorldPos + Vec2(150, 0));
+		test1->RunAnimate(AnimationManager::GetInstance("trump_run.png")->GetAnimate("RUN_RIGHT"));
+		RootNode->addChild(test1);
+
+		test1 = Entity::Create("trump_run.png");
+		test1->setPosition(halfWorldPos + Vec2(0, 150));
+		test1->RunAnimate(AnimationManager::GetInstance("trump_run.png")->GetAnimate("RUN_UP"));
+		RootNode->addChild(test1);
+
+		test1 = Entity::Create("trump_run.png");
+		test1->setPosition(halfWorldPos + Vec2(0, -150));
+		test1->RunAnimate(AnimationManager::GetInstance("trump_run.png")->GetAnimate("RUN_DOWN"));
+		RootNode->addChild(test1);
+	}
+
 	RootNode->addChild(sprite);
 
 	auto keyboardListener = EventListenerKeyboard::create();
@@ -59,9 +105,11 @@ bool BaseScene::init()
 
 	this->addChild(PostprocTexture);
 
-	//this->addChild(RootNode);
+	this->addChild(RootNode);
 	RootNode->retain();
 	this->scheduleUpdate();
+
+	SceneName = "";
 
     return true;
 }

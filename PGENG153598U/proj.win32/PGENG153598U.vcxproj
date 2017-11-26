@@ -148,17 +148,28 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Classes\AnimationManager.cpp" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\BaseScene.cpp" />
+    <ClCompile Include="..\Classes\Entity.cpp" />
     <ClCompile Include="..\Classes\Input.cpp" />
+    <ClCompile Include="..\Classes\SpriteManager.cpp" />
+    <ClCompile Include="..\Classes\SceneManager.cpp" />
+    <ClCompile Include="..\Classes\SceneSplashScreen.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Classes\AnimationManager.h" />
     <ClInclude Include="..\Classes\AppDelegate.h" />
+    <ClInclude Include="..\Classes\Entity.h" />
     <ClInclude Include="..\Classes\Input.h" />
     <ClInclude Include="..\Classes\PostProcessing.h" />
+    <ClInclude Include="..\Classes\SceneManager.h" />
+    <ClInclude Include="..\Classes\SceneSplashScreen.h" />
     <ClInclude Include="..\Classes\SingletonNodeTemplate.h" />
     <ClInclude Include="..\Classes\BaseScene.h" />
+    <ClInclude Include="..\Classes\SingletonTemplate.h" />
+    <ClInclude Include="..\Classes\SpriteManager.h" />
     <ClInclude Include="..\Classes\temptest.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
