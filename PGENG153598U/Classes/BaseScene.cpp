@@ -58,7 +58,6 @@ bool BaseScene::init()
 		AnimationManager::GetInstance("trump_run.png")->AddAnimate("RUN_DOWN", 0, 5, 0.5f);
 	}
 	{//Creation of entities
-		Entity* test1;
 		test1 = Entity::Create("sprite2.png");
 		test1->setPosition(300, 150);
 		cocos2d::log("entity content size: %f", test1->getContentSize().width);
@@ -120,6 +119,22 @@ void BaseScene::onKeyPressed(cocos2d::EventKeyboard::KeyCode keycode, cocos2d::E
 void BaseScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keycode, cocos2d::Event* event)
 {
 	//input->onKeyReleased(keycode, event);
+	if (keycode == cocos2d::EventKeyboard::KeyCode::KEY_UP_ARROW)
+	{
+		test1->Move(Vec2(0, 50.0f));
+	}
+	if (keycode == cocos2d::EventKeyboard::KeyCode::KEY_DOWN_ARROW)
+	{
+		test1->Move(Vec2(0, -50.0f));
+	}
+	if (keycode == cocos2d::EventKeyboard::KeyCode::KEY_LEFT_ARROW)
+	{
+		test1->Move(Vec2(-50.0f, 0));
+	}
+	if (keycode == cocos2d::EventKeyboard::KeyCode::KEY_RIGHT_ARROW)
+	{
+		test1->Move(Vec2(50.0f, 0));
+	}
 }
 
 void BaseScene::update(float delta)

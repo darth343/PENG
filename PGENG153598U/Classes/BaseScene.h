@@ -4,12 +4,15 @@
 #include "cocos2d.h"
 #include "Input.h"
 
+class Entity;
 class BaseScene : public cocos2d::Scene
 {
 protected:
 	Input* input;
 	Node* RootNode;
 	cocos2d::RenderTexture* PostprocTexture;
+
+	Entity* test1;
 
 public:
     static cocos2d::Scene* createScene();

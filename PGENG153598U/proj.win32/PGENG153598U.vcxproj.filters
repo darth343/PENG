@@ -33,6 +33,12 @@
     <ClCompile Include="..\Classes\SpriteManager.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\BattleScene.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PlayerEntity.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -66,6 +72,12 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\SpriteManager.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BattleScene.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PlayerEntity.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
