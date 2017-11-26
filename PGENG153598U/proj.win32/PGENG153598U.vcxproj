@@ -154,6 +154,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\BattleScene.cpp" />
     <ClCompile Include="..\Classes\Entity.cpp" />
     <ClCompile Include="..\Classes\Input.cpp" />
+    <ClCompile Include="..\Classes\PlayerEntity.cpp" />
     <ClCompile Include="..\Classes\SpriteManager.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -163,6 +164,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\BattleScene.h" />
     <ClInclude Include="..\Classes\Entity.h" />
     <ClInclude Include="..\Classes\Input.h" />
+    <ClInclude Include="..\Classes\PlayerEntity.h" />
     <ClInclude Include="..\Classes\PostProcessing.h" />
     <ClInclude Include="..\Classes\SingletonNodeTemplate.h" />
     <ClInclude Include="..\Classes\BaseScene.h" />

@@ -12,6 +12,10 @@ Entity::~Entity()
 {
 }
 
+void Entity::Move(Vec2 dir)
+{
+}
+
 Entity* Entity::Create(const std::string& fileName)
 {
 	SpriteFrame* spriteFrame = SpriteManager::GetInstance()->GetSpriteFrame(fileName);

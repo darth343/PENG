@@ -1,7 +1,7 @@
 #include "AppDelegate.h"
 #include "BaseScene.h"
+#include "BattleScene.h"
 #include "Input.h"
-#include "SceneManager.h"
 
 // #define USE_AUDIO_ENGINE 1
 // #define USE_SIMPLE_AUDIO_ENGINE 1
@@ -57,7 +57,6 @@ static int register_all_packages()
 
 bool AppDelegate::applicationDidFinishLaunching() {
     // initialize director
-	auto scene_manager = SceneManager::getInstance();
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
@@ -97,11 +96,10 @@ bool AppDelegate::applicationDidFinishLaunching() {
     register_all_packages();
 
     // create a scene. it's an autorelease object
-	//auto scene = BaseScene::create();
+	auto scene = BattleScene::create();
 
     // run
-    //director->runWithScene(scene);
-	scene_manager->Runwithscene(scene_manager->GetScene("Splash_Screen"));
+    director->runWithScene(scene);
 
     return true;
 }
