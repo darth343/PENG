@@ -13,6 +13,7 @@ public:
 	virtual void Move(Vec2 dir);
 
 protected:
+
 	float movementDuration;
 	float movementCooldown;
 

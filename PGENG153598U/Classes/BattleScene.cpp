@@ -4,6 +4,8 @@
 #include "SpriteManager.h"
 #include "AnimationManager.h"
 #include "PlayerEntity.h"
+#include "GridSystem.h"
+#include "Grid.h"
 
 USING_NS_CC;
 
@@ -37,36 +39,53 @@ bool BattleScene::init()
 
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-	Size playingSize = Size(visibleSize.width, visibleSize.height - (visibleSize.height / 8));
+	Size playingSize = Size(visibleSize.width, visibleSize.height * 0.6f);
+
+	int numRow = 10;
+	int numCol = 5;
+
+	GridSystem::GetInstance()->GenerateGrid(playingSize, numRow, numCol);
 
 	RootNode = Node::create();
 	RootNode->setName("RootNode");
 
-	Sprite* sprite = Sprite::create("errorTexture.png");
-	sprite->setPosition(Vec2(playingSize.width * 0.5f, playingSize.height * 0.5f));
-	sprite->setContentSize(playingSize);
-	RootNode->addChild(sprite);
+	for (int i = 0; i < numRow; ++i)
+	{
+		for (int j = 0; j < numCol; ++j)
+		{
+			Sprite* sprite = Sprite::create("ZigzagGrass_Mud_Round.png");
+			sprite->setContentSize(Size(GridSystem::GetInstance()->GetGridWidth(), GridSystem::GetInstance()->GetGridHeight()));
+			sprite->setPosition(GridSystem::GetInstance()->GetGrid(i, j).GetPosition());
+			RootNode->addChild(sprite);
+		}
+	}
 
 	{//Generates sprites for repititve uses
 		SpriteManager::GetInstance()->GenerateSprite("sprite2.png", 6, 1);
 		SpriteManager::GetInstance()->GenerateSprite("trump_run.png", 6, 4);
 		SpriteManager::GetInstance()->GenerateSprite("blinkEffect.png", 10, 1);
+		SpriteManager::GetInstance()->GenerateSprite("ZigzagGrass_Mud_Round.png", 1, 1);
+		SpriteManager::GetInstance()->GenerateSprite("testSprite.png", 5, 3);
 	}
 	{//Setup animations for sprites
 		AnimationManager::GetInstance("sprite2.png")->AddAnimate("RUN", 0, 5, 2.0f);
+
 		AnimationManager::GetInstance("trump_run.png")->AddAnimate("RUN_LEFT", 18, 23, 0.5f);
 		AnimationManager::GetInstance("trump_run.png")->AddAnimate("RUN_RIGHT", 6, 11, 0.5f);
 		AnimationManager::GetInstance("trump_run.png")->AddAnimate("RUN_UP", 12, 17, 0.5f);
 		AnimationManager::GetInstance("trump_run.png")->AddAnimate("RUN_DOWN", 0, 5, 0.5f);
 
 		AnimationManager::GetInstance("blinkEffect.png")->AddAnimate("DEFAULT", 0, 9, 0.2f);
+
+		AnimationManager::GetInstance("testSprite.png")->AddAnimate("IDLE", 1, 4);
+		AnimationManager::GetInstance("testSprite.png")->AddAnimate("MOVE", 6, 7, 0.2f);
 	}
 	{//Creation of entities
 		Vec2 halfWorldPos = Vec2(visibleSize.width * 0.5f, visibleSize.height * 0.5f);
 
-		playerEntity = PlayerEntity::Create("trump_run.png");
-		playerEntity->setPosition(halfWorldPos + Vec2(150, 0));
-		playerEntity->RunAnimate(AnimationManager::GetInstance("trump_run.png")->GetAnimate("RUN_RIGHT"));
+		playerEntity = PlayerEntity::Create("testSprite.png");
+		playerEntity->setPosition(GridSystem::GetInstance()->GetGrid(0, 0).GetPosition());
+		playerEntity->RunAnimate(AnimationManager::GetInstance("testSprite.png")->GetAnimate("IDLE"));
 		RootNode->addChild(playerEntity);
 	}
 
@@ -101,19 +120,19 @@ void BattleScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keycode, cocos2d
 	//input->onKeyReleased(keycode, event);
 	if (keycode == cocos2d::EventKeyboard::KeyCode::KEY_UP_ARROW)
 	{
-		playerEntity->Move(Vec2(0, 50.0f));
+		playerEntity->Move(Vec2(0, 1.0f));
 	}
 	if (keycode == cocos2d::EventKeyboard::KeyCode::KEY_DOWN_ARROW)
 	{
-		playerEntity->Move(Vec2(0, -50.0f));
+		playerEntity->Move(Vec2(0, -1.0f));
 	}
 	if (keycode == cocos2d::EventKeyboard::KeyCode::KEY_LEFT_ARROW)
 	{
-		playerEntity->Move(Vec2(-50.0f, 0));
+		playerEntity->Move(Vec2(-1.0f, 0));
 	}
 	if (keycode == cocos2d::EventKeyboard::KeyCode::KEY_RIGHT_ARROW)
 	{
-		playerEntity->Move(Vec2(50.0f, 0));
+		playerEntity->Move(Vec2(1.0f, 0));
 	}
 }
 

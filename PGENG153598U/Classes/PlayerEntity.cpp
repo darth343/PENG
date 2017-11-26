@@ -2,6 +2,7 @@
 
 #include "SpriteManager.h"
 #include "AnimationManager.h"
+#include "GridSystem.h"
 
 PlayerEntity::PlayerEntity():
 Entity()
@@ -18,15 +19,17 @@ void PlayerEntity::Move(Vec2 dir)
 	if (canMoveFlag)
 	{
 		canMoveFlag = false;
+		dir.x *= GridSystem::GetInstance()->GetGridWidth();
+		dir.y *= GridSystem::GetInstance()->GetGridHeight();
 
-		RunAnimate(AnimationManager::GetInstance("blinkEffect.png")->GetAnimate("DEFAULT"));
+		RunAnimate(AnimationManager::GetInstance("testSprite.png")->GetAnimate("MOVE"));
 
 		Sequence* seq = Sequence::createWithTwoActions(
 			MoveBy::create(movementDuration, dir),
 			CallFunc::create([&]() 
 		{
 			canMoveFlag = true; 
-			RunAnimate(AnimationManager::GetInstance("trump_run.png")->GetAnimate("RUN_RIGHT"));
+			RunAnimate(AnimationManager::GetInstance("testSprite.png")->GetAnimate("IDLE"));
 		})
 		);
 

@@ -27,7 +27,8 @@ void SpriteManager::GenerateSprite(const std::string& fileName, int numCol, int 
 	Texture2D* texture = spriteSheet->getTexture();
 	float width = spriteSheet->getContentSize().width / numCol;
 	float height = spriteSheet->getContentSize().height / numRow;
-	
+	spriteFrameMap[fileName].reserve(numCol * numRow);
+
 	for (int i = 0; i < numRow; ++i)
 	{
 		for (int j = 0; j < numCol; ++j)
