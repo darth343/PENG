@@ -39,6 +39,12 @@
     <ClCompile Include="..\Classes\PlayerEntity.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Grid.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GridSystem.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -78,6 +84,12 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\PlayerEntity.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Grid.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GridSystem.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

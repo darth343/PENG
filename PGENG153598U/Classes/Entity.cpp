@@ -5,6 +5,7 @@
 Entity::Entity()
 {
 	this->display = Sprite::create();
+	display->setAnchorPoint(Vec2(0.5f, 0.1f));
 	this->addChild(this->display);
 }
 
