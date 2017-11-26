@@ -3,9 +3,10 @@
 
 #include "cocos2d.h"
 #include "Input.h"
+#include "BaseScene.h"
 
 class PlayerEntity;
-class BattleScene : public cocos2d::Scene
+class BattleScene : public BaseScene
 {
 protected:
 	Input* input;

@@ -32,6 +32,7 @@ bool BattleScene::init()
 	//input = Input::create();
 	//input->retain();
 	//this->addChild(input);
+	this->SceneName = "Battle_Scene";
 
     auto visibleSize = Director::getInstance()->getVisibleSize();
 

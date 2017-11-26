@@ -1,5 +1,7 @@
 #include "SceneManager.h"
 
+USING_NS_CC;
+
 //Singleton instance
 static SceneManager* The_SceneManager = nullptr;
 
@@ -16,35 +18,51 @@ SceneManager* SceneManager::getInstance()
 
 bool SceneManager::Init()
 {
-	if (!SceneManager::Init())
+	/*if (!SceneManager::Init())
 	{
 		return false;
-	}
+	}*/
 
 	//Scenes are created inside the Scene Manager, then loaded from AppDelegate
-	auto Scene_SplashScreen = SceneSplashScreen::create();
-	scenestorage.push_back(Scene_SplashScreen);
+	//auto Scene_SplashScreen = SceneSplashScreen::create();
+	//scenestorage.push_back(Scene_SplashScreen);
+	//auto Scene_Battle = BattleScene::create();
+	//scenestorage.push_back(Scene_Battle);
 
 	return true;
 }
 
-void SceneManager::Runwithscene(cocos2d::Scene* scene)
+void SceneManager::Runwithscene(Scene* scene)
 {
-	cocos2d::Director::getInstance()->runWithScene(scene);
+	Director::getInstance()->runWithScene(scene);
 }
 
-void SceneManager::ReplaceScene(cocos2d::Scene* scene)
+void SceneManager::ReplaceScene(Scene* scene)
 {
-	cocos2d::Director::getInstance()->replaceScene(scene);
+	Director::getInstance()->replaceScene(scene);
+}
+
+void SceneManager::ReplaceSceneWithTimer(Scene* scene, float timer)
+{
+	TransitionFade::create(timer, scene, Color3B(0, 255, 255));
 }
 
 BaseScene* SceneManager::GetScene(std::string Scene)
 {
-	for (int i = 0; i < sizeof(scenestorage); i++)
+	for (int i = 0; i < scenestorage.size(); i++)
 	{
 		if (scenestorage[i]->SceneName == Scene)
 		{
 			return scenestorage[i];
 		}
 	}
+
+	//return scenestorage[0];
+	/*for (std::vector<BaseScene*>::iterator it = scenestorage.begin(); it != scenestorage.end(); it++)
+	{
+		if ((*it)->SceneName == Scene)
+		{
+			return *it;
+		}
+	}*/
 }
