@@ -17,6 +17,10 @@ bool Input::init()
 	keyboardListener->onKeyReleased = CC_CALLBACK_2(Input::onKeyReleased, this);
 
 	_eventDispatcher->addEventListenerWithFixedPriority(keyboardListener, 1);
+	
+	AssignHotkey(InputAction::IA_UP, EventKeyboard::KeyCode::KEY_W);
+	AssignHotkey(InputAction::IA_DOWN, EventKeyboard::KeyCode::KEY_S);
+
 
 	this->onEnter();
 	this->scheduleUpdateWithPriority(1);
@@ -26,27 +30,37 @@ bool Input::init()
 	return true;
 }
 
-void Input::RegisterFunctionToKeyPress(EventKeyboard::KeyCode keyCode,	std::function<void()> fptr)
+void Input::AssignHotkey(Input::InputAction action, cocos2d::EventKeyboard::KeyCode hotkey)
 {
-	std::string keyStr = "KP_";
-	keyStr += (int)keyCode;
-	GetInstance()->FunctionMaps[keyStr].push_back(fptr);
+	GetInstance()->InputMaps[hotkey] = action;
 }
 
-void Input::RegisterFunctionToKeyRelease(EventKeyboard::KeyCode keyCode, std::function<void()> fptr)
+void Input::RegisterFunctionToActionPress(Input::InputAction action, std::function<void()> fptr)
 {
-	std::string keyStr = "KR_";
-	keyStr += (int)keyCode;
-	GetInstance()->FunctionMaps[keyStr].push_back(fptr);
+	std::string keyStr = "AP_";
+	keyStr += (int)action;
+	GetInstance()->ActionMaps[keyStr].push_back(fptr);
+}
+
+void Input::RegisterFunctionToActionRelease(Input::InputAction action, std::function<void()> fptr)
+{
+	std::string keyStr = "AR_";
+	keyStr += (int)action;
+	GetInstance()->ActionMaps[keyStr].push_back(fptr);
 }
 
 void Input::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 {
 	_keys[(int)keyCode] = 1;
 
-	std::string keyStr = "KP_";
-	keyStr += (int)keyCode;
-	for (std::vector< std::function<void()> >::iterator itr = FunctionMaps[keyStr].begin(); itr != FunctionMaps[keyStr].end(); itr++)
+	if (InputMaps.count(keyCode) == 0)
+		return;
+
+	InputAction action = InputMaps[keyCode];
+
+	std::string keyStr = "AP_";
+	keyStr += (int)action;
+	for (std::vector< std::function<void()> >::iterator itr = ActionMaps[keyStr].begin(); itr != ActionMaps[keyStr].end(); itr++)
 	{
 		(*itr)();
 	}
@@ -56,9 +70,15 @@ void Input::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
 {
 	_keys[(int)keyCode] = 0;
 
-	std::string keyStr = "KR_";
-	keyStr += (int)keyCode;
-	for (std::vector< std::function<void()> >::iterator itr = FunctionMaps[keyStr].begin(); itr != FunctionMaps[keyStr].end(); itr++)
+	if (InputMaps.count(keyCode) == 0)
+		return;
+
+	InputAction action = InputMaps[keyCode];
+
+
+	std::string keyStr = "AR_";
+	keyStr += (int)action;
+	for (std::vector< std::function<void()> >::iterator itr = ActionMaps[keyStr].begin(); itr != ActionMaps[keyStr].end(); itr++)
 	{
 		(*itr)();
 	}
