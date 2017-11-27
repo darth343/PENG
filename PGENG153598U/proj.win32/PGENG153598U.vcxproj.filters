@@ -51,6 +51,9 @@
     <ClCompile Include="..\Classes\SceneSplashScreen.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\PostProcessing.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -66,9 +69,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\temptest.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PostProcessing.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\SingletonNodeTemplate.h">
@@ -102,6 +102,9 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\SceneSplashScreen.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PostProcessing.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

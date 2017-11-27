@@ -102,6 +102,27 @@ bool BattleScene::init()
 	PostprocTexture->setScale(1.f);
 	PostprocTexture->clear(0, 0, 0, 255);
 
+	Input::RegisterFunctionToActionRelease(Input::InputAction::IA_UP, [&]() 
+	{
+		playerEntity->Move(Vec2(0, 1.0f));
+	}
+	);
+	Input::RegisterFunctionToActionRelease(Input::InputAction::IA_DOWN, [&]()
+	{
+		playerEntity->Move(Vec2(0, -1.0f));
+	}
+	);
+	Input::RegisterFunctionToActionRelease(Input::InputAction::IA_LEFT, [&]()
+	{
+		playerEntity->Move(Vec2(-1.0f, 0));
+	}
+	);
+	Input::RegisterFunctionToActionRelease(Input::InputAction::IA_RIGHT, [&]()
+	{
+		playerEntity->Move(Vec2(1.0f, 0));
+	}
+	);
+
 	this->addChild(PostprocTexture);
 
 	this->addChild(RootNode);
@@ -118,23 +139,6 @@ void BattleScene::onKeyPressed(cocos2d::EventKeyboard::KeyCode keycode, cocos2d:
 
 void BattleScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keycode, cocos2d::Event* event)
 {
-	//input->onKeyReleased(keycode, event);
-	if (keycode == cocos2d::EventKeyboard::KeyCode::KEY_UP_ARROW)
-	{
-		playerEntity->Move(Vec2(0, 1.0f));
-	}
-	if (keycode == cocos2d::EventKeyboard::KeyCode::KEY_DOWN_ARROW)
-	{
-		playerEntity->Move(Vec2(0, -1.0f));
-	}
-	if (keycode == cocos2d::EventKeyboard::KeyCode::KEY_LEFT_ARROW)
-	{
-		playerEntity->Move(Vec2(-1.0f, 0));
-	}
-	if (keycode == cocos2d::EventKeyboard::KeyCode::KEY_RIGHT_ARROW)
-	{
-		playerEntity->Move(Vec2(1.0f, 0));
-	}
 }
 
 void BattleScene::update(float delta)

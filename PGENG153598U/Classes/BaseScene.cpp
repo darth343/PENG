@@ -4,6 +4,7 @@
 #include "SpriteManager.h"
 #include "AnimationManager.h"
 #include "Entity.h"
+#include "PostProcessing.h"
 
 USING_NS_CC;
 
@@ -97,14 +98,15 @@ bool BaseScene::init()
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(keyboardListener, this);
 
 	// Set up Post Processin Texture
-	PostprocTexture = RenderTexture::create(visibleSize.width, visibleSize.height);
-	PostprocTexture->setPosition(visibleSize.width * 0.5f, visibleSize.height * 0.5f);
-	PostprocTexture->setScale(1.f);
-	PostprocTexture->clear(0, 0, 0, 255);
+	ScreenSprite = Sprite::create("Batman.png");
+	ScreenSprite->setPosition(visibleSize * 0.5f);
+	ScreenSprite->setScaleY(-1);
 
-	this->addChild(PostprocTexture);
+	this->addChild(ScreenSprite);
 
-	this->addChild(RootNode);
+	//this->addChild(RootNode);
+	RootNode->onEnter();
+	RootNode->onEnterTransitionDidFinish();
 	RootNode->retain();
 	this->scheduleUpdate();
 
@@ -149,17 +151,9 @@ void BaseScene::update(float delta)
 	{
 		CCLOG("W is Released");
 	}
-}
 
-void BaseScene::render(Renderer* renderer, const Mat4& eyeTransform, const Mat4* eyeProjection)
-{
-	Scene::render(renderer, eyeTransform, eyeProjection);
-
-	auto visibleSize = Director::getInstance()->getVisibleSize();
-
-	PostprocTexture->beginWithClear(0, 0, 0, 255);
-	RootNode->visit();
-	PostprocTexture->end();
+	PostProcessing::GetInstance()->Render(RootNode);
+	ScreenSprite->setTexture(PostProcessing::GetInstance()->GetTexture());
 }
 
 void BaseScene::menuCloseCallback(Ref* pSender)
