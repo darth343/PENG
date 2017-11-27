@@ -68,8 +68,13 @@ void SceneSplashScreen::onKeyReleased(cocos2d::EventKeyboard::KeyCode keycode, c
 
 void SceneSplashScreen::update(float dt)
 {
+	timerset += dt;
+	if (timerset > randomtimer)
+	{
 		auto Scene_Manager = SceneManager::getInstance();
-		Scene_Manager->ReplaceSceneWithTimer(Scene_Manager->GetScene("Battle_Scene"), randomtimer);
+		Scene_Manager->ReplaceScene(Scene_Manager->GetScene("Battle_Scene"));
+	}
+		
 }
 
 void SceneSplashScreen::render(Renderer* renderer, const Mat4& eyeTransform, const Mat4* eyeProjection)

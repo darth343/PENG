@@ -100,16 +100,11 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
 	//auto scene_SplashScreen = SceneSplashScreen::create();
 
-	//Scene_Manager->getInstance()->scenestorage.push_back(scene_SplashScreen);
+	//auto scene = BattleScene::create();
 
-	auto scene = BattleScene::create();
-
-	Scene_Manager->getInstance()->scenestorage.push_back(scene);
-
-	//Scene_Manager->getInstance()->Runwithscene(Scene_Manager->GetScene("Splash_Screen"));
+	Scene_Manager->getInstance()->Runwithscene(Scene_Manager->GetScene("Splash_Screen"));
     // run
-    director->runWithScene(scene);
-	//Scene_Manager->Runwithscene(Scene_Manager->GetScene("Battle_Scene"));
+    //director->runWithScene(scene);
     return true;
 }
 

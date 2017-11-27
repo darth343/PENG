@@ -5,6 +5,16 @@ USING_NS_CC;
 //Singleton instance
 static SceneManager* The_SceneManager = nullptr;
 
+SceneManager::SceneManager()
+{
+	std::fill(sceneStorage, sceneStorage + STORAGESIZE, nullptr);
+}
+
+SceneManager::~SceneManager()
+{
+	The_SceneManager = nullptr;
+}
+
 SceneManager* SceneManager::getInstance()
 {
 	if (!The_SceneManager)
@@ -18,17 +28,13 @@ SceneManager* SceneManager::getInstance()
 
 bool SceneManager::Init()
 {
-	/*if (!SceneManager::Init())
-	{
-		return false;
-	}*/
-
 	//Scenes are created inside the Scene Manager, then loaded from AppDelegate
-	//auto Scene_SplashScreen = SceneSplashScreen::create();
-	//scenestorage.push_back(Scene_SplashScreen);
-	//auto Scene_Battle = BattleScene::create();
-	//scenestorage.push_back(Scene_Battle);
-
+	auto Scene_SplashScreen = SceneSplashScreen::create();
+	this->SetSceneName(Scene_SplashScreen, "Splash_Screen");
+	auto Scene_Battle = BattleScene::create();
+	this->SetSceneName(Scene_Battle, "Battle_Scene");
+	sceneStorage[0] = Scene_SplashScreen;
+	sceneStorage[1] = Scene_Battle;
 	return true;
 }
 
@@ -47,22 +53,23 @@ void SceneManager::ReplaceSceneWithTimer(Scene* scene, float timer)
 	TransitionFade::create(timer, scene, Color3B(0, 255, 255));
 }
 
+void SceneManager::SetSceneName(BaseScene* scene, std::string SceneName)
+{
+	scene->SceneName = SceneName;
+}
+
 BaseScene* SceneManager::GetScene(std::string Scene)
 {
-	for (int i = 0; i < scenestorage.size(); i++)
+	for (int i = 0; i < STORAGESIZE; i++)
 	{
-		if (scenestorage[i]->SceneName == Scene)
+		if (sceneStorage[i] != nullptr)
 		{
-			return scenestorage[i];
+			if (sceneStorage[i]->SceneName == Scene)
+			{
+				return sceneStorage[i];
+				break;
+			}
 		}
+		
 	}
-
-	//return scenestorage[0];
-	/*for (std::vector<BaseScene*>::iterator it = scenestorage.begin(); it != scenestorage.end(); it++)
-	{
-		if ((*it)->SceneName == Scene)
-		{
-			return *it;
-		}
-	}*/
 }
