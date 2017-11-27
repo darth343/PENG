@@ -22,10 +22,12 @@ public:
 	bool Init();
 
 	BaseScene* sceneStorage[STORAGESIZE];
+	//Scene* currentscene;
 
 	//These functions are made for the convenience of calling em out instead of writing the entire line
 	void Runwithscene(cocos2d::Scene* scene);
 	void ReplaceScene(cocos2d::Scene* scene);
+	void RestartScene(cocos2d::Scene* scene);
 	void ReplaceSceneWithTimer(cocos2d::Scene* scene,float timer);
 	void SetSceneName(BaseScene* scene, std::string SceneName);
 	BaseScene* GetScene(std::string scene);

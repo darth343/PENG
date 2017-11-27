@@ -11,7 +11,7 @@ class BattleScene : public BaseScene
 protected:
 	Input* input;
 	Node* RootNode;
-	cocos2d::RenderTexture* PostprocTexture;
+	cocos2d::Sprite* ScreenSprite;
 
 	PlayerEntity* playerEntity;
 
@@ -27,7 +27,6 @@ public:
 	void onKeyReleased(cocos2d::EventKeyboard::KeyCode, cocos2d::Event*);
 
 	virtual void update(float delta);
-	virtual void render(cocos2d::Renderer* renderer, const cocos2d::Mat4& eyeTransform, const cocos2d::Mat4* eyeProjection = nullptr);
 
     // implement the "static create()" method manually
 	CREATE_FUNC(BattleScene);

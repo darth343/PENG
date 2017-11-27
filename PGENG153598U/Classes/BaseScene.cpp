@@ -5,6 +5,7 @@
 #include "AnimationManager.h"
 #include "Entity.h"
 #include "PostProcessing.h"
+#include "SceneManager.h"
 
 USING_NS_CC;
 
@@ -110,7 +111,7 @@ bool BaseScene::init()
 	RootNode->retain();
 	this->scheduleUpdate();
 
-	SceneName = "";
+	//SceneName = "";
 
     return true;
 }
@@ -122,22 +123,10 @@ void BaseScene::onKeyPressed(cocos2d::EventKeyboard::KeyCode keycode, cocos2d::E
 
 void BaseScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keycode, cocos2d::Event* event)
 {
-	//input->onKeyReleased(keycode, event);
-	if (keycode == cocos2d::EventKeyboard::KeyCode::KEY_UP_ARROW)
+	if (keycode == cocos2d::EventKeyboard::KeyCode::KEY_T)
 	{
-		test1->Move(Vec2(0, 50.0f));
-	}
-	if (keycode == cocos2d::EventKeyboard::KeyCode::KEY_DOWN_ARROW)
-	{
-		test1->Move(Vec2(0, -50.0f));
-	}
-	if (keycode == cocos2d::EventKeyboard::KeyCode::KEY_LEFT_ARROW)
-	{
-		test1->Move(Vec2(-50.0f, 0));
-	}
-	if (keycode == cocos2d::EventKeyboard::KeyCode::KEY_RIGHT_ARROW)
-	{
-		test1->Move(Vec2(50.0f, 0));
+		auto Scene_Manager = SceneManager::getInstance();
+		Scene_Manager->ReplaceScene(Scene_Manager->GetScene("Battle_Screen"));
 	}
 }
 

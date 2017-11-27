@@ -14,8 +14,8 @@ void main()
 	for(int i = -steps; i <= steps; i++)
 	{
 	
-		color += texture2D(image, vec2(v_texCoord.x, v_texCoord.y) + vec2(0, 0.00093632958 * steps * temp));
-		temp += 1.5f;
+		color += texture2D(image, vec2(v_texCoord.x, v_texCoord.y) + vec2(0, 0.00093632958 * i));
+		temp += 0.5f;
 	}
 	
 	float division = steps + steps;

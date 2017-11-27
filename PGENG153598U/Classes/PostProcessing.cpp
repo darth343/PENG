@@ -47,15 +47,15 @@ bool PostProcessing::init()
 	combinefilter->retain();
 
 	GLProgramState* brightpassState = GLProgramState::create(brightpass);
-	brightpassState->setUniformFloat("brightcheckvalue", 0.3f);
+	brightpassState->setUniformFloat("brightcheckvalue", 0.8f);
 	brightpassState->retain();
 
 	GLProgramState* horiblurState = GLProgramState::create(horiblurpass);
-	horiblurState->setUniformInt("steps", 2);
+	horiblurState->setUniformInt("steps", 4);
 	horiblurState->retain();
 
 	GLProgramState* vertiblurState = GLProgramState::create(vertiblurpass);
-	vertiblurState->setUniformInt("steps", 2);
+	vertiblurState->setUniformInt("steps", 4);
 	vertiblurState->retain();
 
 	GLProgramState* combinefilterstate = GLProgramState::create(combinefilter);

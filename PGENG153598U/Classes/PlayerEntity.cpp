@@ -18,6 +18,7 @@ void PlayerEntity::Move(Vec2 dir)
 {
 	if (canMoveFlag)
 	{
+
 		canMoveFlag = false;
 		dir.x *= GridSystem::GetInstance()->GetGridWidth();
 		dir.y *= GridSystem::GetInstance()->GetGridHeight();

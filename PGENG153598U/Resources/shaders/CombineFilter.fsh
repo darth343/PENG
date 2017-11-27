@@ -11,5 +11,5 @@ void main()
 	vec4 originalColor = texture2D(original, v_texCoord);
 	vec4 blurpassColor = texture2D(blurpass, v_texCoord);
 			
-	gl_FragColor = blurpassColor + originalColor;
+	gl_FragColor = blurpassColor * 0.5f + originalColor;
 }

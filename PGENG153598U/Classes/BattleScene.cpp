@@ -6,6 +6,8 @@
 #include "PlayerEntity.h"
 #include "GridSystem.h"
 #include "Grid.h"
+#include "SceneManager.h"
+#include "PostProcessing.h"
 
 USING_NS_CC;
 
@@ -34,7 +36,7 @@ bool BattleScene::init()
 	//input = Input::create();
 	//input->retain();
 	//this->addChild(input);
-	this->SceneName = "Battle_Scene";
+	//this->SceneName = "Battle_Scene";
 
     auto visibleSize = Director::getInstance()->getVisibleSize();
 
@@ -97,10 +99,9 @@ bool BattleScene::init()
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(keyboardListener, this);
 
 	// Set up Post Processin Texture
-	PostprocTexture = RenderTexture::create(visibleSize.width, visibleSize.height);
-	PostprocTexture->setPosition(visibleSize.width * 0.5f, visibleSize.height * 0.5f);
-	PostprocTexture->setScale(1.f);
-	PostprocTexture->clear(0, 0, 0, 255);
+	ScreenSprite = Sprite::create("Batman.png");
+	ScreenSprite->setPosition(visibleSize * 0.5f);
+	ScreenSprite->setScaleY(-1);
 
 	Input::RegisterFunctionToActionRelease(Input::InputAction::IA_UP, [&]() 
 	{
@@ -123,9 +124,11 @@ bool BattleScene::init()
 	}
 	);
 
-	this->addChild(PostprocTexture);
+	this->addChild(ScreenSprite);
 
-	this->addChild(RootNode);
+	//this->addChild(RootNode);
+	RootNode->onEnter();
+	RootNode->onEnterTransitionDidFinish();
 	RootNode->retain();
 	this->scheduleUpdate();
 
@@ -139,6 +142,11 @@ void BattleScene::onKeyPressed(cocos2d::EventKeyboard::KeyCode keycode, cocos2d:
 
 void BattleScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keycode, cocos2d::Event* event)
 {
+	if (keycode == cocos2d::EventKeyboard::KeyCode::KEY_T)
+	{
+		auto Scene_Manager = SceneManager::getInstance();
+		Scene_Manager->ReplaceScene(Scene_Manager->GetScene("Base_Scene"));
+	}
 }
 
 void BattleScene::update(float delta)
@@ -151,17 +159,9 @@ void BattleScene::update(float delta)
 	{
 		CCLOG("W is Released");
 	}
-}
 
-void BattleScene::render(Renderer* renderer, const Mat4& eyeTransform, const Mat4* eyeProjection)
-{
-	Scene::render(renderer, eyeTransform, eyeProjection);
-
-	auto visibleSize = Director::getInstance()->getVisibleSize();
-
-	PostprocTexture->beginWithClear(0, 0, 0, 255);
-	RootNode->visit();
-	PostprocTexture->end();
+	PostProcessing::GetInstance()->Render(RootNode);
+	ScreenSprite->setTexture(PostProcessing::GetInstance()->GetTexture());
 }
 
 void BattleScene::menuCloseCallback(Ref* pSender)

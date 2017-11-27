@@ -14,15 +14,15 @@ void main()
 	for(int i = -steps; i <= steps; i++)
 	{
 	
-		color += texture2D(image, vec2(v_texCoord.x, v_texCoord.y) + vec2(0.00093632958 * steps * temp, 0));
-		temp += 1.5f;
+		color += texture2D(image, vec2(v_texCoord.x, v_texCoord.y) + vec2(0.00093632958 * i, 0));
+		temp += 0.5f;
 	}
 	
 	float division = steps + steps;
 	
 	division = 1.0f / division;
 	
-	color.rgb = vec3(color.r * division, color.g * division, color.b * division);
+	color.rgb = vec3(color.r, color.g, color.b );
 		
 	gl_FragColor = color;
 }
