@@ -3,6 +3,7 @@
 #include "BattleScene.h"
 #include "Input.h"
 #include "SceneManager.h"
+#include "SceneSplashScreen.h"
 // #define USE_AUDIO_ENGINE 1
 // #define USE_SIMPLE_AUDIO_ENGINE 1
 

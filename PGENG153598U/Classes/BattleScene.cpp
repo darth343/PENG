@@ -6,6 +6,7 @@
 #include "PlayerEntity.h"
 #include "GridSystem.h"
 #include "Grid.h"
+#include "SceneManager.h"
 
 USING_NS_CC;
 
@@ -34,7 +35,7 @@ bool BattleScene::init()
 	//input = Input::create();
 	//input->retain();
 	//this->addChild(input);
-	this->SceneName = "Battle_Scene";
+	//this->SceneName = "Battle_Scene";
 
     auto visibleSize = Director::getInstance()->getVisibleSize();
 
@@ -134,6 +135,12 @@ void BattleScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keycode, cocos2d
 	if (keycode == cocos2d::EventKeyboard::KeyCode::KEY_RIGHT_ARROW)
 	{
 		playerEntity->Move(Vec2(1.0f, 0));
+	}
+	if (keycode == cocos2d::EventKeyboard::KeyCode::KEY_ENTER)
+	{
+		auto scene = SceneSplashScreen::create();
+		Director::getInstance()->replaceScene(scene);
+
 	}
 }
 

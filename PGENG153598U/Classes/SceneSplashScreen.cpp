@@ -62,7 +62,7 @@ void SceneSplashScreen::onKeyReleased(cocos2d::EventKeyboard::KeyCode keycode, c
 	if (keycode == cocos2d::EventKeyboard::KeyCode::KEY_ENTER)
 	{
 		auto Scene_Manager = SceneManager::getInstance();
-		Scene_Manager->ReplaceScene(Scene_Manager->GetScene("Battle_Scene"));
+		Scene_Manager->ReplaceScene(Scene_Manager->GetScene("Battle_Screen"));
 	}
 }
 
@@ -72,7 +72,7 @@ void SceneSplashScreen::update(float dt)
 	if (timerset > randomtimer)
 	{
 		auto Scene_Manager = SceneManager::getInstance();
-		Scene_Manager->ReplaceScene(Scene_Manager->GetScene("Battle_Scene"));
+		Scene_Manager->ReplaceScene(Scene_Manager->GetScene("Battle_Screen"));
 	}
 		
 }

@@ -8,6 +8,7 @@ static SceneManager* The_SceneManager = nullptr;
 SceneManager::SceneManager()
 {
 	std::fill(sceneStorage, sceneStorage + STORAGESIZE, nullptr);
+	//currentscene = nullptr;
 }
 
 SceneManager::~SceneManager()
@@ -32,7 +33,8 @@ bool SceneManager::Init()
 	auto Scene_SplashScreen = SceneSplashScreen::create();
 	this->SetSceneName(Scene_SplashScreen, "Splash_Screen");
 	auto Scene_Battle = BattleScene::create();
-	this->SetSceneName(Scene_Battle, "Battle_Scene");
+	Scene_Battle->retain();
+	this->SetSceneName(Scene_Battle, "Battle_Screen");
 	sceneStorage[0] = Scene_SplashScreen;
 	sceneStorage[1] = Scene_Battle;
 	return true;
@@ -40,6 +42,11 @@ bool SceneManager::Init()
 
 void SceneManager::Runwithscene(Scene* scene)
 {
+	//BaseScene* tempscene = ;
+	//currentscene = scene;
+	auto director = cocos2d::Director::getInstance();
+	Scene *temp = director->getRunningScene();
+
 	Director::getInstance()->runWithScene(scene);
 }
 
@@ -69,6 +76,7 @@ BaseScene* SceneManager::GetScene(std::string Scene)
 				return sceneStorage[i];
 				break;
 			}
+			
 		}
 		
 	}
