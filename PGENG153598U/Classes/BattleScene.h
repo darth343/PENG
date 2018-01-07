@@ -5,6 +5,8 @@
 #include "Input.h"
 #include "BaseScene.h"
 
+using std::string;
+
 class PlayerEntity;
 class BattleScene : public BaseScene
 {

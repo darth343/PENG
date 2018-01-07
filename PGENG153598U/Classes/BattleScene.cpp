@@ -47,7 +47,8 @@ bool BattleScene::init()
 	int numRow = 10;
 	int numCol = 5;
 
-	GridSystem::GetInstance()->GenerateGrid(playingSize, numRow, numCol);
+	GridSystem::GetInstance()->GenerateGrid(playingSize, numRow, numCol,2);
+	GridSystem::GetInstance()->SetActive_Index(1);
 
 	RootNode = Node::create();
 	RootNode->setName("RootNode");
@@ -60,6 +61,8 @@ bool BattleScene::init()
 			sprite->setContentSize(Size(GridSystem::GetInstance()->GetGridWidth(), GridSystem::GetInstance()->GetGridHeight()));
 			sprite->setPosition(GridSystem::GetInstance()->GetGrid(i, j).GetPosition());
 			RootNode->addChild(sprite);
+			
+			
 		}
 	}
 
@@ -87,7 +90,7 @@ bool BattleScene::init()
 		Vec2 halfWorldPos = Vec2(visibleSize.width * 0.5f, visibleSize.height * 0.5f);
 
 		playerEntity = PlayerEntity::Create("testSprite.png");
-		playerEntity->setPosition(GridSystem::GetInstance()->GetGrid(0, 0).GetPosition());
+		playerEntity->setPosition(GridSystem::GetInstance()->GetGrid(1).GetPosition());
 		playerEntity->RunAnimate(AnimationManager::GetInstance("testSprite.png")->GetAnimate("IDLE"));
 		RootNode->addChild(playerEntity);
 	}
@@ -105,22 +108,22 @@ bool BattleScene::init()
 
 	Input::RegisterFunctionToActionRelease(Input::InputAction::IA_UP, [&]() 
 	{
-		playerEntity->Move(Vec2(0, 1.0f));
+		//playerEntity->Move(Vec2(0, 1.0f));
 	}
 	);
 	Input::RegisterFunctionToActionRelease(Input::InputAction::IA_DOWN, [&]()
 	{
-		playerEntity->Move(Vec2(0, -1.0f));
+		//playerEntity->Move(Vec2(0, -1.0f));
 	}
 	);
 	Input::RegisterFunctionToActionRelease(Input::InputAction::IA_LEFT, [&]()
 	{
-		playerEntity->Move(Vec2(-1.0f, 0));
+		//playerEntity->Move(Vec2(-1.0f, 0));
 	}
 	);
 	Input::RegisterFunctionToActionRelease(Input::InputAction::IA_RIGHT, [&]()
 	{
-		playerEntity->Move(Vec2(1.0f, 0));
+		//playerEntity->Move(Vec2(1.0f, 0));
 	}
 	);
 
@@ -157,7 +160,71 @@ void BattleScene::update(float delta)
 	}
 	else if (Input::GetKeyUp(EventKeyboard::KeyCode::KEY_W))
 	{
-		CCLOG("W is Released");
+		
+		int tampvalue = GridSystem::GetInstance()->GetActive_Index() + 1;
+		int tempx = playerEntity->getPosition().x;
+		int tempy = playerEntity->getPosition().y;
+		Vec2 newposition = Vec2(tempx , (int)tempy + (int)GridSystem::GetInstance()->GetGridHeight());
+		Vec2 tempposition = GridSystem::GetInstance()->GetGrid(tampvalue).GetPosition();
+		Vec2 tempposition2 = GridSystem::GetInstance()->GetGrid(GridSystem::GetInstance()->GetActive_Index()).GetPosition();
+		float magnitude = tempposition2.distance(tempposition); 
+		string tempstring = "Player_Grid";
+		if (tampvalue > 0 && magnitude < 110.f && GridSystem::GetInstance()->GetGrid(tampvalue).GetIdentity() == tempstring)
+		{
+			playerEntity->Move(Vec2(0, 1.0f));
+			GridSystem::GetInstance()->SetActive_Index(tampvalue);
+		}
+	}
+	else if (Input::GetKeyUp(EventKeyboard::KeyCode::KEY_S))
+	{
+
+		int tampvalue = GridSystem::GetInstance()->GetActive_Index() - 1;
+		int tempx = playerEntity->getPosition().x;
+		int tempy = playerEntity->getPosition().y;
+		Vec2 newposition = Vec2(tempx, (int)tempy - (int)GridSystem::GetInstance()->GetGridHeight());
+		Vec2 tempposition = GridSystem::GetInstance()->GetGrid(tampvalue).GetPosition();
+		Vec2 tempposition2 = GridSystem::GetInstance()->GetGrid(GridSystem::GetInstance()->GetActive_Index()).GetPosition();
+		float magnitude = tempposition2.distance(tempposition);
+		string tempstring = "Player_Grid";
+		if (tampvalue > 0 && magnitude < 110.f && GridSystem::GetInstance()->GetGrid(tampvalue).GetIdentity() == tempstring)
+		{
+			playerEntity->Move(Vec2(0, -1.0f));
+			GridSystem::GetInstance()->SetActive_Index(tampvalue);
+		}
+	}
+	else if (Input::GetKeyUp(EventKeyboard::KeyCode::KEY_A))
+	{
+
+		int tampvalue = GridSystem::GetInstance()->GetActive_Index() - 5;
+		int tempx = playerEntity->getPosition().x;
+		int tempy = playerEntity->getPosition().y;
+		Vec2 newposition = Vec2(tempx - (int)GridSystem::GetInstance()->GetGridWidth(), tempy);
+		Vec2 tempposition = GridSystem::GetInstance()->GetGrid(tampvalue).GetPosition();
+		Vec2 tempposition2 = GridSystem::GetInstance()->GetGrid(GridSystem::GetInstance()->GetActive_Index()).GetPosition();
+		float magnitude = tempposition2.distance(tempposition);
+		string tempstring = "Player_Grid";
+		if (tampvalue > 0 && magnitude < 110.f && GridSystem::GetInstance()->GetGrid(tampvalue).GetIdentity() == tempstring)
+		{
+			playerEntity->Move(Vec2(-1.0f, 0.f));
+			GridSystem::GetInstance()->SetActive_Index(tampvalue);
+		}
+	}
+	else if (Input::GetKeyUp(EventKeyboard::KeyCode::KEY_D))
+	{
+
+		int tampvalue = GridSystem::GetInstance()->GetActive_Index() + 5;
+		int tempx = playerEntity->getPosition().x;
+		int tempy = playerEntity->getPosition().y;
+		Vec2 newposition = Vec2(tempx + (int)GridSystem::GetInstance()->GetGridWidth(), tempy);
+		Vec2 tempposition = GridSystem::GetInstance()->GetGrid(tampvalue).GetPosition();
+		Vec2 tempposition2 = GridSystem::GetInstance()->GetGrid(GridSystem::GetInstance()->GetActive_Index()).GetPosition();
+		float magnitude = tempposition2.distance(tempposition); 
+		string tempstring = "Player_Grid";
+		if (tampvalue > 0 && magnitude < 110.f && GridSystem::GetInstance()->GetGrid(tampvalue).GetIdentity() == tempstring)
+		{
+			playerEntity->Move(Vec2(1.0f, 0.f));
+			GridSystem::GetInstance()->SetActive_Index(tampvalue);
+		}
 	}
 
 	PostProcessing::GetInstance()->Render(RootNode);
