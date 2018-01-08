@@ -6,9 +6,9 @@ SpriteManager::SpriteManager()
 
 SpriteManager::~SpriteManager()
 {
-	for (auto q : spriteFrameMap)
+	for (auto q : spriteInfoMap)
 	{
-		for (auto r : q.second)
+		for (auto r : q.second.spriteFrameList)
 		{
 			r->release();
 		}
@@ -27,7 +27,9 @@ void SpriteManager::GenerateSprite(const std::string& fileName, int numCol, int 
 	Texture2D* texture = spriteSheet->getTexture();
 	float width = spriteSheet->getContentSize().width / numCol;
 	float height = spriteSheet->getContentSize().height / numRow;
-	spriteFrameMap[fileName].reserve(numCol * numRow);
+	spriteInfoMap[fileName].width = width;
+	spriteInfoMap[fileName].height = height;
+	spriteInfoMap[fileName].spriteFrameList.reserve(numCol * numRow);
 
 	for (int i = 0; i < numRow; ++i)
 	{
@@ -35,22 +37,33 @@ void SpriteManager::GenerateSprite(const std::string& fileName, int numCol, int 
 		{
 			SpriteFrame* sprite = SpriteFrame::createWithTexture(texture, Rect(j * width, i * height, width, height));
 			sprite->retain();
-			spriteFrameMap[fileName].push_back(sprite);
+
+			spriteInfoMap[fileName].spriteFrameList.push_back(sprite);
 		}
 	}
 }
 
 SpriteFrame* SpriteManager::GetSpriteFrame(const std::string& fileName, unsigned spriteIndex)
 {
-	if (spriteFrameMap[fileName].size() <= spriteIndex)
+	if (spriteInfoMap[fileName].spriteFrameList.size() <= spriteIndex)
 	{
 		cocos2d::log("SpriteManager::GetSprite-> %s has less than %d number of frames", fileName, spriteIndex);
 		return nullptr;
 	}
 
 	SpriteFrame* newSprite = SpriteFrame::createWithTexture(
-		spriteFrameMap[fileName].at(spriteIndex)->getTexture(),
-		spriteFrameMap[fileName].at(spriteIndex)->getRect()
+		spriteInfoMap[fileName].spriteFrameList.at(spriteIndex)->getTexture(),
+		spriteInfoMap[fileName].spriteFrameList.at(spriteIndex)->getRect()
 	);
 	return newSprite;
+}
+
+float SpriteManager::GetSpriteWidth(const std::string& fileName)
+{
+	return spriteInfoMap[fileName].width;
+}
+
+float SpriteManager::GetSpriteHeight(const std::string& fileName)
+{
+	return spriteInfoMap[fileName].height;
 }

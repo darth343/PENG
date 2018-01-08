@@ -1,23 +1,16 @@
 #ifndef PLAYER_ENTITY_H
 #define PLAYER_ENTITY_H
 
-#include "Entity.h"
+#include "BattleEntity.h"
 
-class PlayerEntity : public Entity
+class PlayerEntity : public BattleEntity
 {
 public:
 	static PlayerEntity* Create(const std::string& fileName);
-	PlayerEntity();
+	PlayerEntity(const std::string& fileName);
 	virtual ~PlayerEntity();
 
-	virtual void Move(Vec2 dir);
-
 protected:
-
-	float movementDuration;
-	float movementCooldown;
-
-	bool canMoveFlag;
 
 };
 

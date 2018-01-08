@@ -11,6 +11,7 @@ using namespace cocos2d;
 using std::vector;
 using std::map;
 
+struct SpriteInfo;
 class SpriteManager : public Singleton<SpriteManager>
 {
 	friend Singleton<SpriteManager>;
@@ -20,10 +21,20 @@ public:
 	void GenerateSprite(const std::string& fileName, int numCol = 1, int numRow = 1);
 	SpriteFrame* GetSpriteFrame(const std::string& fileName, unsigned spriteIndex = 0);
 
+	float GetSpriteWidth(const std::string& fileName);
+	float GetSpriteHeight(const std::string& fileName);
+
 protected:
 	SpriteManager();
 
-	std::map<std::string, std::vector<SpriteFrame*>> spriteFrameMap;
+	std::map<std::string, SpriteInfo> spriteInfoMap;
+};
+
+struct SpriteInfo
+{
+	std::vector<SpriteFrame*> spriteFrameList;
+	float width;
+	float height;
 };
 
 #endif

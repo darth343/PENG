@@ -55,7 +55,7 @@ void AnimationManager::RemoveAnimate(const std::string& animName)
 	Action* animate = GetAnimate(animName);
 	if (animate != nullptr)
 	{
-		//animate->release();
+		animate->release();
 		animMap.erase(animName);
 	}
 }

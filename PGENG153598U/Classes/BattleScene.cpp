@@ -6,14 +6,24 @@
 #include "PlayerEntity.h"
 #include "GridSystem.h"
 #include "Grid.h"
-#include "SceneManager.h"
-#include "PostProcessing.h"
+#include "PlayerInfo.h"
+#include "EnemyEntity.h"
 
 USING_NS_CC;
 
 Scene* BattleScene::createScene()
 {
-	return BattleScene::create();
+	auto scene = Scene::createWithPhysics();
+	scene->setName("BattleScene");
+
+	auto layer = BattleScene::create();
+
+	layer->setName("Scene");
+	layer->retain();
+
+	scene->addChild(layer);
+
+	return scene;
 }
 
 // Print useful error message instead of segfaulting when files are not there.
@@ -36,7 +46,10 @@ bool BattleScene::init()
 	//input = Input::create();
 	//input->retain();
 	//this->addChild(input);
-	//this->SceneName = "Battle_Scene";
+
+	auto contactListener = EventListenerPhysicsContact::create();
+	contactListener->onContactBegin = CC_CALLBACK_1(BattleScene::OnCollisionEvent, this);
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
 
     auto visibleSize = Director::getInstance()->getVisibleSize();
 
@@ -46,8 +59,10 @@ bool BattleScene::init()
 
 	int numRow = 10;
 	int numCol = 5;
+	int numPlayerRow = 5;
+	int numPlayerCol = 5;
 
-	GridSystem::GetInstance()->GenerateGrid(playingSize, numRow, numCol);
+	GridSystem::GetInstance()->GenerateGrid(playingSize, numRow, numCol, numPlayerCol, numPlayerRow);
 
 	RootNode = Node::create();
 	RootNode->setName("RootNode");
@@ -56,7 +71,11 @@ bool BattleScene::init()
 	{
 		for (int j = 0; j < numCol; ++j)
 		{
-			Sprite* sprite = Sprite::create("ZigzagGrass_Mud_Round.png");
+			Sprite* sprite;
+			if (i < numPlayerRow && j < numPlayerCol)
+				sprite = Sprite::create("ZigzagGrass_Mud_Round.png");
+			else
+				sprite = Sprite::create("ZigzagForest_Square.png");
 			sprite->setContentSize(Size(GridSystem::GetInstance()->GetGridWidth(), GridSystem::GetInstance()->GetGridHeight()));
 			sprite->setPosition(GridSystem::GetInstance()->GetGrid(i, j).GetPosition());
 			RootNode->addChild(sprite);
@@ -68,7 +87,8 @@ bool BattleScene::init()
 		SpriteManager::GetInstance()->GenerateSprite("trump_run.png", 6, 4);
 		SpriteManager::GetInstance()->GenerateSprite("blinkEffect.png", 10, 1);
 		SpriteManager::GetInstance()->GenerateSprite("ZigzagGrass_Mud_Round.png", 1, 1);
-		SpriteManager::GetInstance()->GenerateSprite("testSprite.png", 5, 3);
+		SpriteManager::GetInstance()->GenerateSprite("player.png", 13, 21);
+		SpriteManager::GetInstance()->GenerateSprite("orc1.png", 13, 21);
 	}
 	{//Setup animations for sprites
 		AnimationManager::GetInstance("sprite2.png")->AddAnimate("RUN", 0, 5, 2.0f);
@@ -78,20 +98,35 @@ bool BattleScene::init()
 		AnimationManager::GetInstance("trump_run.png")->AddAnimate("RUN_UP", 12, 17, 0.5f);
 		AnimationManager::GetInstance("trump_run.png")->AddAnimate("RUN_DOWN", 0, 5, 0.5f);
 
-		AnimationManager::GetInstance("blinkEffect.png")->AddAnimate("DEFAULT", 0, 9, 0.2f);
+		AnimationManager::GetInstance("blinkEffect.png")->AddAnimate("IDLE", 0, 9);
 
-		AnimationManager::GetInstance("testSprite.png")->AddAnimate("IDLE", 1, 4);
-		AnimationManager::GetInstance("testSprite.png")->AddAnimate("MOVE", 6, 7, 0.2f);
+		AnimationManager::GetInstance("player.png")->AddAnimate("IDLE", 143, 151);
+		AnimationManager::GetInstance("player.png")->AddAnimate("MOVE", 39, 45, 0.1f);
+
+		AnimationManager::GetInstance("orc1.png")->AddAnimate("IDLE", 117, 125);
+		AnimationManager::GetInstance("orc1.png")->AddAnimate("MOVE", 13, 19, 0.1f);
+		AnimationManager::GetInstance("orc1.png")->AddAnimate("THRUST", 65, 72, 1.0f, false);
 	}
 	{//Creation of entities
 		Vec2 halfWorldPos = Vec2(visibleSize.width * 0.5f, visibleSize.height * 0.5f);
 
-		playerEntity = PlayerEntity::Create("testSprite.png");
-		playerEntity->setPosition(GridSystem::GetInstance()->GetGrid(0, 0).GetPosition());
-		playerEntity->RunAnimate(AnimationManager::GetInstance("testSprite.png")->GetAnimate("IDLE"));
+		playerEntity = PlayerEntity::Create("player.png");
+		PlayerInfo::GetInstance()->controllingEntity = playerEntity;
+		playerEntity->setPosition(GridSystem::GetInstance()->GetGrid(1, 2).GetPosition());
+		playerEntity->SetGridPosition(Vec2(1, 2));
+		playerEntity->RunAnimate(AnimationManager::GetInstance("player.png")->GetAnimate("IDLE"));
+		playerEntity->GetDisplay()->setScale(2);
 		RootNode->addChild(playerEntity);
-	}
 
+		{
+			auto enemyEntity = EnemyEntity::Create("orc1.png");
+			enemyEntity->setPosition(GridSystem::GetInstance()->GetGrid(6, 2).GetPosition());
+			enemyEntity->SetGridPosition(Vec2(6, 2));
+			enemyEntity->GetDisplay()->setScale(2);
+			RootNode->addChild(enemyEntity);
+		}
+	}
+	
 	auto keyboardListener = EventListenerKeyboard::create();
 	keyboardListener->onKeyPressed = CC_CALLBACK_2(BattleScene::onKeyPressed, this);
 	keyboardListener->onKeyReleased = CC_CALLBACK_2(BattleScene::onKeyReleased, this);
@@ -99,54 +134,62 @@ bool BattleScene::init()
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(keyboardListener, this);
 
 	// Set up Post Processin Texture
-	ScreenSprite = Sprite::create("Batman.png");
-	ScreenSprite->setPosition(visibleSize * 0.5f);
-	ScreenSprite->setScaleY(-1);
+	PostprocTexture = RenderTexture::create(visibleSize.width, visibleSize.height);
+	PostprocTexture->setPosition(visibleSize.width * 0.5f, visibleSize.height * 0.5f);
+	PostprocTexture->setScale(1.f);
+	PostprocTexture->clear(0, 0, 0, 255);
 
-	Input::RegisterFunctionToActionRelease(Input::InputAction::IA_UP, [&]() 
-	{
-		playerEntity->Move(Vec2(0, 1.0f));
-	}
-	);
-	Input::RegisterFunctionToActionRelease(Input::InputAction::IA_DOWN, [&]()
-	{
-		playerEntity->Move(Vec2(0, -1.0f));
-	}
-	);
-	Input::RegisterFunctionToActionRelease(Input::InputAction::IA_LEFT, [&]()
-	{
-		playerEntity->Move(Vec2(-1.0f, 0));
-	}
-	);
-	Input::RegisterFunctionToActionRelease(Input::InputAction::IA_RIGHT, [&]()
-	{
-		playerEntity->Move(Vec2(1.0f, 0));
-	}
-	);
+	this->addChild(PostprocTexture);
 
-	this->addChild(ScreenSprite);
-
-	//this->addChild(RootNode);
-	RootNode->onEnter();
-	RootNode->onEnterTransitionDidFinish();
+	this->addChild(RootNode);
 	RootNode->retain();
 	this->scheduleUpdate();
 
     return true;
 }
 
+bool BattleScene::OnCollisionEvent(PhysicsContact& contact)
+{
+	auto bodyA = contact.getShapeA()->getBody();
+	auto bodyB = contact.getShapeB()->getBody();
+
+	Entity* entityA = dynamic_cast<Entity*>((bodyA->getNode()));
+	Entity* entityB = dynamic_cast<Entity*>((bodyB->getNode()));
+
+	if (entityA != nullptr &&
+		entityB != nullptr)
+	{
+		entityA->OnCollisionEnter(entityB);
+		entityB->OnCollisionEnter(entityA);
+	}
+
+	return false;
+}
+
 void BattleScene::onKeyPressed(cocos2d::EventKeyboard::KeyCode keycode, cocos2d::Event* event)
 {
 	//input->onKeyPressed(keycode, event);
+	if (keycode == cocos2d::EventKeyboard::KeyCode::KEY_UP_ARROW)
+	{
+		playerEntity->Move(Vec2(0, 1.0f));
+	}
+	if (keycode == cocos2d::EventKeyboard::KeyCode::KEY_DOWN_ARROW)
+	{
+		playerEntity->Move(Vec2(0, -1.0f));
+	}
+	if (keycode == cocos2d::EventKeyboard::KeyCode::KEY_LEFT_ARROW)
+	{
+		playerEntity->Move(Vec2(-1.0f, 0));
+	}
+	if (keycode == cocos2d::EventKeyboard::KeyCode::KEY_RIGHT_ARROW)
+	{
+		playerEntity->Move(Vec2(1.0f, 0));
+	}
 }
 
 void BattleScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keycode, cocos2d::Event* event)
 {
-	if (keycode == cocos2d::EventKeyboard::KeyCode::KEY_T)
-	{
-		auto Scene_Manager = SceneManager::getInstance();
-		Scene_Manager->ReplaceScene(Scene_Manager->GetScene("Base_Scene"));
-	}
+	//input->onKeyReleased(keycode, event);
 }
 
 void BattleScene::update(float delta)
@@ -159,9 +202,17 @@ void BattleScene::update(float delta)
 	{
 		CCLOG("W is Released");
 	}
+}
 
-	PostProcessing::GetInstance()->Render(RootNode);
-	ScreenSprite->setTexture(PostProcessing::GetInstance()->GetTexture());
+void BattleScene::render(Renderer* renderer, const Mat4& eyeTransform, const Mat4* eyeProjection)
+{
+	Scene::render(renderer, eyeTransform, eyeProjection);
+
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+
+	PostprocTexture->beginWithClear(0, 0, 0, 255);
+	RootNode->visit();
+	PostprocTexture->end();
 }
 
 void BattleScene::menuCloseCallback(Ref* pSender)

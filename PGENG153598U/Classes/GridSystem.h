@@ -16,11 +16,15 @@ class GridSystem : public Singleton<GridSystem>
 public:
 	virtual ~GridSystem();
 
-	void GenerateGrid(Size playingSize, unsigned numCol, unsigned numRow);
+	void GenerateGrid(Size playingSize, unsigned numCol, unsigned numRow, unsigned numPlayerCol, unsigned numPlayerRow);
 
 	virtual Grid GetGrid(int col, int row);
 	inline virtual float GetGridWidth() { return this->gridWidth; }
 	inline virtual float GetGridHeight() { return this->gridHeight; }
+
+	float GetNumRow() { return maxGridCount.y; }
+	float GetNumCol() { return maxGridCount.x; }
+	float GetMaxGridCount() { return (maxGridCount.x * maxGridCount.y); }
 
 protected:
 	GridSystem();

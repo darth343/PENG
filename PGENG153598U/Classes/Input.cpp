@@ -20,8 +20,6 @@ bool Input::init()
 	
 	AssignHotkey(InputAction::IA_UP, EventKeyboard::KeyCode::KEY_W);
 	AssignHotkey(InputAction::IA_DOWN, EventKeyboard::KeyCode::KEY_S);
-	AssignHotkey(InputAction::IA_LEFT, EventKeyboard::KeyCode::KEY_A);
-	AssignHotkey(InputAction::IA_RIGHT, EventKeyboard::KeyCode::KEY_D);0
 
 
 	this->onEnter();
