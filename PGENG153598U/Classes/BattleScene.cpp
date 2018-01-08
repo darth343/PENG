@@ -8,6 +8,7 @@
 #include "Grid.h"
 #include "SceneManager.h"
 #include "PostProcessing.h"
+#include "WaveSpawner.h"
 
 USING_NS_CC;
 
@@ -49,6 +50,8 @@ bool BattleScene::init()
 
 	GridSystem::GetInstance()->GenerateGrid(playingSize, numRow, numCol,2);
 	GridSystem::GetInstance()->SetActive_Index(1);
+
+	WaveSpawner::GetInstance();
 
 	RootNode = Node::create();
 	RootNode->setName("RootNode");
