@@ -3,7 +3,7 @@
 
 #include "cocos2d.h"
 #include "SingletonTemplate.h"
-//#include "EnemyEntity.h"
+#include "EnemyEntity.h"
 #include <vector>
 
 using std::vector;
@@ -18,9 +18,9 @@ public:
 
 	void ActivateWaves();
 
-	void SpawnEnemies();
+	void SpawnEnemies(Node* node);
 
-	void ControlEnemyWave(float delta);
+	void ControlEnemyWave(float delta, Node* node);
 
 	void SetWavenumber(int newnumber) { this->wavecount = newnumber; }
 	int GetWavenumber() { return this->wavecount; }
@@ -35,8 +35,8 @@ protected:
 	int wavecount;
 	int Enemiesleft;
 	float Nextwavetimer;
-	//vector<vector<EnemyEntity>> EnemyList;
 
+	vector<vector<EnemyEntity*>> EnemyList;
 };
 
 

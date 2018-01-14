@@ -12,7 +12,7 @@ public:
 
 	virtual void Move(Vec2 dir);
 	virtual void Attack(Vec2 dir);
-
+	int getHealth() { return this->health; }
 private:
 
 	void RunAI();

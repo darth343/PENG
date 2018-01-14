@@ -134,9 +134,12 @@ bool BattleScene::init()
 		RootNode->addChild(playerEntity);
 
 		{
-			auto enemyEntity = EnemyEntity::Create("orc1.png", Vec2(6, 2));
-			enemyEntity->GetDisplay()->setScale(2);
-			RootNode->addChild(enemyEntity);
+			//auto enemy = WaveSpawner::GetInstance()->EnemyList[0][0];
+			//auto enemyEntity = EnemyEntity::Create("orc1.png", Vec2(6, 2));
+			//enemyEntity->GetDisplay()->setScale(2);
+			//RootNode->addChild(enemyEntity);
+			WaveSpawner::GetInstance()->ActivateWaves();
+			WaveSpawner::GetInstance()->SpawnEnemies(RootNode);
 		}
 	}
 	
@@ -216,6 +219,7 @@ void BattleScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keycode, cocos2d
 
 void BattleScene::update(float delta)
 {
+	WaveSpawner::GetInstance()->ControlEnemyWave(delta, RootNode);
 	if (Input::GetKeyDown(EventKeyboard::KeyCode::KEY_W))
 	{
 		CCLOG("W is Pressed");
