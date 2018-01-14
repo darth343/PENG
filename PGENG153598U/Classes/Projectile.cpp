@@ -21,11 +21,11 @@ void Projectile::OnCollisionEnter(Entity* other)
 	if (battleEntity)
 	{
 		this->removeFromParentAndCleanup(true);
-		battleEntity->TakeDamage(1);
+		battleEntity->TakeDamage(this->damage);
 	}
 }
 
-Projectile* Projectile::Create(const std::string& fileName, Vec2 direction, float speed, bool isFriendly)
+Projectile* Projectile::Create(const std::string& fileName, Vec2 direction, float speed, bool isFriendly, int damage)
 {
 	SpriteFrame* spriteFrame = SpriteManager::GetInstance()->GetSpriteFrame(fileName);
 	if (spriteFrame == nullptr)
@@ -42,6 +42,7 @@ Projectile* Projectile::Create(const std::string& fileName, Vec2 direction, floa
 		proj->getPhysicsBody()->setContactTestBitmask(FRIENDLY_ENTITY);
 
 	proj->getPhysicsBody()->setVelocity(direction.getNormalized() * speed);
+	proj->SetDamage(damage);
 
 	return proj;
 }

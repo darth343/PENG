@@ -25,26 +25,26 @@ PlayerEntity::~PlayerEntity()
 
 void PlayerEntity::Fire1(Vec2 dir)
 {
-	if (canAttackFlag)
+	if (canAttack1Flag)
 	{
-		canAttackFlag = false;
+		canAttack1Flag = false;
 		canMoveFlag = false;
 		dir.y = 0;
 		this->RunAnimate(AnimationManager::GetInstance(spriteName)->GetAnimate("THRUST"));
 
 		auto seq = Sequence::create(
-			DelayTime::create(1.0f),
+			DelayTime::create(PLAYER_ATTACK1_ANIM_SPEED),
 			CallFunc::create([&, dir]()
 		{
 			canMoveFlag = true;
-			auto proj = Projectile::Create("blinkEffect.png", dir, 1000.0f, true);
+			auto proj = Projectile::Create("blinkEffect.png", dir, PLAYER_ATTACK1_SPEED, true);
 			this->getParent()->addChild(proj);
 			proj->setPosition(this->getPosition());
 
 			this->RunAnimate(AnimationManager::GetInstance(spriteName)->GetAnimate("IDLE"));
 		}),
 			DelayTime::create(attack1_Cooldown),
-			CallFunc::create([&]() {canAttackFlag = true; }),
+			CallFunc::create([&]() {canAttack1Flag = true; }),
 			nullptr);
 
 		this->runAction(seq);
@@ -52,26 +52,26 @@ void PlayerEntity::Fire1(Vec2 dir)
 }
 void PlayerEntity::Fire2(Vec2 dir)
 {
-	if (canAttackFlag)
+	if (canAttack2Flag)
 	{
-		canAttackFlag = false;
+		canAttack2Flag = false;
 		canMoveFlag = false;
 		dir.y = 0;
-		this->RunAnimate(AnimationManager::GetInstance(spriteName)->GetAnimate("THRUST"));
+		this->RunAnimate(AnimationManager::GetInstance(spriteName)->GetAnimate("SWING"));
 
 		auto seq = Sequence::create(
-			DelayTime::create(1.0f),
+			DelayTime::create(PLAYER_ATTACK2_ANIM_SPEED),
 			CallFunc::create([&, dir]()
 		{
 			canMoveFlag = true;
-			auto proj = Projectile::Create("blinkEffect.png", dir, 300.0f, true);
+			auto proj = Projectile::Create("blinkEffect.png", dir, PLAYER_ATTACK2_SPEED, true, 3);
 			this->getParent()->addChild(proj);
 			proj->setPosition(this->getPosition());
 
 			this->RunAnimate(AnimationManager::GetInstance(spriteName)->GetAnimate("IDLE"));
 		}),
 			DelayTime::create(attack2_Cooldown),
-			CallFunc::create([&]() {canAttackFlag = true; }),
+			CallFunc::create([&]() {canAttack2Flag = true; }),
 			nullptr);
 
 		this->runAction(seq);

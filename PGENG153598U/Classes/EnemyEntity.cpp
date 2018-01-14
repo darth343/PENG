@@ -15,6 +15,7 @@ EnemyEntity::EnemyEntity(const std::string& fileName, Vec2 gridPos):
 	attackCooldown = 2.0f;
 	movementDuration = 0.2f;
 	movementCooldown = 0.2f;
+	health = 5;
 	canAttackFlag = true;
 	canMoveFlag = true;
 	isFriendly = false;

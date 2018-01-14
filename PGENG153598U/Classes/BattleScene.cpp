@@ -104,11 +104,14 @@ bool BattleScene::init()
 
 		AnimationManager::GetInstance("player.png")->AddAnimate("IDLE", 143, 151);
 		AnimationManager::GetInstance("player.png")->AddAnimate("MOVE", 39, 45, 0.1f);
-		AnimationManager::GetInstance("player.png")->AddAnimate("THRUST", 65, 72, PLAYER_ATTACK1_ANIM_SPEED, false);
+		AnimationManager::GetInstance("player.png")->AddAnimate("THRUST", 91, 98, PLAYER_ATTACK1_ANIM_SPEED, false);
+		AnimationManager::GetInstance("player.png")->AddAnimate("SWING", 195, 200, PLAYER_ATTACK2_ANIM_SPEED, false);
+		AnimationManager::GetInstance("player.png")->AddAnimate("DIE", 260, 265, 1.0f, false);
 
 		AnimationManager::GetInstance("orc1.png")->AddAnimate("IDLE", 117, 125);
 		AnimationManager::GetInstance("orc1.png")->AddAnimate("MOVE", 13, 19, 0.1f);
 		AnimationManager::GetInstance("orc1.png")->AddAnimate("THRUST", 65, 72, 1.0f, false);
+		AnimationManager::GetInstance("orc1.png")->AddAnimate("DIE", 260, 265, 1.0f, false);
 	}
 	{//Creation of entities
 		Vec2 halfWorldPos = Vec2(visibleSize.width * 0.5f, visibleSize.height * 0.5f);

@@ -18,7 +18,8 @@ protected:
 	float attack1_Cooldown;
 	float attack2_Cooldown;
 
-	bool canAttackFlag;
+	bool canAttack1Flag;
+	bool canAttack2Flag;
 
 };
 

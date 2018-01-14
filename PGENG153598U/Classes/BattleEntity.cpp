@@ -1,6 +1,7 @@
 #include "BattleEntity.h"
 
 #include "GridSystem.h"
+#include "AnimationManager.h"
 
 BattleEntity::BattleEntity(const std::string& fileName):
 	Entity(fileName)
@@ -28,7 +29,15 @@ void BattleEntity::TakeDamage(int amount)
 
 void BattleEntity::Die()
 {
-	this->removeFromParentAndCleanup(true);
+	this->getPhysicsBody()->removeFromWorld();
+	this->stopAllActions();
+	this->RunAnimate(AnimationManager::GetInstance(spriteName)->GetAnimate("DIE"));
+	this->runAction(Sequence::createWithTwoActions(
+		DelayTime::create(1.0f),
+		CallFunc::create([&, this]() 
+	{
+		this->removeFromParentAndCleanup(true); 
+	})));
 }
 
 void BattleEntity::Move(Vec2 dir)
