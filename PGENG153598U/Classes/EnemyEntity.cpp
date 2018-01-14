@@ -8,64 +8,78 @@
 #include "AnimationManager.h"
 #include "GridSystem.h"
 
-EnemyEntity::EnemyEntity(const std::string& fileName):
+EnemyEntity::EnemyEntity(const std::string& fileName, Vec2 gridPos):
 	BattleEntity(fileName)
 {
 	reactionTime = 0.2f;
 	attackCooldown = 2.0f;
+	movementDuration = 0.2f;
 	movementCooldown = 0.2f;
 	canAttackFlag = true;
+	canMoveFlag = true;
+	isFriendly = false;
+	actionFinished = true;
+
+	this->setPosition(GridSystem::GetInstance()->GetGrid(gridPos.x, gridPos.y).GetPosition());
+	this->gridPosition = gridPos;
 
 	this->getPhysicsBody()->setCategoryBitmask(ENEMY_ENTITY);
 	this->getPhysicsBody()->setCollisionBitmask(false);
 	this->getPhysicsBody()->setContactTestBitmask(PROJECTILE);
 
-	auto behavior = RepeatForever::create(Sequence::create(
-		DelayTime::create(reactionTime),
-		RunAI(), 
-		nullptr));
-
-	this->runAction(behavior);
+	this->RunAI();
 }
 
 EnemyEntity::~EnemyEntity()
 {
 }
 
-Action* EnemyEntity::RunAI()
+void EnemyEntity::RunAI()
 {
+	//if (!actionFinished)
+	//	return;
+
+	//actionFinished = false;
 	Vec2 playerPos = PlayerInfo::GetInstance()->controllingEntity->GetGridPosition();
 	if (playerPos.y != this->gridPosition.y)
 	{//follow player
-		return Move2(Vec2(0, playerPos.y - this->gridPosition.y));
+		Move(Vec2(0, cocos2d::clampf(playerPos.y - this->gridPosition.y, -1.0f, 1.0f)));
 	}
 	else
 	{//attack
-		return Attack2(playerPos - this->gridPosition);
+		Attack(playerPos - this->gridPosition);
 	}
 }
 
-Action* EnemyEntity::Move2(Vec2 dir)
+void EnemyEntity::Move(Vec2 dir)
 {
 	if (canMoveFlag)
 	{
-		dir.x = clampf(dir.x, -1, 1);
-		dir.y = clampf(dir.y, -1, 1);
+		//canMoveFlag = false;
+		//dir.x = (int)(dir.x + 0.5f);
+		//dir.y = (int)(dir.y + 0.5f);
 
-		Vec2 nextPos = this->gridPosition + dir;
+		Vec2 nextGridPos = this->gridPosition + dir;
 
-		if (nextPos.x < 0 || nextPos.x >= GridSystem::GetInstance()->GetNumCol() ||
-			nextPos.y < 0 || nextPos.y >= GridSystem::GetInstance()->GetNumRow())
+		if (isFriendly != GridSystem::GetInstance()->GetGrid(nextGridPos.x, nextGridPos.y).GetBelongsToPlayer())
 		{
-			return nullptr;
-		}
-		if (isFriendly != GridSystem::GetInstance()->GetGrid(nextPos.x, nextPos.y).GetBelongsToPlayer())
+			//return nullptr;
+			//dir.x = 0.0f;
+			//dir.y = 0.0f;
+		}//do another check if occupied
+		else
 		{
-			return nullptr;
+			if (nextGridPos.x < 0 || nextGridPos.x >= GridSystem::GetInstance()->GetNumCol())
+			{
+				dir.x = 0.0f;
+			}
+			if (nextGridPos.y < 0 || nextGridPos.y >= GridSystem::GetInstance()->GetNumRow())
+			{
+				dir.y = 0.0f;
+			}
 		}
 
-		canMoveFlag = false;
-		gridPosition = nextPos;
+		gridPosition = nextGridPos;
 		dir.x *= GridSystem::GetInstance()->GetGridWidth();
 		dir.y *= GridSystem::GetInstance()->GetGridHeight();
 
@@ -73,41 +87,64 @@ Action* EnemyEntity::Move2(Vec2 dir)
 
 		Sequence* seq = Sequence::create(
 			MoveBy::create(movementDuration, dir),
-			CallFunc::create([&]() {}),
 			DelayTime::create(movementCooldown),
 			CallFunc::create([&]()
 		{
 			canMoveFlag = true;
+			actionFinished = true;
 			//RunAnimate(AnimationManager::GetInstance(spriteName)->GetAnimate("IDLE"));
-		}), nullptr
+		}),
+			DelayTime::create(reactionTime), 
+			CallFunc::create([&]() {RunAI(); }),
+			nullptr
 		);
 
-		return seq;
+		this->runAction(seq);
+	}
+	else
+	{
+		this->RunAI();
 	}
 }
 
-Action* EnemyEntity::Attack2(Vec2 dir)
+void EnemyEntity::Attack(Vec2 dir)
 {
 	if (canAttackFlag)
 	{
-		canAttackFlag = false;
+		//canAttackFlag = false;
 		dir.y = 0;
 		this->RunAnimate(AnimationManager::GetInstance(spriteName)->GetAnimate("THRUST"));
 
-		return Sequence::createWithTwoActions(
+		auto seq = Sequence::create(
 			DelayTime::create(1.0f),
 			CallFunc::create([&, dir]()
 		{
 			auto proj = Projectile::Create("blinkEffect.png", dir, 200.0f, false);
 			this->getParent()->addChild(proj);
 			proj->setPosition(this->getPosition());
-			this->runAction(Sequence::createWithTwoActions(DelayTime::create(attackCooldown), CallFunc::create([&]() {canAttackFlag = true; })));
+
+			this->runAction(Sequence::createWithTwoActions(
+				DelayTime::create(attackCooldown), 
+				CallFunc::create([&]() 
+			{
+				canAttackFlag = true; 
+			})));
+			actionFinished = true;
 			this->RunAnimate(AnimationManager::GetInstance(spriteName)->GetAnimate("IDLE"));
-		}));
+		}),
+			DelayTime::create(reactionTime),
+			CallFunc::create([&]() {RunAI(); }),
+			nullptr);
+
+		this->runAction(seq);
+	}
+	else
+	{
+		this->RunAI();
 	}
 }
 
-EnemyEntity* EnemyEntity::Create(const std::string& fileName)
+EnemyEntity* EnemyEntity::Create(const std::string& fileName, Vec2 gridPos)
 {
 	SpriteFrame* spriteFrame = SpriteManager::GetInstance()->GetSpriteFrame(fileName);
 	if (spriteFrame == nullptr)
@@ -115,7 +152,7 @@ EnemyEntity* EnemyEntity::Create(const std::string& fileName)
 		cocos2d::log("Entity: %s not found, failed to create entity", fileName);
 		return nullptr;
 	}
-	EnemyEntity* entity = new EnemyEntity(fileName);
+	EnemyEntity* entity = new EnemyEntity(fileName, gridPos);
 	entity->SetIsFriendly(false);
 
 	return entity;

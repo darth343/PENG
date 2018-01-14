@@ -6,21 +6,22 @@
 class EnemyEntity : public BattleEntity
 {
 public:
-	static EnemyEntity* Create(const std::string& fileName);
-	EnemyEntity(const std::string& fileName);
+	static EnemyEntity* Create(const std::string& fileName, Vec2 gridPos);
+	EnemyEntity(const std::string& fileName, Vec2 gridPos);
 	~EnemyEntity();
 
-	Action* Move2(Vec2 dir);
-	Action* Attack2(Vec2 dir);
+	virtual void Move(Vec2 dir);
+	virtual void Attack(Vec2 dir);
 
 private:
 
-	Action* RunAI();
+	void RunAI();
 
 	float reactionTime;
 	float attackCooldown;
 
 	bool canAttackFlag;
+	bool actionFinished;
 };
 
 #endif

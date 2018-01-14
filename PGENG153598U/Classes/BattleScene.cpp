@@ -8,6 +8,7 @@
 #include "Grid.h"
 #include "PlayerInfo.h"
 #include "EnemyEntity.h"
+#include "GameInfo.h"
 
 USING_NS_CC;
 
@@ -15,6 +16,7 @@ Scene* BattleScene::createScene()
 {
 	auto scene = Scene::createWithPhysics();
 	scene->setName("BattleScene");
+	scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 
 	auto layer = BattleScene::create();
 
@@ -102,6 +104,7 @@ bool BattleScene::init()
 
 		AnimationManager::GetInstance("player.png")->AddAnimate("IDLE", 143, 151);
 		AnimationManager::GetInstance("player.png")->AddAnimate("MOVE", 39, 45, 0.1f);
+		AnimationManager::GetInstance("player.png")->AddAnimate("THRUST", 65, 72, PLAYER_ATTACK1_ANIM_SPEED, false);
 
 		AnimationManager::GetInstance("orc1.png")->AddAnimate("IDLE", 117, 125);
 		AnimationManager::GetInstance("orc1.png")->AddAnimate("MOVE", 13, 19, 0.1f);
@@ -119,9 +122,7 @@ bool BattleScene::init()
 		RootNode->addChild(playerEntity);
 
 		{
-			auto enemyEntity = EnemyEntity::Create("orc1.png");
-			enemyEntity->setPosition(GridSystem::GetInstance()->GetGrid(6, 2).GetPosition());
-			enemyEntity->SetGridPosition(Vec2(6, 2));
+			auto enemyEntity = EnemyEntity::Create("orc1.png", Vec2(6, 2));
 			enemyEntity->GetDisplay()->setScale(2);
 			RootNode->addChild(enemyEntity);
 		}
@@ -184,6 +185,15 @@ void BattleScene::onKeyPressed(cocos2d::EventKeyboard::KeyCode keycode, cocos2d:
 	if (keycode == cocos2d::EventKeyboard::KeyCode::KEY_RIGHT_ARROW)
 	{
 		playerEntity->Move(Vec2(1.0f, 0));
+	}
+
+	if (keycode == cocos2d::EventKeyboard::KeyCode::KEY_A)
+	{
+		playerEntity->Fire1(Vec2(1, 0));
+	}
+	if (keycode == cocos2d::EventKeyboard::KeyCode::KEY_S)
+	{
+		playerEntity->Fire2(Vec2(1, 0));
 	}
 }
 

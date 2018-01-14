@@ -2,12 +2,17 @@
 
 #include "SpriteManager.h"
 #include "GameInfo.h"
+#include "AnimationManager.h"
+#include "Projectile.h"
 
 PlayerEntity::PlayerEntity(const std::string& fileName):
 BattleEntity(fileName)
 {
-	movementDuration = 0.1f;
-	movementCooldown = 0.0f;
+	movementDuration = PLAYER_MOVE_DURATION;
+	movementCooldown = PLAYER_MOVE_COOLDOWN;
+	attack1_Cooldown = PLAYER_ATTACK1_COOLDOWN;
+	attack2_Cooldown = PLAYER_ATTACK2_COOLDOWN;
+	health = 5;
 
 	this->getPhysicsBody()->setCategoryBitmask(FRIENDLY_ENTITY);
 	this->getPhysicsBody()->setCollisionBitmask(false);
@@ -16,6 +21,61 @@ BattleEntity(fileName)
 
 PlayerEntity::~PlayerEntity()
 {
+}
+
+void PlayerEntity::Fire1(Vec2 dir)
+{
+	if (canAttackFlag)
+	{
+		canAttackFlag = false;
+		canMoveFlag = false;
+		dir.y = 0;
+		this->RunAnimate(AnimationManager::GetInstance(spriteName)->GetAnimate("THRUST"));
+
+		auto seq = Sequence::create(
+			DelayTime::create(1.0f),
+			CallFunc::create([&, dir]()
+		{
+			canMoveFlag = true;
+			auto proj = Projectile::Create("blinkEffect.png", dir, 1000.0f, true);
+			this->getParent()->addChild(proj);
+			proj->setPosition(this->getPosition());
+
+			this->RunAnimate(AnimationManager::GetInstance(spriteName)->GetAnimate("IDLE"));
+		}),
+			DelayTime::create(attack1_Cooldown),
+			CallFunc::create([&]() {canAttackFlag = true; }),
+			nullptr);
+
+		this->runAction(seq);
+	}
+}
+void PlayerEntity::Fire2(Vec2 dir)
+{
+	if (canAttackFlag)
+	{
+		canAttackFlag = false;
+		canMoveFlag = false;
+		dir.y = 0;
+		this->RunAnimate(AnimationManager::GetInstance(spriteName)->GetAnimate("THRUST"));
+
+		auto seq = Sequence::create(
+			DelayTime::create(1.0f),
+			CallFunc::create([&, dir]()
+		{
+			canMoveFlag = true;
+			auto proj = Projectile::Create("blinkEffect.png", dir, 300.0f, true);
+			this->getParent()->addChild(proj);
+			proj->setPosition(this->getPosition());
+
+			this->RunAnimate(AnimationManager::GetInstance(spriteName)->GetAnimate("IDLE"));
+		}),
+			DelayTime::create(attack2_Cooldown),
+			CallFunc::create([&]() {canAttackFlag = true; }),
+			nullptr);
+
+		this->runAction(seq);
+	}
 }
 
 //void PlayerEntity::Move(Vec2 dir)

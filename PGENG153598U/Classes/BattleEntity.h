@@ -11,6 +11,9 @@ public:
 
 	virtual void Move(Vec2 dir);
 	virtual void Attack(Vec2 dir){}
+	virtual void Die();
+
+	virtual void TakeDamage(int amount);
 
 	virtual inline void SetGridPosition(Vec2 pos) { this->gridPosition = pos; }
 	virtual inline Vec2 GetGridPosition() { return this->gridPosition; }
@@ -21,7 +24,7 @@ public:
 protected:
 	Vec2 gridPosition;
 
-	int Health;
+	int health;
 
 	float movementDuration;
 	float movementCooldown;

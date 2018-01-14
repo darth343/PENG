@@ -15,6 +15,22 @@ BattleEntity::~BattleEntity()
 {
 }
 
+void BattleEntity::TakeDamage(int amount)
+{
+	this->health -= amount;
+	if (health <= 0)
+	{
+		health = 0;
+
+		Die();
+	}
+}
+
+void BattleEntity::Die()
+{
+	this->removeFromParentAndCleanup(true);
+}
+
 void BattleEntity::Move(Vec2 dir)
 {
 	if (canMoveFlag)

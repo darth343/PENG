@@ -21,6 +21,7 @@ void Projectile::OnCollisionEnter(Entity* other)
 	if (battleEntity)
 	{
 		this->removeFromParentAndCleanup(true);
+		battleEntity->TakeDamage(1);
 	}
 }
 
