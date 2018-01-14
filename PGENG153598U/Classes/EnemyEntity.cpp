@@ -65,9 +65,14 @@ void EnemyEntity::Move(Vec2 dir)
 		if (isFriendly != GridSystem::GetInstance()->GetGrid(nextGridPos.x, nextGridPos.y).GetBelongsToPlayer())
 		{
 			//return nullptr;
-			//dir.x = 0.0f;
-			//dir.y = 0.0f;
+			dir.x = 0.0f;
+			dir.y = 0.0f;
 		}//do another check if occupied
+		else if (GridSystem::GetInstance()->GetGrid(nextGridPos.x, nextGridPos.y).GetIsOccupied())
+		{
+			dir.x = 0.0f;
+			dir.y = 0.0f;
+		}
 		else
 		{
 			if (nextGridPos.x < 0 || nextGridPos.x >= GridSystem::GetInstance()->GetNumCol())
@@ -80,7 +85,10 @@ void EnemyEntity::Move(Vec2 dir)
 			}
 		}
 
-		gridPosition = nextGridPos;
+		nextGridPos = this->gridPosition + dir;
+		GridSystem::GetInstance()->GetGrid(gridPosition.x, gridPosition.y).SetIsOccupied(false);
+		this->gridPosition = nextGridPos;
+		GridSystem::GetInstance()->GetGrid(gridPosition.x, gridPosition.y).SetIsOccupied(true);
 		dir.x *= GridSystem::GetInstance()->GetGridWidth();
 		dir.y *= GridSystem::GetInstance()->GetGridHeight();
 

@@ -7,6 +7,8 @@ BattleEntity::BattleEntity(const std::string& fileName):
 	Entity(fileName)
 {
 	isFriendly = false;
+	display->setAnchorPoint(Vec2(0.5f, 0.1f));
+	display->setScale(2);
 
 	movementDuration = 0.2f;
 	movementCooldown = 0.0f;

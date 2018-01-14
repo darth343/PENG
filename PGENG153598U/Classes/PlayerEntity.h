@@ -6,8 +6,8 @@
 class PlayerEntity : public BattleEntity
 {
 public:
-	static PlayerEntity* Create(const std::string& fileName);
-	PlayerEntity(const std::string& fileName);
+	static PlayerEntity* Create(const std::string& fileName, Vec2 gridPos);
+	PlayerEntity(const std::string& fileName, Vec2 gridPos);
 	virtual ~PlayerEntity();
 
 	virtual void Fire1(Vec2 dir);

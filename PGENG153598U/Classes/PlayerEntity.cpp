@@ -4,10 +4,14 @@
 #include "GameInfo.h"
 #include "AnimationManager.h"
 #include "Projectile.h"
+#include "GridSystem.h"
 
-PlayerEntity::PlayerEntity(const std::string& fileName):
+PlayerEntity::PlayerEntity(const std::string& fileName, Vec2 gridPos):
 BattleEntity(fileName)
 {
+	this->setPosition(GridSystem::GetInstance()->GetGrid(gridPos.x, gridPos.y).GetPosition());
+	this->gridPosition = gridPos;
+
 	movementDuration = PLAYER_MOVE_DURATION;
 	movementCooldown = PLAYER_MOVE_COOLDOWN;
 	attack1_Cooldown = PLAYER_ATTACK1_COOLDOWN;
@@ -110,7 +114,7 @@ void PlayerEntity::Fire2(Vec2 dir)
 //	}
 //}
 
-PlayerEntity* PlayerEntity::Create(const std::string& fileName)
+PlayerEntity* PlayerEntity::Create(const std::string& fileName, Vec2 gridPos)
 {
 	SpriteFrame* spriteFrame = SpriteManager::GetInstance()->GetSpriteFrame(fileName);
 	if (spriteFrame == nullptr)
@@ -118,7 +122,7 @@ PlayerEntity* PlayerEntity::Create(const std::string& fileName)
 		cocos2d::log("Entity: %s not found, failed to create entity", fileName);
 		return nullptr;
 	}
-	PlayerEntity* entity = new PlayerEntity(fileName);
+	PlayerEntity* entity = new PlayerEntity(fileName, gridPos);
 	entity->SetIsFriendly(true);
 	
 	return entity;

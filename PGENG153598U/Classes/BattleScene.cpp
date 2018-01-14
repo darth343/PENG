@@ -16,7 +16,7 @@ Scene* BattleScene::createScene()
 {
 	auto scene = Scene::createWithPhysics();
 	scene->setName("BattleScene");
-	scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	//scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 
 	auto layer = BattleScene::create();
 
@@ -116,17 +116,16 @@ bool BattleScene::init()
 	{//Creation of entities
 		Vec2 halfWorldPos = Vec2(visibleSize.width * 0.5f, visibleSize.height * 0.5f);
 
-		playerEntity = PlayerEntity::Create("player.png");
+		playerEntity = PlayerEntity::Create("player.png", Vec2(1, 2));
 		PlayerInfo::GetInstance()->controllingEntity = playerEntity;
-		playerEntity->setPosition(GridSystem::GetInstance()->GetGrid(1, 2).GetPosition());
-		playerEntity->SetGridPosition(Vec2(1, 2));
-		playerEntity->RunAnimate(AnimationManager::GetInstance("player.png")->GetAnimate("IDLE"));
-		playerEntity->GetDisplay()->setScale(2);
 		RootNode->addChild(playerEntity);
 
 		{
 			auto enemyEntity = EnemyEntity::Create("orc1.png", Vec2(6, 2));
-			enemyEntity->GetDisplay()->setScale(2);
+			RootNode->addChild(enemyEntity);
+		}
+		{
+			auto enemyEntity = EnemyEntity::Create("orc1.png", Vec2(7, 4));
 			RootNode->addChild(enemyEntity);
 		}
 	}
