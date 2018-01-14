@@ -35,7 +35,7 @@ protected:
 	int wavecount;
 	int Enemiesleft;
 	float Nextwavetimer;
-	vector<vector<EnemyEntity>> EnemyList;
+	//vector<vector<EnemyEntity>> EnemyList;
 
 };
 

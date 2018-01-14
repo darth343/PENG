@@ -4,8 +4,6 @@
 #include "SpriteManager.h"
 #include "AnimationManager.h"
 #include "Entity.h"
-#include "PostProcessing.h"
-#include "SceneManager.h"
 
 USING_NS_CC;
 
@@ -60,34 +58,34 @@ bool BaseScene::init()
 		AnimationManager::GetInstance("trump_run.png")->AddAnimate("RUN_DOWN", 0, 5, 0.5f);
 	}
 	{//Creation of entities
-		test1 = Entity::Create("sprite2.png");
-		test1->setPosition(300, 150);
-		cocos2d::log("entity content size: %f", test1->getContentSize().width);
-		cocos2d::log("entity display size: %f", test1->GetDisplay()->getContentSize().width);
-		cocos2d::log("entity displayFrame rect: %f", test1->GetDisplayFrame()->getRect().size.width);
-		test1->RunAnimate(AnimationManager::GetInstance("sprite2.png")->GetAnimate("RUN"));
-		RootNode->addChild(test1);
+		//test1 = Entity::Create("sprite2.png");
+		//test1->setPosition(300, 150);
+		//cocos2d::log("entity content size: %f", test1->getContentSize().width);
+		//cocos2d::log("entity display size: %f", test1->GetDisplay()->getContentSize().width);
+		//cocos2d::log("entity displayFrame rect: %f", test1->GetDisplayFrame()->getRect().size.width);
+		//test1->RunAnimate(AnimationManager::GetInstance("sprite2.png")->GetAnimate("RUN"));
+		//RootNode->addChild(test1);
 
-		Vec2 halfWorldPos = Vec2(visibleSize.width * 0.5f, visibleSize.height * 0.5f);
-		test1 = Entity::Create("trump_run.png");
-		test1->setPosition(halfWorldPos + Vec2(-150, 0));
-		test1->RunAnimate(AnimationManager::GetInstance("trump_run.png")->GetAnimate("RUN_LEFT"));
-		RootNode->addChild(test1);
+		//Vec2 halfWorldPos = Vec2(visibleSize.width * 0.5f, visibleSize.height * 0.5f);
+		//test1 = Entity::Create("trump_run.png");
+		//test1->setPosition(halfWorldPos + Vec2(-150, 0));
+		//test1->RunAnimate(AnimationManager::GetInstance("trump_run.png")->GetAnimate("RUN_LEFT"));
+		//RootNode->addChild(test1);
 
-		test1 = Entity::Create("trump_run.png");
-		test1->setPosition(halfWorldPos + Vec2(150, 0));
-		test1->RunAnimate(AnimationManager::GetInstance("trump_run.png")->GetAnimate("RUN_RIGHT"));
-		RootNode->addChild(test1);
+		//test1 = Entity::Create("trump_run.png");
+		//test1->setPosition(halfWorldPos + Vec2(150, 0));
+		//test1->RunAnimate(AnimationManager::GetInstance("trump_run.png")->GetAnimate("RUN_RIGHT"));
+		//RootNode->addChild(test1);
 
-		test1 = Entity::Create("trump_run.png");
-		test1->setPosition(halfWorldPos + Vec2(0, 150));
-		test1->RunAnimate(AnimationManager::GetInstance("trump_run.png")->GetAnimate("RUN_UP"));
-		RootNode->addChild(test1);
+		//test1 = Entity::Create("trump_run.png");
+		//test1->setPosition(halfWorldPos + Vec2(0, 150));
+		//test1->RunAnimate(AnimationManager::GetInstance("trump_run.png")->GetAnimate("RUN_UP"));
+		//RootNode->addChild(test1);
 
-		test1 = Entity::Create("trump_run.png");
-		test1->setPosition(halfWorldPos + Vec2(0, -150));
-		test1->RunAnimate(AnimationManager::GetInstance("trump_run.png")->GetAnimate("RUN_DOWN"));
-		RootNode->addChild(test1);
+		//test1 = Entity::Create("trump_run.png");
+		//test1->setPosition(halfWorldPos + Vec2(0, -150));
+		//test1->RunAnimate(AnimationManager::GetInstance("trump_run.png")->GetAnimate("RUN_DOWN"));
+		//RootNode->addChild(test1);
 	}
 
 	RootNode->addChild(sprite);
@@ -99,19 +97,18 @@ bool BaseScene::init()
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(keyboardListener, this);
 
 	// Set up Post Processin Texture
-	ScreenSprite = Sprite::create("Batman.png");
-	ScreenSprite->setPosition(visibleSize * 0.5f);
-	ScreenSprite->setScaleY(-1);
+	PostprocTexture = RenderTexture::create(visibleSize.width, visibleSize.height);
+	PostprocTexture->setPosition(visibleSize.width * 0.5f, visibleSize.height * 0.5f);
+	PostprocTexture->setScale(1.f);
+	PostprocTexture->clear(0, 0, 0, 255);
 
-	this->addChild(ScreenSprite);
+	this->addChild(PostprocTexture);
 
-	//this->addChild(RootNode);
-	RootNode->onEnter();
-	RootNode->onEnterTransitionDidFinish();
+	this->addChild(RootNode);
 	RootNode->retain();
 	this->scheduleUpdate();
 
-	//SceneName = "";
+	SceneName = "";
 
     return true;
 }
@@ -123,11 +120,23 @@ void BaseScene::onKeyPressed(cocos2d::EventKeyboard::KeyCode keycode, cocos2d::E
 
 void BaseScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keycode, cocos2d::Event* event)
 {
-	if (keycode == cocos2d::EventKeyboard::KeyCode::KEY_T)
-	{
-		auto Scene_Manager = SceneManager::getInstance();
-		Scene_Manager->ReplaceScene(Scene_Manager->GetScene("Battle_Screen"));
-	}
+	////input->onKeyReleased(keycode, event);
+	//if (keycode == cocos2d::EventKeyboard::KeyCode::KEY_UP_ARROW)
+	//{
+	//	test1->Move(Vec2(0, 50.0f));
+	//}
+	//if (keycode == cocos2d::EventKeyboard::KeyCode::KEY_DOWN_ARROW)
+	//{
+	//	test1->Move(Vec2(0, -50.0f));
+	//}
+	//if (keycode == cocos2d::EventKeyboard::KeyCode::KEY_LEFT_ARROW)
+	//{
+	//	test1->Move(Vec2(-50.0f, 0));
+	//}
+	//if (keycode == cocos2d::EventKeyboard::KeyCode::KEY_RIGHT_ARROW)
+	//{
+	//	test1->Move(Vec2(50.0f, 0));
+	//}
 }
 
 void BaseScene::update(float delta)
@@ -140,9 +149,17 @@ void BaseScene::update(float delta)
 	{
 		CCLOG("W is Released");
 	}
+}
 
-	PostProcessing::GetInstance()->Render(RootNode);
-	ScreenSprite->setTexture(PostProcessing::GetInstance()->GetTexture());
+void BaseScene::render(Renderer* renderer, const Mat4& eyeTransform, const Mat4* eyeProjection)
+{
+	Scene::render(renderer, eyeTransform, eyeProjection);
+
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+
+	PostprocTexture->beginWithClear(0, 0, 0, 255);
+	RootNode->visit();
+	PostprocTexture->end();
 }
 
 void BaseScene::menuCloseCallback(Ref* pSender)

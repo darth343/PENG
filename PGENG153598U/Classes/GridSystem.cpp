@@ -45,7 +45,8 @@ void GridSystem::GenerateGrid(Size playingSize, unsigned numCol, unsigned numRow
 	}
 }
 
-void GridSystem::GenerateGrid(Size playingSize, unsigned numCol, unsigned numRow)
+
+void GridSystem::GenerateGrid(Size playingSize, unsigned numCol, unsigned numRow, unsigned numPlayerCol, unsigned numPlayerRow)
 {
 	maxGridCount.x = numCol;
 	maxGridCount.y = numRow;
@@ -68,6 +69,8 @@ void GridSystem::GenerateGrid(Size playingSize, unsigned numCol, unsigned numRow
 		{
 			gridMap[i][j].SetCoord(Vec2(j, i));
 			gridMap[i][j].SetPosition(Vec2(halfWidth + (j * gridWidth), halfHeight + (i * gridHeight)));
+			if (i < numPlayerRow && j < numPlayerCol)
+				gridMap[i][j].SetBelongsToPlayer(true);
 		}
 	}
 }

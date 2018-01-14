@@ -1,20 +1,7 @@
 #include "SceneManager.h"
 
-USING_NS_CC;
-
 //Singleton instance
 static SceneManager* The_SceneManager = nullptr;
-
-SceneManager::SceneManager()
-{
-	std::fill(sceneStorage, sceneStorage + STORAGESIZE, nullptr);
-	//currentscene = nullptr;
-}
-
-SceneManager::~SceneManager()
-{
-	The_SceneManager = nullptr;
-}
 
 SceneManager* SceneManager::getInstance()
 {
@@ -29,68 +16,35 @@ SceneManager* SceneManager::getInstance()
 
 bool SceneManager::Init()
 {
+	if (!SceneManager::Init())
+	{
+		return false;
+	}
+
 	//Scenes are created inside the Scene Manager, then loaded from AppDelegate
 	auto Scene_SplashScreen = SceneSplashScreen::create();
-	Scene_SplashScreen->retain();
-	this->SetSceneName(Scene_SplashScreen, "Splash_Screen");
-	auto Scene_Battle = BattleScene::create();
-	Scene_Battle->retain();
-	this->SetSceneName(Scene_Battle, "Battle_Screen");
-	auto Base_Scene = BaseScene::create();
-	Base_Scene->retain();
-	this->SetSceneName(Base_Scene, "Base_Scene");
-	sceneStorage[0] = Scene_SplashScreen;
-	sceneStorage[1] = Scene_Battle;
-	sceneStorage[2] = Base_Scene;
+	scenestorage.push_back(Scene_SplashScreen);
+
 	return true;
 }
 
-void SceneManager::Runwithscene(Scene* scene)
+void SceneManager::Runwithscene(cocos2d::Scene* scene)
 {
-	//BaseScene* tempscene = ;
-	//currentscene = scene;
-	//auto director = cocos2d::Director::getInstance();
-	//Scene *temp = director->getRunningScene();
-
-	Scene* current = Director::getInstance()->getRunningScene();
-	if (current)
-	{
-		current->release();
-		current->removeFromParentAndCleanup(true);
-		current = nullptr;
-	}
-
-	Director::getInstance()->runWithScene(scene);
+	cocos2d::Director::getInstance()->runWithScene(scene);
 }
 
-void SceneManager::ReplaceScene(Scene* scene)
+void SceneManager::ReplaceScene(cocos2d::Scene* scene)
 {
-	Director::getInstance()->replaceScene(scene);
-}
-
-void SceneManager::ReplaceSceneWithTimer(Scene* scene, float timer)
-{
-	TransitionFade::create(timer, scene, Color3B(0, 255, 255));
-}
-
-void SceneManager::SetSceneName(BaseScene* scene, std::string SceneName)
-{
-	scene->SceneName = SceneName;
+	cocos2d::Director::getInstance()->replaceScene(scene);
 }
 
 BaseScene* SceneManager::GetScene(std::string Scene)
 {
-	for (int i = 0; i < STORAGESIZE; i++)
+	for (int i = 0; i < sizeof(scenestorage); i++)
 	{
-		if (sceneStorage[i] != nullptr)
+		if (scenestorage[i]->SceneName == Scene)
 		{
-			if (sceneStorage[i]->SceneName == Scene)
-			{
-				return sceneStorage[i];
-				break;
-			}
-			
+			return scenestorage[i];
 		}
-		
 	}
 }

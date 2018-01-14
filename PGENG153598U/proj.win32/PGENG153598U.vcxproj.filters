@@ -55,6 +55,16 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\WaveSpawner.cpp">
+    <ClCompile Include="..\Classes\EnemyEntity.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PlayerInfo.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Projectile.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BattleEntity.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -111,6 +121,19 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\WaveSpawner.h">
+    <ClInclude Include="..\Classes\EnemyEntity.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PlayerInfo.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Projectile.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameInfo.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BattleEntity.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

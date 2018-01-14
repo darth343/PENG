@@ -2,8 +2,7 @@
 #include "BaseScene.h"
 #include "BattleScene.h"
 #include "Input.h"
-#include "SceneManager.h"
-#include "SceneSplashScreen.h"
+
 // #define USE_AUDIO_ENGINE 1
 // #define USE_SIMPLE_AUDIO_ENGINE 1
 
@@ -96,16 +95,12 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     register_all_packages();
 
-	auto Scene_Manager = SceneManager::getInstance();
     // create a scene. it's an autorelease object
+	auto scene = BattleScene::createScene();
 
-	//auto scene_SplashScreen = SceneSplashScreen::create();
-
-	//auto scene = BattleScene::create();
-
-	Scene_Manager->getInstance()->Runwithscene(Scene_Manager->GetScene("Splash_Screen"));
     // run
-    //director->runWithScene(scene);
+    director->runWithScene(scene);
+
     return true;
 }
 

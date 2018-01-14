@@ -22,12 +22,21 @@ public:
 
 	inline virtual void SetIndex(int _Index) { this->Index = _Index; }
 	inline virtual int GetIndex() { return this->Index; }
+	inline virtual void SetIsOccupied(bool _flag) { this->isOccupied = _flag; }
+	inline virtual bool GetIsOccupied() { return this->isOccupied; }
+
+	inline virtual void SetBelongsToPlayer(bool _flag) { this->belongsToPlayer = _flag; }
+	inline virtual bool GetBelongsToPlayer() { return this->belongsToPlayer; }
 
 protected:
 	Vec2 position;
 	Vec2 coord;
 	std::string Identity;
 	int Index;
+
+	bool isOccupied;
+	bool belongsToPlayer;
+
 };
 
 #endif
