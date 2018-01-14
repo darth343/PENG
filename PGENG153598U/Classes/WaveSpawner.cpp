@@ -24,7 +24,7 @@ void WaveSpawner::ActivateWaves()
 	{
 		for (int j = 0; j < 2; j++)
 		{
-
+			//EnemyList[i][j].Create();
 		}
 	}
 }

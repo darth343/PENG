@@ -3,7 +3,7 @@
 
 #include "cocos2d.h"
 #include "SingletonTemplate.h"
-#include "EnemyEntity.h"
+//#include "EnemyEntity.h"
 #include <vector>
 
 using std::vector;
