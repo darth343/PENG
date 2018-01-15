@@ -14,10 +14,11 @@
 #include "Ghost1.h"
 #include "Orc2.h"
 #include "GameInfo.h"
+#include "OverworldScene.h"
 
 USING_NS_CC;
 
-Scene* BattleScene::createScene()
+Scene* BattleScene::createScene() 
 {
 	auto scene = Scene::createWithPhysics();
 	scene->setName("BattleScene");
@@ -235,6 +236,13 @@ void BattleScene::onKeyPressed(cocos2d::EventKeyboard::KeyCode keycode, cocos2d:
 	if (keycode == cocos2d::EventKeyboard::KeyCode::KEY_S)
 	{
 		playerEntity->Fire2(Vec2(1, 0));
+	}
+
+	if (keycode == cocos2d::EventKeyboard::KeyCode::KEY_N)
+	{
+		auto scene = OverworldScene::createScene();
+		// Move to next scene
+		CCDirector::getInstance()->pushScene(TransitionFade::create(1.0f, scene));
 	}
 }
 

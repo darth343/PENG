@@ -2,6 +2,7 @@
 
 #include "GridSystem.h"
 #include "AnimationManager.h"
+#include "SpriteManager.h"
 
 BattleEntity::BattleEntity(const std::string& fileName):
 	Entity(fileName)
@@ -9,6 +10,12 @@ BattleEntity::BattleEntity(const std::string& fileName):
 	isFriendly = false;
 	display->setAnchorPoint(Vec2(0.5f, 0.1f));
 	display->setScale(2);
+
+	auto collider = PhysicsBody::createCircle((SpriteManager::GetInstance()->GetSpriteWidth(this->spriteName) * 0.5f) * 0.7f);
+	collider->setDynamic(false);
+	collider->setGravityEnable(false);
+
+	this->addComponent(collider);
 
 	movementDuration = 0.2f;
 	movementCooldown = 0.0f;

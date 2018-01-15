@@ -71,12 +71,20 @@ void WaveSpawner::ControlEnemyWave(float delta, Node* node)
 	{
 		Nextwavetimer -= delta;
 	}
-	if (Nextwavetimer <= 0 && GetWavenumber() >= 0)
+	if (Nextwavetimer <= 0 && GetWavenumber() > 0)
 	{
 		int temp = GetWavenumber();
 		temp -= 1;
 		SetWavenumber(temp);
-		SpawnEnemies(node);
+		if (wavecount == 0)
+		{
+			CCDirector::getInstance()->popScene();
+		}
+		else
+		{
+			SpawnEnemies(node);
+		}
+		
 		SetWavetimer(5.0f);
 	}
 }

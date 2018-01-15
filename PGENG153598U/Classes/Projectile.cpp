@@ -7,6 +7,12 @@
 Projectile::Projectile(const std::string& fileName):
 	Entity(fileName)
 {
+	auto collider = PhysicsBody::createCircle((SpriteManager::GetInstance()->GetSpriteWidth(this->spriteName) * 0.5f) * 0.7f);
+	collider->setDynamic(false);
+	collider->setGravityEnable(false);
+
+	this->addComponent(collider);
+
 	this->getPhysicsBody()->setCategoryBitmask(PROJECTILE);
 	this->getPhysicsBody()->setCollisionBitmask(false);
 }

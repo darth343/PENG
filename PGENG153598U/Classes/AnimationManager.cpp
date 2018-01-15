@@ -52,12 +52,12 @@ void AnimationManager::AddAnimate(const std::string& animName, int startFrame, i
 
 void AnimationManager::RemoveAnimate(const std::string& animName)
 {
-	Action* animate = GetAnimate(animName);
-	if (animate != nullptr)
-	{
-		animate->release();
-		animMap.erase(animName);
-	}
+	//Action* animate = GetAnimate(animName);
+	//if (animate != nullptr)
+	//{
+	//	animate->release();
+	//	animMap.erase(animName);
+	//}
 }
 
 
