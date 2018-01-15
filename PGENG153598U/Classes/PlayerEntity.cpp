@@ -16,7 +16,7 @@ BattleEntity(fileName)
 	movementCooldown = PLAYER_MOVE_COOLDOWN;
 	attack1_Cooldown = PLAYER_ATTACK1_COOLDOWN;
 	attack2_Cooldown = PLAYER_ATTACK2_COOLDOWN;
-	health = 5;
+	health = PLAYER_HEALTH_AMOUNT;
 
 	this->getPhysicsBody()->setCategoryBitmask(FRIENDLY_ENTITY);
 	this->getPhysicsBody()->setCollisionBitmask(false);

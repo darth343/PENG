@@ -22,9 +22,9 @@ public:
 	inline virtual float GetGridWidth() { return this->gridWidth; }
 	inline virtual float GetGridHeight() { return this->gridHeight; }
 
-	float GetNumRow() { return maxGridCount.y; }
-	float GetNumCol() { return maxGridCount.x; }
-	float GetMaxGridCount() { return (maxGridCount.x * maxGridCount.y); }
+	int GetNumRow() { return maxGridCount.y; }
+	int GetNumCol() { return maxGridCount.x; }
+	int GetMaxGridCount() { return (maxGridCount.x * maxGridCount.y); }
 
 protected:
 	GridSystem();

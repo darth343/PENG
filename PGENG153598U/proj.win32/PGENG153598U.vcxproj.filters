@@ -66,6 +66,12 @@
     <ClCompile Include="..\Classes\BattleEntity.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Ghost1.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Orc2.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -132,6 +138,12 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\BattleEntity.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Ghost1.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Orc2.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

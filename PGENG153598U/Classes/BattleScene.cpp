@@ -8,6 +8,8 @@
 #include "Grid.h"
 #include "PlayerInfo.h"
 #include "EnemyEntity.h"
+#include "Ghost1.h"
+#include "Orc2.h"
 #include "GameInfo.h"
 
 USING_NS_CC;
@@ -91,6 +93,8 @@ bool BattleScene::init()
 		SpriteManager::GetInstance()->GenerateSprite("ZigzagGrass_Mud_Round.png", 1, 1);
 		SpriteManager::GetInstance()->GenerateSprite("player.png", 13, 21);
 		SpriteManager::GetInstance()->GenerateSprite("orc1.png", 13, 21);
+		SpriteManager::GetInstance()->GenerateSprite("orc2.png", 13, 21);
+		SpriteManager::GetInstance()->GenerateSprite("ghost1.png", 13, 21);
 	}
 	{//Setup animations for sprites
 		AnimationManager::GetInstance("sprite2.png")->AddAnimate("RUN", 0, 5, 2.0f);
@@ -108,10 +112,25 @@ bool BattleScene::init()
 		AnimationManager::GetInstance("player.png")->AddAnimate("SWING", 195, 200, PLAYER_ATTACK2_ANIM_SPEED, false);
 		AnimationManager::GetInstance("player.png")->AddAnimate("DIE", 260, 265, 1.0f, false);
 
+		/*
+		Enemy sprite indexes
+		IDLE	117 - 125
+		THRUST	65 - 72
+		WAVE	13 - 19
+		DIE		260 - 265
+		*/
+
 		AnimationManager::GetInstance("orc1.png")->AddAnimate("IDLE", 117, 125);
-		AnimationManager::GetInstance("orc1.png")->AddAnimate("MOVE", 13, 19, 0.1f);
-		AnimationManager::GetInstance("orc1.png")->AddAnimate("THRUST", 65, 72, 1.0f, false);
+		AnimationManager::GetInstance("orc1.png")->AddAnimate("ATTACK", 65, 72, 1.0f, false);
 		AnimationManager::GetInstance("orc1.png")->AddAnimate("DIE", 260, 265, 1.0f, false);
+
+		AnimationManager::GetInstance("orc2.png")->AddAnimate("IDLE", 117, 125, 1.5f);
+		AnimationManager::GetInstance("orc2.png")->AddAnimate("ATTACK", 65, 72, 1.0f, false);
+		AnimationManager::GetInstance("orc2.png")->AddAnimate("DIE", 260, 265, 1.0f, false);
+
+		AnimationManager::GetInstance("ghost1.png")->AddAnimate("IDLE", 117, 125);
+		AnimationManager::GetInstance("ghost1.png")->AddAnimate("ATTACK", 13, 19, 1.0f, false);
+		AnimationManager::GetInstance("ghost1.png")->AddAnimate("DIE", 260, 265, 1.0f, false);
 	}
 	{//Creation of entities
 		Vec2 halfWorldPos = Vec2(visibleSize.width * 0.5f, visibleSize.height * 0.5f);
@@ -126,6 +145,14 @@ bool BattleScene::init()
 		}
 		{
 			auto enemyEntity = EnemyEntity::Create("orc1.png", Vec2(7, 4));
+			RootNode->addChild(enemyEntity);
+		}
+		{
+			auto enemyEntity = Ghost1::Create("ghost1.png", Vec2(9, 4));
+			RootNode->addChild(enemyEntity);
+		}
+		{
+			auto enemyEntity = Orc2::Create("orc2.png", Vec2(8, 4));
 			RootNode->addChild(enemyEntity);
 		}
 	}

@@ -12,10 +12,11 @@ public:
 
 	virtual void Move(Vec2 dir);
 	virtual void Attack(Vec2 dir);
+	virtual void Idle(float duration);
 
-private:
+protected:
 
-	void RunAI();
+	virtual void RunAI();
 
 	float reactionTime;
 	float attackCooldown;

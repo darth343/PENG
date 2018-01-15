@@ -27,8 +27,6 @@ EnemyEntity::EnemyEntity(const std::string& fileName, Vec2 gridPos):
 	this->getPhysicsBody()->setCategoryBitmask(ENEMY_ENTITY);
 	this->getPhysicsBody()->setCollisionBitmask(false);
 	this->getPhysicsBody()->setContactTestBitmask(PROJECTILE);
-
-	this->RunAI();
 }
 
 EnemyEntity::~EnemyEntity()
@@ -42,13 +40,17 @@ void EnemyEntity::RunAI()
 
 	//actionFinished = false;
 	Vec2 playerPos = PlayerInfo::GetInstance()->controllingEntity->GetGridPosition();
-	if (playerPos.y != this->gridPosition.y)
+	if (playerPos.y != this->gridPosition.y && canMoveFlag)
 	{//follow player
 		Move(Vec2(0, cocos2d::clampf(playerPos.y - this->gridPosition.y, -1.0f, 1.0f)));
 	}
-	else
+	else if (canAttackFlag)
 	{//attack
 		Attack(playerPos - this->gridPosition);
+	}
+	else
+	{
+		Idle(reactionTime);
 	}
 }
 
@@ -56,7 +58,7 @@ void EnemyEntity::Move(Vec2 dir)
 {
 	if (canMoveFlag)
 	{
-		//canMoveFlag = false;
+		canMoveFlag = false;
 		//dir.x = (int)(dir.x + 0.5f);
 		//dir.y = (int)(dir.y + 0.5f);
 
@@ -110,25 +112,21 @@ void EnemyEntity::Move(Vec2 dir)
 
 		this->runAction(seq);
 	}
-	else
-	{
-		this->RunAI();
-	}
 }
 
 void EnemyEntity::Attack(Vec2 dir)
 {
 	if (canAttackFlag)
 	{
-		//canAttackFlag = false;
+		canAttackFlag = false;
 		dir.y = 0;
-		this->RunAnimate(AnimationManager::GetInstance(spriteName)->GetAnimate("THRUST"));
+		this->RunAnimate(AnimationManager::GetInstance(spriteName)->GetAnimate("ATTACK"));
 
 		auto seq = Sequence::create(
 			DelayTime::create(1.0f),
 			CallFunc::create([&, dir]()
 		{
-			auto proj = Projectile::Create("blinkEffect.png", dir, 200.0f, false);
+			auto proj = Projectile::Create("blinkEffect.png", dir, 300.0f, false);
 			this->getParent()->addChild(proj);
 			proj->setPosition(this->getPosition());
 
@@ -147,10 +145,15 @@ void EnemyEntity::Attack(Vec2 dir)
 
 		this->runAction(seq);
 	}
-	else
-	{
-		this->RunAI();
-	}
+}
+
+void EnemyEntity::Idle(float duration)
+{
+	auto seq = Sequence::createWithTwoActions(
+		DelayTime::create(reactionTime),
+		CallFunc::create([&]() {RunAI(); }));
+
+	this->runAction(seq);
 }
 
 EnemyEntity* EnemyEntity::Create(const std::string& fileName, Vec2 gridPos)
@@ -163,6 +166,7 @@ EnemyEntity* EnemyEntity::Create(const std::string& fileName, Vec2 gridPos)
 	}
 	EnemyEntity* entity = new EnemyEntity(fileName, gridPos);
 	entity->SetIsFriendly(false);
+	entity->RunAI();
 
 	return entity;
 }
