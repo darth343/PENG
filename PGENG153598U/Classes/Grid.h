@@ -17,6 +17,11 @@ public:
 	inline virtual void SetCoord(Vec2 _coord) { this->coord = _coord; }
 	inline virtual Vec2 GetCoord() { return this->coord; }
 
+	inline virtual void SetIdentity(std::string _name) { this->Identity = _name; }
+	inline virtual std::string GetIdentity() { return this->Identity; }
+
+	inline virtual void SetIndex(int _Index) { this->Index = _Index; }
+	inline virtual int GetIndex() { return this->Index; }
 	inline virtual void SetIsOccupied(bool _flag) { this->isOccupied = _flag; }
 	inline virtual bool GetIsOccupied() { return this->isOccupied; }
 
@@ -26,6 +31,8 @@ public:
 protected:
 	Vec2 position;
 	Vec2 coord;
+	std::string Identity;
+	int Index;
 
 	bool isOccupied;
 	bool belongsToPlayer;

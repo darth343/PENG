@@ -13,7 +13,7 @@ Ghost1::Ghost1(const std::string& fileName, Vec2 gridPos) :
 	attackCooldown = 2.0f;
 	movementDuration = 1.0f;
 	movementCooldown = 0.3f;
-	health = 10;
+	health = 6;
 	alternateAction = true;
 }
 

@@ -6,6 +6,9 @@
 #include "PlayerEntity.h"
 #include "GridSystem.h"
 #include "Grid.h"
+#include "SceneManager.h"
+#include "PostProcessing.h"
+#include "WaveSpawner.h"
 #include "PlayerInfo.h"
 #include "EnemyEntity.h"
 #include "Ghost1.h"
@@ -66,6 +69,10 @@ bool BattleScene::init()
 	int numPlayerRow = 5;
 	int numPlayerCol = 5;
 
+	GridSystem::GetInstance()->GenerateGrid(playingSize, numRow, numCol,2);
+	GridSystem::GetInstance()->SetActive_Index(1);
+
+	WaveSpawner::GetInstance();
 	GridSystem::GetInstance()->GenerateGrid(playingSize, numRow, numCol, numPlayerCol, numPlayerRow);
 
 	RootNode = Node::create();
@@ -83,6 +90,8 @@ bool BattleScene::init()
 			sprite->setContentSize(Size(GridSystem::GetInstance()->GetGridWidth(), GridSystem::GetInstance()->GetGridHeight()));
 			sprite->setPosition(GridSystem::GetInstance()->GetGrid(i, j).GetPosition());
 			RootNode->addChild(sprite);
+			
+			
 		}
 	}
 
@@ -135,26 +144,29 @@ bool BattleScene::init()
 	{//Creation of entities
 		Vec2 halfWorldPos = Vec2(visibleSize.width * 0.5f, visibleSize.height * 0.5f);
 
-		playerEntity = PlayerEntity::Create("player.png", Vec2(1, 2));
+		playerEntity = PlayerEntity::Create("player.png", Vec2(2, 2));
 		PlayerInfo::GetInstance()->controllingEntity = playerEntity;
 		RootNode->addChild(playerEntity);
 
-		{
-			auto enemyEntity = EnemyEntity::Create("orc1.png", Vec2(6, 2));
-			RootNode->addChild(enemyEntity);
-		}
-		{
-			auto enemyEntity = EnemyEntity::Create("orc1.png", Vec2(7, 4));
-			RootNode->addChild(enemyEntity);
-		}
-		{
-			auto enemyEntity = Ghost1::Create("ghost1.png", Vec2(9, 4));
-			RootNode->addChild(enemyEntity);
-		}
-		{
-			auto enemyEntity = Orc2::Create("orc2.png", Vec2(8, 4));
-			RootNode->addChild(enemyEntity);
-		}
+		//{
+		//	auto enemyEntity = EnemyEntity::Create("orc1.png", Vec2(6, 2));
+		//	RootNode->addChild(enemyEntity);
+		//}
+		//{
+		//	auto enemyEntity = EnemyEntity::Create("orc1.png", Vec2(7, 4));
+		//	RootNode->addChild(enemyEntity);
+		//}
+		//{
+		//	auto enemyEntity = Ghost1::Create("ghost1.png", Vec2(9, 4));
+		//	RootNode->addChild(enemyEntity);
+		//}
+		//{
+		//	auto enemyEntity = Orc2::Create("orc2.png", Vec2(8, 4));
+		//	RootNode->addChild(enemyEntity);
+		//}
+
+		WaveSpawner::GetInstance()->ActivateWaves();
+		WaveSpawner::GetInstance()->SpawnEnemies(RootNode);
 	}
 	
 	auto keyboardListener = EventListenerKeyboard::create();
@@ -233,13 +245,78 @@ void BattleScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keycode, cocos2d
 
 void BattleScene::update(float delta)
 {
+	WaveSpawner::GetInstance()->ControlEnemyWave(delta, RootNode);
 	if (Input::GetKeyDown(EventKeyboard::KeyCode::KEY_W))
 	{
 		CCLOG("W is Pressed");
 	}
 	else if (Input::GetKeyUp(EventKeyboard::KeyCode::KEY_W))
 	{
-		CCLOG("W is Released");
+		
+		int tampvalue = GridSystem::GetInstance()->GetActive_Index() + 1;
+		int tempx = playerEntity->getPosition().x;
+		int tempy = playerEntity->getPosition().y;
+		Vec2 newposition = Vec2(tempx , (int)tempy + (int)GridSystem::GetInstance()->GetGridHeight());
+		Vec2 tempposition = GridSystem::GetInstance()->GetGrid(tampvalue).GetPosition();
+		Vec2 tempposition2 = GridSystem::GetInstance()->GetGrid(GridSystem::GetInstance()->GetActive_Index()).GetPosition();
+		float magnitude = tempposition2.distance(tempposition); 
+		string tempstring = "Player_Grid";
+		if (tampvalue > 0 && magnitude < 110.f && GridSystem::GetInstance()->GetGrid(tampvalue).GetIdentity() == tempstring)
+		{
+			playerEntity->Move(Vec2(0, 1.0f));
+			GridSystem::GetInstance()->SetActive_Index(tampvalue);
+		}
+	}
+	else if (Input::GetKeyUp(EventKeyboard::KeyCode::KEY_S))
+	{
+
+		int tampvalue = GridSystem::GetInstance()->GetActive_Index() - 1;
+		int tempx = playerEntity->getPosition().x;
+		int tempy = playerEntity->getPosition().y;
+		Vec2 newposition = Vec2(tempx, (int)tempy - (int)GridSystem::GetInstance()->GetGridHeight());
+		Vec2 tempposition = GridSystem::GetInstance()->GetGrid(tampvalue).GetPosition();
+		Vec2 tempposition2 = GridSystem::GetInstance()->GetGrid(GridSystem::GetInstance()->GetActive_Index()).GetPosition();
+		float magnitude = tempposition2.distance(tempposition);
+		string tempstring = "Player_Grid";
+		if (tampvalue > 0 && magnitude < 110.f && GridSystem::GetInstance()->GetGrid(tampvalue).GetIdentity() == tempstring)
+		{
+			playerEntity->Move(Vec2(0, -1.0f));
+			GridSystem::GetInstance()->SetActive_Index(tampvalue);
+		}
+	}
+	else if (Input::GetKeyUp(EventKeyboard::KeyCode::KEY_A))
+	{
+
+		int tampvalue = GridSystem::GetInstance()->GetActive_Index() - 5;
+		int tempx = playerEntity->getPosition().x;
+		int tempy = playerEntity->getPosition().y;
+		Vec2 newposition = Vec2(tempx - (int)GridSystem::GetInstance()->GetGridWidth(), tempy);
+		Vec2 tempposition = GridSystem::GetInstance()->GetGrid(tampvalue).GetPosition();
+		Vec2 tempposition2 = GridSystem::GetInstance()->GetGrid(GridSystem::GetInstance()->GetActive_Index()).GetPosition();
+		float magnitude = tempposition2.distance(tempposition);
+		string tempstring = "Player_Grid";
+		if (tampvalue > 0 && magnitude < 110.f && GridSystem::GetInstance()->GetGrid(tampvalue).GetIdentity() == tempstring)
+		{
+			playerEntity->Move(Vec2(-1.0f, 0.f));
+			GridSystem::GetInstance()->SetActive_Index(tampvalue);
+		}
+	}
+	else if (Input::GetKeyUp(EventKeyboard::KeyCode::KEY_D))
+	{
+
+		int tampvalue = GridSystem::GetInstance()->GetActive_Index() + 5;
+		int tempx = playerEntity->getPosition().x;
+		int tempy = playerEntity->getPosition().y;
+		Vec2 newposition = Vec2(tempx + (int)GridSystem::GetInstance()->GetGridWidth(), tempy);
+		Vec2 tempposition = GridSystem::GetInstance()->GetGrid(tampvalue).GetPosition();
+		Vec2 tempposition2 = GridSystem::GetInstance()->GetGrid(GridSystem::GetInstance()->GetActive_Index()).GetPosition();
+		float magnitude = tempposition2.distance(tempposition); 
+		string tempstring = "Player_Grid";
+		if (tampvalue > 0 && magnitude < 110.f && GridSystem::GetInstance()->GetGrid(tampvalue).GetIdentity() == tempstring)
+		{
+			playerEntity->Move(Vec2(1.0f, 0.f));
+			GridSystem::GetInstance()->SetActive_Index(tampvalue);
+		}
 	}
 }
 

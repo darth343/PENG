@@ -6,6 +6,8 @@
 
 using namespace cocos2d;
 
+using std::string;
+
 class PlayerEntity;
 class BattleScene : public cocos2d::Scene
 {

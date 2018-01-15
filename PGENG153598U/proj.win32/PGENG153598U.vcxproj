@@ -167,6 +167,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\SceneManager.cpp" />
     <ClCompile Include="..\Classes\SceneSplashScreen.cpp" />
     <ClCompile Include="..\Classes\SpriteManager.cpp" />
+    <ClCompile Include="..\Classes\WaveSpawner.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -193,6 +194,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\SingletonTemplate.h" />
     <ClInclude Include="..\Classes\SpriteManager.h" />
     <ClInclude Include="..\Classes\temptest.h" />
+    <ClInclude Include="..\Classes\WaveSpawner.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>

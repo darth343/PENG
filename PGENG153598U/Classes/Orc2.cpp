@@ -9,7 +9,7 @@
 Orc2::Orc2(const std::string& fileName, Vec2 gridPos) :
 	EnemyEntity(fileName, gridPos)
 {
-	health = 10;
+	health = 5;
 }
 
 Orc2::~Orc2()

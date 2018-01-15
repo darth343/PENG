@@ -58,6 +58,10 @@ SpriteFrame* SpriteManager::GetSpriteFrame(const std::string& fileName, unsigned
 	return newSprite;
 }
 
+Size SpriteManager::GetContentSize(const std::string& fileName)
+{
+	return Size(spriteInfoMap[fileName].width, spriteInfoMap[fileName].height);
+}
 float SpriteManager::GetSpriteWidth(const std::string& fileName)
 {
 	return spriteInfoMap[fileName].width;

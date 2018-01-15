@@ -54,6 +54,7 @@
     <ClCompile Include="..\Classes\PostProcessing.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\WaveSpawner.cpp">
     <ClCompile Include="..\Classes\EnemyEntity.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -125,6 +126,7 @@
     <ClInclude Include="..\Classes\PostProcessing.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\WaveSpawner.h">
     <ClInclude Include="..\Classes\EnemyEntity.h">
       <Filter>src</Filter>
     </ClInclude>

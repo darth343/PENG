@@ -14,6 +14,7 @@ public:
 	virtual void Die();
 
 	virtual void TakeDamage(int amount);
+	virtual inline int GetHealth() { return this->health; }
 
 	virtual inline void SetGridPosition(Vec2 pos) { this->gridPosition = pos; }
 	virtual inline Vec2 GetGridPosition() { return this->gridPosition; }

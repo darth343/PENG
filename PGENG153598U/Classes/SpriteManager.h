@@ -21,6 +21,7 @@ public:
 	void GenerateSprite(const std::string& fileName, int numCol = 1, int numRow = 1);
 	SpriteFrame* GetSpriteFrame(const std::string& fileName, unsigned spriteIndex = 0);
 
+	Size GetContentSize(const std::string& fileName);
 	float GetSpriteWidth(const std::string& fileName);
 	float GetSpriteHeight(const std::string& fileName);
 
