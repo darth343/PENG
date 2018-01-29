@@ -16,6 +16,7 @@
 #include "GameInfo.h"
 #include "OverworldScene.h"
 
+
 USING_NS_CC;
 
 Scene* BattleScene::createScene() 
@@ -78,6 +79,8 @@ bool BattleScene::init()
 
 	RootNode = Node::create();
 	RootNode->setName("RootNode");
+	UINode = Node::create();
+	UINode->setName("UINode");
 
 	for (int i = 0; i < numRow; ++i)
 	{
@@ -95,7 +98,6 @@ bool BattleScene::init()
 			
 		}
 	}
-
 	{//Generates sprites for repititve uses
 		SpriteManager::GetInstance()->GenerateSprite("sprite2.png", 6, 1);
 		SpriteManager::GetInstance()->GenerateSprite("trump_run.png", 6, 4);
@@ -142,6 +144,33 @@ bool BattleScene::init()
 		AnimationManager::GetInstance("ghost1.png")->AddAnimate("ATTACK", 13, 19, 1.0f, false);
 		AnimationManager::GetInstance("ghost1.png")->AddAnimate("DIE", 260, 265, 1.0f, false);
 	}
+	{//Create UI	
+		//auto touchListener = EventListenerTouchOneByOne::create();
+
+		//touchListener->onTouchBegan = [](Touch* touch, Event* event) {
+		//	//type your code for the callback function here
+		//	return true;
+		//}
+
+		//_eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+
+		auto button = ui::Button::create();
+		button->setTag(BTN_UP);
+		button->setPositionY(300);
+		button->loadTextureNormal("sprite2.png");
+		button->setTouchEnabled(true);
+		//upBtn->addTouchEventListener(CC_CALLBACK_2([&, ](this, ui::Widget::TouchEventType::BEGAN) { playerEntity->Move(Vec2(0, 1.0f)); }, this));
+		button->addTouchEventListener(CC_CALLBACK_2(BattleScene::onTouchEvent, this));
+		UINode->addChild(button);
+
+		button = ui::Button::create();
+		button->setTag(BTN_DOWN);
+		button->loadTextureNormal("sprite2.png");
+		button->setTouchEnabled(true);
+		//upBtn->addTouchEventListener(CC_CALLBACK_2([&, ](this, ui::Widget::TouchEventType::BEGAN) { playerEntity->Move(Vec2(0, 1.0f)); }, this));
+		button->addTouchEventListener(CC_CALLBACK_2(BattleScene::onTouchEvent, this));
+		UINode->addChild(button);
+	}
 	{//Creation of entities
 		Vec2 halfWorldPos = Vec2(visibleSize.width * 0.5f, visibleSize.height * 0.5f);
 
@@ -185,6 +214,7 @@ bool BattleScene::init()
 	this->addChild(PostprocTexture);
 
 	this->addChild(RootNode);
+	this->addChild(UINode, 1);
 	RootNode->retain();
 	this->scheduleUpdate();
 
@@ -244,6 +274,37 @@ void BattleScene::onKeyPressed(cocos2d::EventKeyboard::KeyCode keycode, cocos2d:
 		// Move to next scene
 		CCDirector::getInstance()->pushScene(TransitionFade::create(1.0f, scene));
 	}
+}
+
+bool BattleScene::onTouchEvent(Ref* pSender, cocos2d::ui::Widget::TouchEventType eEventType)
+{
+	//// get the location of the touch on screen
+	//Vec2 location = touch->getLocation();
+	//// get the location of the touch relative to your button
+	//Vec2 nodeSpaceLocation = playerEntity->getParent()->convertToNodeSpace(location);
+	//// check if touch is inside node's bounding box
+	//cocos2d:
+	//if (playerEntity->getBoundingBox().containsPoint(nodeSpaceLocation)) {
+	//	playerEntity->Move(Vec2(0.0f, 1.0f));
+	//}
+	auto button = dynamic_cast<ui::Button*>(pSender);
+	if (!button || eEventType != cocos2d::ui::Widget::TouchEventType::BEGAN)
+		return false;
+
+	switch (button->getTag())
+	{
+		case BTN_UP:
+		{
+			playerEntity->Move(Vec2(0, 1.0f));
+			break;
+		}
+		case BTN_DOWN:
+		{
+			playerEntity->Move(Vec2(0, -1.0f));
+			break;
+		}
+	}
+	return false;
 }
 
 void BattleScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keycode, cocos2d::Event* event)
