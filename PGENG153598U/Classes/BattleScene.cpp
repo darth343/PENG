@@ -154,22 +154,70 @@ bool BattleScene::init()
 
 		//_eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
 
+		Node* dpadNode = Node::create();
+		dpadNode->setPositionX(120);
+		dpadNode->setPositionY(120);
+		UINode->addChild(dpadNode);
+
 		auto button = ui::Button::create();
 		button->setTag(BTN_UP);
-		button->setPositionY(300);
-		button->loadTextureNormal("sprite2.png");
+		button->setPositionX(0);
+		button->setPositionY(75);
+		button->loadTextureNormal("upArrow.png");
 		button->setTouchEnabled(true);
 		//upBtn->addTouchEventListener(CC_CALLBACK_2([&, ](this, ui::Widget::TouchEventType::BEGAN) { playerEntity->Move(Vec2(0, 1.0f)); }, this));
 		button->addTouchEventListener(CC_CALLBACK_2(BattleScene::onTouchEvent, this));
-		UINode->addChild(button);
+		dpadNode->addChild(button);
 
 		button = ui::Button::create();
 		button->setTag(BTN_DOWN);
-		button->loadTextureNormal("sprite2.png");
+		button->setPositionX(0);
+		button->setPositionY(-75);
+		button->loadTextureNormal("downArrow.png");
 		button->setTouchEnabled(true);
-		//upBtn->addTouchEventListener(CC_CALLBACK_2([&, ](this, ui::Widget::TouchEventType::BEGAN) { playerEntity->Move(Vec2(0, 1.0f)); }, this));
 		button->addTouchEventListener(CC_CALLBACK_2(BattleScene::onTouchEvent, this));
-		UINode->addChild(button);
+		dpadNode->addChild(button);
+
+		button = ui::Button::create();
+		button->setTag(BTN_LEFT);
+		button->setPositionX(-75);
+		button->setPositionY(0);
+		button->loadTextureNormal("leftArrow.png");
+		button->setTouchEnabled(true);
+		button->addTouchEventListener(CC_CALLBACK_2(BattleScene::onTouchEvent, this));
+		dpadNode->addChild(button);
+
+		button = ui::Button::create();
+		button->setTag(BTN_RIGHT);
+		button->setPositionX(75);
+		button->setPositionY(0);
+		button->loadTextureNormal("rightArrow.png");
+		button->setTouchEnabled(true);
+		button->addTouchEventListener(CC_CALLBACK_2(BattleScene::onTouchEvent, this));
+		dpadNode->addChild(button);
+
+		Node* ABNode = Node::create();
+		ABNode->setPositionX(900);
+		ABNode->setPositionY(100);
+		UINode->addChild(ABNode);
+
+		button = ui::Button::create();
+		button->setTag(BTN_A);
+		button->setPositionX(50);
+		button->setPositionY(20);
+		button->loadTextureNormal("A_Button.png");
+		button->setTouchEnabled(true);
+		button->addTouchEventListener(CC_CALLBACK_2(BattleScene::onTouchEvent, this));
+		ABNode->addChild(button);
+
+		button = ui::Button::create();
+		button->setTag(BTN_B);
+		button->setPositionX(-50);
+		button->setPositionY(-20);
+		button->loadTextureNormal("B_Button.png");
+		button->setTouchEnabled(true);
+		button->addTouchEventListener(CC_CALLBACK_2(BattleScene::onTouchEvent, this));
+		ABNode->addChild(button);
 	}
 	{//Creation of entities
 		Vec2 halfWorldPos = Vec2(visibleSize.width * 0.5f, visibleSize.height * 0.5f);
@@ -301,6 +349,26 @@ bool BattleScene::onTouchEvent(Ref* pSender, cocos2d::ui::Widget::TouchEventType
 		case BTN_DOWN:
 		{
 			playerEntity->Move(Vec2(0, -1.0f));
+			break;
+		}
+		case BTN_LEFT:
+		{
+			playerEntity->Move(Vec2(-1.0f, 0));
+			break;
+		}
+		case BTN_RIGHT:
+		{
+			playerEntity->Move(Vec2(1.0f, 0));
+			break;
+		}
+		case BTN_A:
+		{
+			playerEntity->Fire1(Vec2(1, 0));
+			break;
+		}
+		case BTN_B:
+		{
+			playerEntity->Fire2(Vec2(1, 0));
 			break;
 		}
 	}
