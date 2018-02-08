@@ -44,7 +44,7 @@ void WaveSpawner::ControlEnemyWave(float delta, Node* node)
 	{
 		Nextwavetimer -= delta;
 	}
-	if (Nextwavetimer == 0)
+	if (Nextwavetimer <= 0 && GetWavenumber() >= 0)
 	{
 		int temp = GetWavenumber();
 		temp -= 1;
