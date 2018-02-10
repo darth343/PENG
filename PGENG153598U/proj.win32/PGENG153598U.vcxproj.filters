@@ -1,145 +1,72 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="win32">
-      <UniqueIdentifier>{84a8ebd7-7cf0-47f6-b75e-d441df67da40}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="resource">
-      <UniqueIdentifier>{715254bc-d70b-4ec5-bf29-467dd3ace079}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src">
-      <UniqueIdentifier>{bb6c862e-70e9-49d9-81b7-3829a6f50471}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>win32</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\AppDelegate.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\BaseScene.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Input.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\AnimationManager.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Entity.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\SpriteManager.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\BattleScene.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PlayerEntity.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Grid.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\GridSystem.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\SceneManager.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\SceneSplashScreen.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PostProcessing.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\WaveSpawner.cpp">
-    <ClCompile Include="..\Classes\EnemyEntity.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PlayerInfo.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Projectile.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\BattleEntity.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\Classes\AnimationManager.cpp" />
+    <ClCompile Include="..\Classes\AppDelegate.cpp" />
+    <ClCompile Include="..\Classes\BaseScene.cpp" />
+    <ClCompile Include="..\Classes\BattleEntity.cpp" />
+    <ClCompile Include="..\Classes\BattleScene.cpp" />
+    <ClCompile Include="..\Classes\EnemyEntity.cpp" />
+    <ClCompile Include="..\Classes\Entity.cpp" />
+    <ClCompile Include="..\Classes\Grid.cpp" />
+    <ClCompile Include="..\Classes\GridSystem.cpp" />
+    <ClCompile Include="..\Classes\Input.cpp" />
+    <ClCompile Include="..\Classes\PlayerEntity.cpp" />
+    <ClCompile Include="..\Classes\PlayerInfo.cpp" />
+    <ClCompile Include="..\Classes\PostProcessing.cpp" />
+    <ClCompile Include="..\Classes\Projectile.cpp" />
+    <ClCompile Include="..\Classes\SceneManager.cpp" />
+    <ClCompile Include="..\Classes\SceneSplashScreen.cpp" />
+    <ClCompile Include="..\Classes\SpriteManager.cpp" />
+    <ClCompile Include="..\Classes\WaveSpawner.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="..\Classes\NC\ParticleEffectManager\ParticleEffectManager.cpp">
+      <Filter>NC\ParticleEffectManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="main.h">
-      <Filter>win32</Filter>
+    <ClInclude Include="..\Classes\AnimationManager.h" />
+    <ClInclude Include="..\Classes\AppDelegate.h" />
+    <ClInclude Include="..\Classes\BattleEntity.h" />
+    <ClInclude Include="..\Classes\BattleScene.h" />
+    <ClInclude Include="..\Classes\EnemyEntity.h" />
+    <ClInclude Include="..\Classes\Entity.h" />
+    <ClInclude Include="..\Classes\GameInfo.h" />
+    <ClInclude Include="..\Classes\Grid.h" />
+    <ClInclude Include="..\Classes\GridSystem.h" />
+    <ClInclude Include="..\Classes\Input.h" />
+    <ClInclude Include="..\Classes\PlayerEntity.h" />
+    <ClInclude Include="..\Classes\PlayerInfo.h" />
+    <ClInclude Include="..\Classes\PostProcessing.h" />
+    <ClInclude Include="..\Classes\Projectile.h" />
+    <ClInclude Include="..\Classes\SceneManager.h" />
+    <ClInclude Include="..\Classes\SceneSplashScreen.h" />
+    <ClInclude Include="..\Classes\SingletonNodeTemplate.h" />
+    <ClInclude Include="..\Classes\BaseScene.h" />
+    <ClInclude Include="..\Classes\SingletonTemplate.h" />
+    <ClInclude Include="..\Classes\SpriteManager.h" />
+    <ClInclude Include="..\Classes\temptest.h" />
+    <ClInclude Include="..\Classes\WaveSpawner.h" />
+    <ClInclude Include="main.h" />
+    <ClInclude Include="..\Classes\NC\ParticleEffectManager\ParticleEffectManager.h">
+      <Filter>NC\ParticleEffectManager</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\AppDelegate.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\BaseScene.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Input.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\temptest.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\SingletonNodeTemplate.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\AnimationManager.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Entity.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\SingletonTemplate.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\SpriteManager.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\BattleScene.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PlayerEntity.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Grid.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\GridSystem.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\SceneManager.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\SceneSplashScreen.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PostProcessing.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\WaveSpawner.h">
-    <ClInclude Include="..\Classes\EnemyEntity.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PlayerInfo.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Projectile.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\GameInfo.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\BattleEntity.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\Classes\NC\FrontManager\FrontManager.h">
+      <Filter>NC\FrontManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="game.rc">
-      <Filter>resource</Filter>
-    </ResourceCompile>
+    <ResourceCompile Include="game.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="NC">
+      <UniqueIdentifier>{05a6bb22-31aa-4375-b4ac-ee429958a978}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NC\ParticleEffectManager">
+      <UniqueIdentifier>{a0406d98-7f05-47dc-b477-f2f17ce25ae0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NC\FrontManager">
+      <UniqueIdentifier>{463d53a3-9c02-4bd4-877d-1d7ae64b1049}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

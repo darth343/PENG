@@ -155,6 +155,13 @@ bool BattleScene::init()
 	PostprocTexture->setScale(1.f);
 	PostprocTexture->clear(0, 0, 0, 255);
 
+	{ //Testing some particle effect code
+		auto Particlefire = ParticleFire::create();
+		Particlefire->setPosition(300, 200);
+		Particlefire->setDuration(3.f);
+		this->addChild(Particlefire,10);
+	}
+
 	this->addChild(PostprocTexture);
 
 	this->addChild(RootNode);

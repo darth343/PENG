@@ -158,6 +158,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Grid.cpp" />
     <ClCompile Include="..\Classes\GridSystem.cpp" />
     <ClCompile Include="..\Classes\Input.cpp" />
+    <ClCompile Include="..\Classes\NC\ParticleEffectManager\ParticleEffectManager.cpp" />
     <ClCompile Include="..\Classes\PlayerEntity.cpp" />
     <ClCompile Include="..\Classes\PlayerInfo.cpp" />
     <ClCompile Include="..\Classes\PostProcessing.cpp" />
@@ -179,6 +180,8 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Grid.h" />
     <ClInclude Include="..\Classes\GridSystem.h" />
     <ClInclude Include="..\Classes\Input.h" />
+    <ClInclude Include="..\Classes\NC\FrontManager\FrontManager.h" />
+    <ClInclude Include="..\Classes\NC\ParticleEffectManager\ParticleEffectManager.h" />
     <ClInclude Include="..\Classes\PlayerEntity.h" />
     <ClInclude Include="..\Classes\PlayerInfo.h" />
     <ClInclude Include="..\Classes\PostProcessing.h" />
