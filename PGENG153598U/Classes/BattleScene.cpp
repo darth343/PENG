@@ -170,7 +170,7 @@ bool BattleScene::init()
 		button->loadTextureNormal("upArrow.png");
 		button->setTouchEnabled(true);
 		//upBtn->addTouchEventListener(CC_CALLBACK_2([&, ](this, ui::Widget::TouchEventType::BEGAN) { playerEntity->Move(Vec2(0, 1.0f)); }, this));
-		button->addTouchEventListener(CC_CALLBACK_2(BattleScene::onTouchEvent, this));
+		//button->addTouchEventListener(CC_CALLBACK_2(BattleScene::onTouchEvent, this));
 		dpadNode->addChild(button);
 
 		button = ui::Button::create();
@@ -179,7 +179,7 @@ bool BattleScene::init()
 		button->setPositionY(-75);
 		button->loadTextureNormal("downArrow.png");
 		button->setTouchEnabled(true);
-		button->addTouchEventListener(CC_CALLBACK_2(BattleScene::onTouchEvent, this));
+		//button->addTouchEventListener(CC_CALLBACK_2(BattleScene::onTouchEvent, this));
 		dpadNode->addChild(button);
 
 		button = ui::Button::create();
@@ -188,7 +188,7 @@ bool BattleScene::init()
 		button->setPositionY(0);
 		button->loadTextureNormal("leftArrow.png");
 		button->setTouchEnabled(true);
-		button->addTouchEventListener(CC_CALLBACK_2(BattleScene::onTouchEvent, this));
+		//button->addTouchEventListener(CC_CALLBACK_2(BattleScene::onTouchEvent, this));
 		dpadNode->addChild(button);
 
 		button = ui::Button::create();
@@ -197,7 +197,7 @@ bool BattleScene::init()
 		button->setPositionY(0);
 		button->loadTextureNormal("rightArrow.png");
 		button->setTouchEnabled(true);
-		button->addTouchEventListener(CC_CALLBACK_2(BattleScene::onTouchEvent, this));
+		//button->addTouchEventListener(CC_CALLBACK_2(BattleScene::onTouchEvent, this));
 		dpadNode->addChild(button);
 
 		Node* ABNode = Node::create();
@@ -211,7 +211,7 @@ bool BattleScene::init()
 		button->setPositionY(20);
 		button->loadTextureNormal("A_Button.png");
 		button->setTouchEnabled(true);
-		button->addTouchEventListener(CC_CALLBACK_2(BattleScene::onTouchEvent, this));
+		//button->addTouchEventListener(CC_CALLBACK_2(BattleScene::onTouchEvent, this));
 		ABNode->addChild(button);
 
 		button = ui::Button::create();
@@ -220,7 +220,7 @@ bool BattleScene::init()
 		button->setPositionY(-20);
 		button->loadTextureNormal("B_Button.png");
 		button->setTouchEnabled(true);
-		button->addTouchEventListener(CC_CALLBACK_2(BattleScene::onTouchEvent, this));
+		//button->addTouchEventListener(CC_CALLBACK_2(BattleScene::onTouchEvent, this));
 		ABNode->addChild(button);
 	}
 	{//Creation of entities
