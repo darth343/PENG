@@ -127,7 +127,7 @@ void EnemyEntity::Attack(Vec2 dir)
 			DelayTime::create(1.0f),
 			CallFunc::create([&, dir]()
 		{
-			auto proj = Projectile::Create("blinkEffect.png", dir, 300.0f, false);
+			auto proj = Projectile::Create("enemyFire1.png", dir, 300.0f, false);
 			this->getParent()->addChild(proj);
 			proj->setPosition(this->getPosition());
 

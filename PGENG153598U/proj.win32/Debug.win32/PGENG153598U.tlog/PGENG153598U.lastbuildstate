@@ -1,2 +1,2 @@
-#TargetFrameworkVersion=v4.0:PlatformToolSet=v140_xp:EnableManagedIncrementalBuild=false:VCToolArchitecture=Native32Bit:WindowsTargetPlatformVersion=
-Debug|Win32|C:\Users\155134X\Desktop\cocos2d-x-3.16\PENG - master\PGENG153598U\proj.win32\|
+#TargetFrameworkVersion=v4.0:PlatformToolSet=v141_xp:EnableManagedIncrementalBuild=false:VCToolArchitecture=Native32Bit:WindowsTargetPlatformVersion=7.0
+Debug|Win32|C:\Users\user\Desktop\cocos2d-x-3.16\peng\PGENG153598U\proj.win32\|

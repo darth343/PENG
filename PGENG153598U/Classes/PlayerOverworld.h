@@ -27,8 +27,6 @@ public:
 		return player;
 	}
 
-
-
 	virtual bool init();
 	//virtual void update(float delta);
 	void onKeyPressed(cocos2d::EventKeyboard::KeyCode keycode, cocos2d::Event* event);

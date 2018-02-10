@@ -18,7 +18,7 @@ class SpriteManager : public Singleton<SpriteManager>
 public:
 	virtual ~SpriteManager();
 
-	void GenerateSprite(const std::string& fileName, int numCol = 1, int numRow = 1);
+	void GenerateSprite(const std::string &fileName, int numCol = 1, int numRow = 1);
 	SpriteFrame* GetSpriteFrame(const std::string& fileName, unsigned spriteIndex = 0);
 
 	Size GetContentSize(const std::string& fileName);
@@ -27,7 +27,6 @@ public:
 
 protected:
 	SpriteManager();
-
 	std::map<std::string, SpriteInfo> spriteInfoMap;
 };
 

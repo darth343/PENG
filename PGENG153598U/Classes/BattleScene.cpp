@@ -1,4 +1,4 @@
-#include "BattleScene.h"
+ #include "BattleScene.h"
 #include "SimpleAudioEngine.h"
 #include "Input.h"
 #include "SpriteManager.h"
@@ -101,12 +101,14 @@ bool BattleScene::init()
 	{//Generates sprites for repititve uses
 		SpriteManager::GetInstance()->GenerateSprite("sprite2.png", 6, 1);
 		SpriteManager::GetInstance()->GenerateSprite("trump_run.png", 6, 4);
-		SpriteManager::GetInstance()->GenerateSprite("blinkEffect.png", 10, 1);
 		SpriteManager::GetInstance()->GenerateSprite("ZigzagGrass_Mud_Round.png", 1, 1);
 		SpriteManager::GetInstance()->GenerateSprite("player.png", 13, 21);
 		SpriteManager::GetInstance()->GenerateSprite("orc1.png", 13, 21);
 		SpriteManager::GetInstance()->GenerateSprite("orc2.png", 13, 21);
 		SpriteManager::GetInstance()->GenerateSprite("ghost1.png", 13, 21);
+		SpriteManager::GetInstance()->GenerateSprite("enemyFire1.png", 8, 1);
+		SpriteManager::GetInstance()->GenerateSprite("playerFire1.png");
+		SpriteManager::GetInstance()->GenerateSprite("playerFire2.png", 5, 5);
 	}
 	{//Setup animations for sprites
 		AnimationManager::GetInstance("sprite2.png")->AddAnimate("RUN", 0, 5, 2.0f);
@@ -116,7 +118,9 @@ bool BattleScene::init()
 		AnimationManager::GetInstance("trump_run.png")->AddAnimate("RUN_UP", 12, 17, 0.5f);
 		AnimationManager::GetInstance("trump_run.png")->AddAnimate("RUN_DOWN", 0, 5, 0.5f);
 
-		AnimationManager::GetInstance("blinkEffect.png")->AddAnimate("IDLE", 0, 9);
+		AnimationManager::GetInstance("enemyFire1.png")->AddAnimate("IDLE", 0, 7);
+		AnimationManager::GetInstance("playerFire1.png")->AddAnimate("IDLE", 0, 0);
+		AnimationManager::GetInstance("playerFire2.png")->AddAnimate("IDLE", 0, 24);
 
 		AnimationManager::GetInstance("player.png")->AddAnimate("IDLE", 143, 151);
 		AnimationManager::GetInstance("player.png")->AddAnimate("MOVE", 39, 45, 0.1f);
@@ -372,7 +376,8 @@ bool BattleScene::onTouchEvent(Ref* pSender, cocos2d::ui::Widget::TouchEventType
 			break;
 		}
 	}
-	return false;
+
+	return true;
 }
 
 void BattleScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keycode, cocos2d::Event* event)

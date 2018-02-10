@@ -41,7 +41,8 @@ void PlayerEntity::Fire1(Vec2 dir)
 			CallFunc::create([&, dir]()
 		{
 			canMoveFlag = true;
-			auto proj = Projectile::Create("blinkEffect.png", dir, PLAYER_ATTACK1_SPEED, true);
+			auto proj = Projectile::Create("playerFire1.png", dir, PLAYER_ATTACK1_SPEED, true);
+			proj->setScale(0.3f);
 			this->getParent()->addChild(proj);
 			proj->setPosition(this->getPosition());
 
@@ -68,7 +69,7 @@ void PlayerEntity::Fire2(Vec2 dir)
 			CallFunc::create([&, dir]()
 		{
 			canMoveFlag = true;
-			auto proj = Projectile::Create("blinkEffect.png", dir, PLAYER_ATTACK2_SPEED, true, 3);
+			auto proj = Projectile::Create("playerFire2.png", dir, PLAYER_ATTACK2_SPEED, true, 3);
 			this->getParent()->addChild(proj);
 			proj->setPosition(this->getPosition());
 

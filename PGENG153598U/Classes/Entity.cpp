@@ -4,7 +4,7 @@
 #include "GridSystem.h"
 #include "AnimationManager.h"
 
-Entity::Entity(const std::string& fileName):
+Entity::Entity(const std::string &fileName):
 	spriteName(fileName)
 {
 	this->display = Sprite::create();
@@ -19,7 +19,7 @@ Entity::~Entity()
 {
 }
 
-Entity* Entity::Create(const std::string& fileName)
+Entity* Entity::Create(const std::string &fileName)
 {
 	SpriteFrame* spriteFrame = SpriteManager::GetInstance()->GetSpriteFrame(fileName);
 	if (spriteFrame == nullptr)
