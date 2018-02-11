@@ -46,9 +46,6 @@ void OverworldScene::createMap()
 	//mapCollider1->setCollisionBitmask(3);
 	//mapCollider1->setContactTestBitmask(3);
 
-	UINode = Node::create();
-	UINode->setName("UINode");
-
 	WorldMap->addComponent(mapCollider1);
 	mapCollider1->setDynamic(false);
 
@@ -93,62 +90,7 @@ void OverworldScene::createMap()
 
 	WorldMap->setPosition(AVERYFAROFFSET);
 
-	{//Create UI	
-	 //auto touchListener = EventListenerTouchOneByOne::create();
-
-	 //touchListener->onTouchBegan = [](Touch* touch, Event* event) {
-	 //	//type your code for the callback function here
-	 //	return true;
-	 //}
-
-	 //_eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
-
-		Node* virtualJoyNode = Node::create();
-		virtualJoyNode->setPositionX(120);
-		virtualJoyNode->setPositionY(120);
-		UINode->addChild(virtualJoyNode);
-
-		auto button = ui::Button::create();
-		button->setTag(BTN_VIRTUALJOY);
-		button->setPositionX(0);
-		button->setPositionY(0);
-		button->loadTextureNormal("virtualJoy_bg.png");
-		button->setTouchEnabled(true);
-		//upBtn->addTouchEventListener(CC_CALLBACK_2([&, ](this, ui::Widget::TouchEventType::BEGAN) { playerEntity->Move(Vec2(0, 1.0f)); }, this));
-		//button->addTouchEventListener(CC_CALLBACK_2(BattleScene::onTouchEvent, this));
-		virtualJoyNode->addChild(button);
-
-		virtualJoyThumb = Sprite::create("virtualJoy_stick.png");
-		virtualJoyThumb->setPositionX(0);
-		virtualJoyThumb->setPositionY(0);
-		virtualJoyNode->addChild(virtualJoyThumb);
-
-		Node* ABNode = Node::create();
-		ABNode->setPositionX(900);
-		ABNode->setPositionY(100);
-		UINode->addChild(ABNode);
-
-		button = ui::Button::create();
-		button->setTag(BTN_A);
-		button->setPositionX(50);
-		button->setPositionY(20);
-		button->loadTextureNormal("A_Button.png");
-		button->setTouchEnabled(true);
-		//button->addTouchEventListener(CC_CALLBACK_2(BattleScene::onTouchEvent, this));
-		ABNode->addChild(button);
-
-		button = ui::Button::create();
-		button->setTag(BTN_B);
-		button->setPositionX(-50);
-		button->setPositionY(-20);
-		button->loadTextureNormal("B_Button.png");
-		button->setTouchEnabled(true);
-		//button->addTouchEventListener(CC_CALLBACK_2(BattleScene::onTouchEvent, this));
-		ABNode->addChild(button);
-	}
-
 	this->addChild(WorldMap);
-	this->addChild(UINode, 1);
 }
 
 // on "init" you need to initialize your instance
@@ -166,6 +108,9 @@ bool OverworldScene::init()
 	//input = Input::create();
 	//input->retain();
 	//this->addChild(input);
+
+	UINode = Node::create();
+	UINode->setName("UINode");
 
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 
@@ -264,8 +209,63 @@ bool OverworldScene::init()
 		triggerbox->addComponent(triggerBoxBody);
 		this->addChild(triggerbox);
 	}
-
 	distanmceasd = Vec2();
+
+	{//Create UI	
+	 //auto touchListener = EventListenerTouchOneByOne::create();
+
+	 //touchListener->onTouchBegan = [](Touch* touch, Event* event) {
+	 //	//type your code for the callback function here
+	 //	return true;
+	 //}
+
+	 //_eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+
+		Node* virtualJoyNode = Node::create();
+		virtualJoyNode->setPositionX(120);
+		virtualJoyNode->setPositionY(120);
+		UINode->addChild(virtualJoyNode);
+
+		auto button = ui::Button::create();
+		button->setTag(BTN_VIRTUALJOY);
+		button->setPositionX(0);
+		button->setPositionY(0);
+		button->loadTextureNormal("virtualJoy_bg.png");
+		button->setTouchEnabled(true);
+		//upBtn->addTouchEventListener(CC_CALLBACK_2([&, ](this, ui::Widget::TouchEventType::BEGAN) { playerEntity->Move(Vec2(0, 1.0f)); }, this));
+		button->addTouchEventListener(CC_CALLBACK_2(OverworldScene::virtualJoyEvent, this));
+		virtualJoyNode->addChild(button);
+
+		virtualJoyThumb = Sprite::create("virtualJoy_stick.png");
+		virtualJoyThumb->setPositionX(0);
+		virtualJoyThumb->setPositionY(0);
+		virtualJoyNode->addChild(virtualJoyThumb);
+
+		Node* ABNode = Node::create();
+		ABNode->setPositionX(900);
+		ABNode->setPositionY(100);
+		UINode->addChild(ABNode);
+
+		button = ui::Button::create();
+		button->setTag(BTN_A);
+		button->setPositionX(50);
+		button->setPositionY(20);
+		button->loadTextureNormal("A_Button.png");
+		button->setTouchEnabled(true);
+		//button->addTouchEventListener(CC_CALLBACK_2(BattleScene::onTouchEvent, this));
+		ABNode->addChild(button);
+
+		button = ui::Button::create();
+		button->setTag(BTN_B);
+		button->setPositionX(-50);
+		button->setPositionY(-20);
+		button->loadTextureNormal("B_Button.png");
+		button->setTouchEnabled(true);
+		//button->addTouchEventListener(CC_CALLBACK_2(BattleScene::onTouchEvent, this));
+		ABNode->addChild(button);
+	}
+
+	this->addChild(UINode, 1);
 
 	this->runAction(CCFollow::create(player));
 
@@ -288,6 +288,53 @@ void OverworldScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keycode, coco
 		auto Scene_Manager = SceneManager::getInstance();
 		Scene_Manager->ReplaceScene(Scene_Manager->GetScene("Battle_Screen"));
 	}
+}
+
+bool OverworldScene::virtualJoyEvent(Ref* pSender, cocos2d::ui::Widget::TouchEventType eEventType)
+{
+	//// get the location of the touch on screen
+	//Vec2 location = touch->getLocation();
+	//// get the location of the touch relative to your button
+	//Vec2 nodeSpaceLocation = playerEntity->getParent()->convertToNodeSpace(location);
+	//// check if touch is inside node's bounding box
+	//cocos2d:
+	//if (playerEntity->getBoundingBox().containsPoint(nodeSpaceLocation)) {
+	//	playerEntity->Move(Vec2(0.0f, 1.0f));
+	//}
+	auto button = dynamic_cast<ui::Button*>(pSender);
+	if (!button)
+		return false;
+	if (button->getTag() != BTN_VIRTUALJOY)
+		return false;
+
+	if (eEventType == cocos2d::ui::Widget::TouchEventType::BEGAN)
+	{
+		//cocos2d::log("BEGAN");
+	}
+	else if (eEventType == cocos2d::ui::Widget::TouchEventType::MOVED)
+	{
+		Vec2 dir = button->getTouchMovePosition() - button->getParent()->getPosition();
+		float maxRadius = button->getSize().width * 0.5f;
+		if (dir.getLength() > maxRadius)
+			dir = dir.getNormalized() * maxRadius;
+		virtualJoyThumb->setPositionX(dir.x);
+		virtualJoyThumb->setPositionY(dir.y);
+		//cocos2d::log("MOVE");
+	}
+	else if (eEventType == cocos2d::ui::Widget::TouchEventType::ENDED)
+	{
+		//cocos2d::log("END");
+		virtualJoyThumb->setPositionX(0.0f);
+		virtualJoyThumb->setPositionY(0.0f);
+	}
+	else if (eEventType == cocos2d::ui::Widget::TouchEventType::CANCELED)
+	{
+		//cocos2d::log("CANCEL");
+		virtualJoyThumb->setPositionX(0.0f);
+		virtualJoyThumb->setPositionY(0.0f);
+	}
+
+	return true;
 }
 
 Vec2 realOffset;

@@ -6,6 +6,8 @@
 #include "BaseScene.h"
 #include "ui\UIButton.h"
 
+using namespace cocos2d;
+
 class PlayerEntity;
 class OverworldScene : public BaseScene
 {
@@ -30,6 +32,8 @@ public:
 
 	void onKeyPressed(cocos2d::EventKeyboard::KeyCode, cocos2d::Event*);
 	void onKeyReleased(cocos2d::EventKeyboard::KeyCode, cocos2d::Event*);
+
+	bool virtualJoyEvent(Ref* pSender, ui::Widget::TouchEventType eEventType);
 
 	virtual void update(float delta);
 
