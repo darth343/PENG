@@ -143,7 +143,7 @@ void PlayerOverworld::onKeyPressed(cocos2d::EventKeyboard::KeyCode keycode, coco
 		}
 		case EventKeyboard::KeyCode::KEY_N:
 		{
-			this->EnterLevel();
+			EnterLevel();
 			break;
 		}
 	}

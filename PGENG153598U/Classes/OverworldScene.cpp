@@ -211,7 +211,16 @@ bool OverworldScene::init()
 	}
 	distanmceasd = Vec2();
 
-	{//Create UI
+	{//Create UI	
+	 //auto touchListener = EventListenerTouchOneByOne::create();
+
+	 //touchListener->onTouchBegan = [](Touch* touch, Event* event) {
+	 //	//type your code for the callback function here
+	 //	return true;
+	 //}
+
+	 //_eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+
 		Node* virtualJoyNode = Node::create();
 		virtualJoyNode->setPositionX(120);
 		virtualJoyNode->setPositionY(120);
@@ -349,31 +358,31 @@ bool OverworldScene::onTouchEvent(Ref* pSender, cocos2d::ui::Widget::TouchEventT
 
 	switch (button->getTag())
 	{
-		case BTN_UP:
-		{
-			break;
-		}
-		case BTN_DOWN:
-		{
-			break;
-		}
-		case BTN_LEFT:
-		{
-			break;
-		}
-		case BTN_RIGHT:
-		{
-			break;
-		}
-		case BTN_A:
-		{
-			playerEntity->EnterLevel();
-			break;
-		}
-		case BTN_B:
-		{
-			break;
-		}
+	case BTN_UP:
+	{
+		break;
+	}
+	case BTN_DOWN:
+	{
+		break;
+	}
+	case BTN_LEFT:
+	{
+		break;
+	}
+	case BTN_RIGHT:
+	{
+		break;
+	}
+	case BTN_A:
+	{
+		playerEntity->EnterLevel();
+		break;
+	}
+	case BTN_B:
+	{
+		break;
+	}
 	}
 
 	return true;
