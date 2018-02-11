@@ -4,12 +4,15 @@
 #include "cocos2d.h"
 #include "Input.h"
 #include "BaseScene.h"
+#include "ui\UIButton.h"
 
 class PlayerEntity;
 class OverworldScene : public BaseScene
 {
 protected:
 	Node* RootNode;
+	Node* UINode;
+	Node* virtualJoyThumb;
 	cocos2d::Sprite* ScreenSprite;
 
 	PlayerEntity* playerEntity;

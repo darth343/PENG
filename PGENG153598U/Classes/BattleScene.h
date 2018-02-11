@@ -9,19 +9,6 @@ using namespace cocos2d;
 
 using std::string;
 
-enum ButtonTag
-{
-	BTN_UP,
-	BTN_DOWN,
-	BTN_LEFT,
-	BTN_RIGHT,
-
-	BTN_A,
-	BTN_B,
-
-	BTN_END
-};
-
 class PlayerEntity;
 class BattleScene : public cocos2d::Scene
 {

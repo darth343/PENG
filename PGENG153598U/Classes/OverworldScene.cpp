@@ -7,6 +7,7 @@
 #include "PostProcessing.h"
 #include "SceneManager.h"
 #include "PlayerOverworld.h"
+#include "GameInfo.h"
 
 USING_NS_CC;
 
@@ -45,9 +46,11 @@ void OverworldScene::createMap()
 	//mapCollider1->setCollisionBitmask(3);
 	//mapCollider1->setContactTestBitmask(3);
 
+	UINode = Node::create();
+	UINode->setName("UINode");
+
 	WorldMap->addComponent(mapCollider1);
 	mapCollider1->setDynamic(false);
-
 
 	Vec2 collider1[3] = { Vec2(-282, 201), Vec2(-170, -201), Vec2(-282, -201) };
 	mapCollider1->addShape(PhysicsShapePolygon::create(collider1, 3));
@@ -90,7 +93,62 @@ void OverworldScene::createMap()
 
 	WorldMap->setPosition(AVERYFAROFFSET);
 
+	{//Create UI	
+	 //auto touchListener = EventListenerTouchOneByOne::create();
+
+	 //touchListener->onTouchBegan = [](Touch* touch, Event* event) {
+	 //	//type your code for the callback function here
+	 //	return true;
+	 //}
+
+	 //_eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+
+		Node* virtualJoyNode = Node::create();
+		virtualJoyNode->setPositionX(120);
+		virtualJoyNode->setPositionY(120);
+		UINode->addChild(virtualJoyNode);
+
+		auto button = ui::Button::create();
+		button->setTag(BTN_VIRTUALJOY);
+		button->setPositionX(0);
+		button->setPositionY(0);
+		button->loadTextureNormal("virtualJoy_bg.png");
+		button->setTouchEnabled(true);
+		//upBtn->addTouchEventListener(CC_CALLBACK_2([&, ](this, ui::Widget::TouchEventType::BEGAN) { playerEntity->Move(Vec2(0, 1.0f)); }, this));
+		//button->addTouchEventListener(CC_CALLBACK_2(BattleScene::onTouchEvent, this));
+		virtualJoyNode->addChild(button);
+
+		virtualJoyThumb = Sprite::create("virtualJoy_stick.png");
+		virtualJoyThumb->setPositionX(0);
+		virtualJoyThumb->setPositionY(0);
+		virtualJoyNode->addChild(virtualJoyThumb);
+
+		Node* ABNode = Node::create();
+		ABNode->setPositionX(900);
+		ABNode->setPositionY(100);
+		UINode->addChild(ABNode);
+
+		button = ui::Button::create();
+		button->setTag(BTN_A);
+		button->setPositionX(50);
+		button->setPositionY(20);
+		button->loadTextureNormal("A_Button.png");
+		button->setTouchEnabled(true);
+		//button->addTouchEventListener(CC_CALLBACK_2(BattleScene::onTouchEvent, this));
+		ABNode->addChild(button);
+
+		button = ui::Button::create();
+		button->setTag(BTN_B);
+		button->setPositionX(-50);
+		button->setPositionY(-20);
+		button->loadTextureNormal("B_Button.png");
+		button->setTouchEnabled(true);
+		//button->addTouchEventListener(CC_CALLBACK_2(BattleScene::onTouchEvent, this));
+		ABNode->addChild(button);
+	}
+
 	this->addChild(WorldMap);
+	this->addChild(UINode, 1);
 }
 
 // on "init" you need to initialize your instance

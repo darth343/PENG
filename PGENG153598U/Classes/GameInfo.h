@@ -19,4 +19,19 @@ enum MASK
 	PROJECTILE = 4,
 };
 
+enum ButtonTag
+{
+	BTN_UP,
+	BTN_DOWN,
+	BTN_LEFT,
+	BTN_RIGHT,
+
+	BTN_VIRTUALJOY,
+
+	BTN_A,
+	BTN_B,
+
+	BTN_END
+};
+
 #endif
