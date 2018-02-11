@@ -143,12 +143,7 @@ void PlayerOverworld::onKeyPressed(cocos2d::EventKeyboard::KeyCode keycode, coco
 		}
 		case EventKeyboard::KeyCode::KEY_N:
 		{
-			if (isInTriggerBox)
-			{
-				auto scene = BattleScene::createScene();
-				// Move to next scene
-				CCDirector::getInstance()->pushScene(TransitionFade::create(1.0f, scene));
-			}
+			this->EnterLevel();
 			break;
 		}
 	}
@@ -187,4 +182,14 @@ void PlayerOverworld::onKeyReleased(cocos2d::EventKeyboard::KeyCode keycode, coc
 void PlayerOverworld::SetVelocityDir(Vec2 dir)
 {
 	this->getPhysicsBody()->setVelocity(dir * speed);
+}
+
+void PlayerOverworld::EnterLevel()
+{
+	if (isInTriggerBox)
+	{
+		auto scene = BattleScene::createScene();
+		// Move to next scene
+		CCDirector::getInstance()->pushScene(TransitionFade::create(1.0f, scene));
+	}
 }

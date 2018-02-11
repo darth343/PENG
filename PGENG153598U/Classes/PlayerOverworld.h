@@ -35,6 +35,7 @@ public:
 	void onContactSeperate(cocos2d::PhysicsContact &contact);
 
 	void SetVelocityDir(Vec2 dir);
+	void EnterLevel();
 
 	//PlayerOverworld();
 	PlayerOverworld(const std::string& spriteName);

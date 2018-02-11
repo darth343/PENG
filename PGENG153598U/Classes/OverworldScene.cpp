@@ -211,16 +211,7 @@ bool OverworldScene::init()
 	}
 	distanmceasd = Vec2();
 
-	{//Create UI	
-	 //auto touchListener = EventListenerTouchOneByOne::create();
-
-	 //touchListener->onTouchBegan = [](Touch* touch, Event* event) {
-	 //	//type your code for the callback function here
-	 //	return true;
-	 //}
-
-	 //_eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
-
+	{//Create UI
 		Node* virtualJoyNode = Node::create();
 		virtualJoyNode->setPositionX(120);
 		virtualJoyNode->setPositionY(120);
@@ -252,7 +243,7 @@ bool OverworldScene::init()
 		button->setPositionY(20);
 		button->loadTextureNormal("A_Button.png");
 		button->setTouchEnabled(true);
-		//button->addTouchEventListener(CC_CALLBACK_2(BattleScene::onTouchEvent, this));
+		button->addTouchEventListener(CC_CALLBACK_2(OverworldScene::onTouchEvent, this));
 		ABNode->addChild(button);
 
 		button = ui::Button::create();
@@ -261,7 +252,7 @@ bool OverworldScene::init()
 		button->setPositionY(-20);
 		button->loadTextureNormal("B_Button.png");
 		button->setTouchEnabled(true);
-		//button->addTouchEventListener(CC_CALLBACK_2(BattleScene::onTouchEvent, this));
+		button->addTouchEventListener(CC_CALLBACK_2(OverworldScene::onTouchEvent, this));
 		ABNode->addChild(button);
 	}
 
@@ -336,6 +327,53 @@ bool OverworldScene::virtualJoyEvent(Ref* pSender, cocos2d::ui::Widget::TouchEve
 		virtualJoyThumb->setPositionX(0.0f);
 		virtualJoyThumb->setPositionY(0.0f);
 		playerEntity->SetVelocityDir(Vec2::ZERO);
+	}
+
+	return true;
+}
+
+bool OverworldScene::onTouchEvent(Ref* pSender, cocos2d::ui::Widget::TouchEventType eEventType)
+{
+	//// get the location of the touch on screen
+	//Vec2 location = touch->getLocation();
+	//// get the location of the touch relative to your button
+	//Vec2 nodeSpaceLocation = playerEntity->getParent()->convertToNodeSpace(location);
+	//// check if touch is inside node's bounding box
+	//cocos2d:
+	//if (playerEntity->getBoundingBox().containsPoint(nodeSpaceLocation)) {
+	//	playerEntity->Move(Vec2(0.0f, 1.0f));
+	//}
+	auto button = dynamic_cast<ui::Button*>(pSender);
+	if (!button || eEventType != cocos2d::ui::Widget::TouchEventType::BEGAN)
+		return false;
+
+	switch (button->getTag())
+	{
+		case BTN_UP:
+		{
+			break;
+		}
+		case BTN_DOWN:
+		{
+			break;
+		}
+		case BTN_LEFT:
+		{
+			break;
+		}
+		case BTN_RIGHT:
+		{
+			break;
+		}
+		case BTN_A:
+		{
+			playerEntity->EnterLevel();
+			break;
+		}
+		case BTN_B:
+		{
+			break;
+		}
 	}
 
 	return true;
