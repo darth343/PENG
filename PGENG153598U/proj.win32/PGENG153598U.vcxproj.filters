@@ -51,9 +51,6 @@
     <ClInclude Include="..\Classes\NC\ParticleEffectManager\ParticleEffectManager.h">
       <Filter>NC\ParticleEffectManager</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\NC\FrontManager\FrontManager.h">
-      <Filter>NC\FrontManager</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc" />
@@ -64,9 +61,6 @@
     </Filter>
     <Filter Include="NC\ParticleEffectManager">
       <UniqueIdentifier>{a0406d98-7f05-47dc-b477-f2f17ce25ae0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NC\FrontManager">
-      <UniqueIdentifier>{463d53a3-9c02-4bd4-877d-1d7ae64b1049}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

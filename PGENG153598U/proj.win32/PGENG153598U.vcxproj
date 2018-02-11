@@ -180,7 +180,6 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Grid.h" />
     <ClInclude Include="..\Classes\GridSystem.h" />
     <ClInclude Include="..\Classes\Input.h" />
-    <ClInclude Include="..\Classes\NC\FrontManager\FrontManager.h" />
     <ClInclude Include="..\Classes\NC\ParticleEffectManager\ParticleEffectManager.h" />
     <ClInclude Include="..\Classes\PlayerEntity.h" />
     <ClInclude Include="..\Classes\PlayerInfo.h" />

@@ -8,6 +8,7 @@ using std::vector;
 using cocos2d::Vec3;
 using cocos2d::Vec2;
 
+USING_NS_CC;
 
 #define MAX_PARTICLE_COUNT 300
 namespace NC
@@ -25,13 +26,20 @@ namespace NC
 		}
 		ParticleEffectManager();
 
-		void Init();
+		void Init(Scene* scene);
 		void Update(float dt);
 
-		void CreateParticleEffect(int type, Vec2 Position, float Duration, Scene Currentscene);
+		//Wrapper for existing Particle Effects
+		void CreateParticleEffect(int type, Vec2 Position, float Duration);
+
+		CCNode* getnode() { return node; }
 	private:
 		ParticleEffectManager(ParticleEffectManager const&);
 		void operator= (ParticleEffectManager const&);
+
+
+		vector<ParticleSystemQuad*> ParticleList;
+		CCNode* node;
 	};
 
 	class ParticleObject
