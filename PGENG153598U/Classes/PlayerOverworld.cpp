@@ -181,6 +181,10 @@ void PlayerOverworld::onKeyReleased(cocos2d::EventKeyboard::KeyCode keycode, coc
 			break;
 		}
 	}
-	this->getPhysicsBody()->setVelocity(direction * speed);
+	this->getPhysicsBody()->setVelocity(direction);
 }
 
+void PlayerOverworld::SetVelocityDir(Vec2 dir)
+{
+	this->getPhysicsBody()->setVelocity(dir * speed);
+}

@@ -169,11 +169,11 @@ bool OverworldScene::init()
 		//RootNode->addChild(test1);
 	}
 	
-	auto player = PlayerOverworld::Create("trump_run.png");
-	player->setName("player");
-	player->setPosition(Vec2(-107, -40) + AVERYFAROFFSET);
-	player->getPhysicsBody()->setCategoryBitmask(2);
-	player->getPhysicsBody()->setContactTestBitmask(1);
+	playerEntity = PlayerOverworld::Create("trump_run.png");
+	playerEntity->setName("player");
+	playerEntity->setPosition(Vec2(-107, -40) + AVERYFAROFFSET);
+	playerEntity->getPhysicsBody()->setCategoryBitmask(2);
+	playerEntity->getPhysicsBody()->setContactTestBitmask(1);
 	//player->getPhysicsBody()->setCategoryBitmask(1);
 	//player->getPhysicsBody()->setCollisionBitmask(3);
 	//player->getPhysicsBody()->setContactTestBitmask(3);
@@ -267,9 +267,9 @@ bool OverworldScene::init()
 
 	this->addChild(UINode, 1);
 
-	this->runAction(CCFollow::create(player));
+	this->runAction(CCFollow::create(playerEntity));
 
-	this->addChild(player);
+	this->addChild(playerEntity);
 
 	this->scheduleUpdate();
 
@@ -319,6 +319,8 @@ bool OverworldScene::virtualJoyEvent(Ref* pSender, cocos2d::ui::Widget::TouchEve
 			dir = dir.getNormalized() * maxRadius;
 		virtualJoyThumb->setPositionX(dir.x);
 		virtualJoyThumb->setPositionY(dir.y);
+		dir.normalize();
+		playerEntity->SetVelocityDir(dir);
 		//cocos2d::log("MOVE");
 	}
 	else if (eEventType == cocos2d::ui::Widget::TouchEventType::ENDED)
@@ -326,12 +328,14 @@ bool OverworldScene::virtualJoyEvent(Ref* pSender, cocos2d::ui::Widget::TouchEve
 		//cocos2d::log("END");
 		virtualJoyThumb->setPositionX(0.0f);
 		virtualJoyThumb->setPositionY(0.0f);
+		playerEntity->SetVelocityDir(Vec2::ZERO);
 	}
 	else if (eEventType == cocos2d::ui::Widget::TouchEventType::CANCELED)
 	{
 		//cocos2d::log("CANCEL");
 		virtualJoyThumb->setPositionX(0.0f);
 		virtualJoyThumb->setPositionY(0.0f);
+		playerEntity->SetVelocityDir(Vec2::ZERO);
 	}
 
 	return true;

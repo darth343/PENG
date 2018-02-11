@@ -8,7 +8,7 @@
 
 using namespace cocos2d;
 
-class PlayerEntity;
+class PlayerOverworld;
 class OverworldScene : public BaseScene
 {
 protected:
@@ -17,7 +17,7 @@ protected:
 	Node* virtualJoyThumb;
 	cocos2d::Sprite* ScreenSprite;
 
-	PlayerEntity* playerEntity;
+	PlayerOverworld* playerEntity;
 
 public:
 	static cocos2d::Scene* createScene();

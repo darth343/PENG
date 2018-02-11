@@ -34,6 +34,8 @@ public:
 	bool onContactBegin(cocos2d::PhysicsContact &contact);
 	void onContactSeperate(cocos2d::PhysicsContact &contact);
 
+	void SetVelocityDir(Vec2 dir);
+
 	//PlayerOverworld();
 	PlayerOverworld(const std::string& spriteName);
 	~PlayerOverworld();
