@@ -8,11 +8,9 @@
     <ClCompile Include="..\Classes\BattleScene.cpp" />
     <ClCompile Include="..\Classes\EnemyEntity.cpp" />
     <ClCompile Include="..\Classes\Entity.cpp" />
-    <ClCompile Include="..\Classes\Ghost1.cpp" />
     <ClCompile Include="..\Classes\Grid.cpp" />
     <ClCompile Include="..\Classes\GridSystem.cpp" />
     <ClCompile Include="..\Classes\Input.cpp" />
-    <ClCompile Include="..\Classes\Orc2.cpp" />
     <ClCompile Include="..\Classes\PlayerEntity.cpp" />
     <ClCompile Include="..\Classes\PlayerInfo.cpp" />
     <ClCompile Include="..\Classes\PostProcessing.cpp" />
@@ -22,6 +20,9 @@
     <ClCompile Include="..\Classes\SpriteManager.cpp" />
     <ClCompile Include="..\Classes\WaveSpawner.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="..\Classes\NC\ParticleEffectManager\ParticleEffectManager.cpp">
+      <Filter>NC\ParticleEffectManager</Filter>
+    </ClCompile>
     <ClCompile Include="..\Classes\OverworldScene.cpp" />
     <ClCompile Include="..\Classes\PlayerOverworld.cpp" />
   </ItemGroup>
@@ -33,11 +34,9 @@
     <ClInclude Include="..\Classes\EnemyEntity.h" />
     <ClInclude Include="..\Classes\Entity.h" />
     <ClInclude Include="..\Classes\GameInfo.h" />
-    <ClInclude Include="..\Classes\Ghost1.h" />
     <ClInclude Include="..\Classes\Grid.h" />
     <ClInclude Include="..\Classes\GridSystem.h" />
     <ClInclude Include="..\Classes\Input.h" />
-    <ClInclude Include="..\Classes\Orc2.h" />
     <ClInclude Include="..\Classes\PlayerEntity.h" />
     <ClInclude Include="..\Classes\PlayerInfo.h" />
     <ClInclude Include="..\Classes\PostProcessing.h" />
@@ -51,10 +50,21 @@
     <ClInclude Include="..\Classes\temptest.h" />
     <ClInclude Include="..\Classes\WaveSpawner.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="..\Classes\NC\ParticleEffectManager\ParticleEffectManager.h">
+      <Filter>NC\ParticleEffectManager</Filter>
+    </ClInclude>
     <ClInclude Include="..\Classes\OverworldScene.h" />
     <ClInclude Include="..\Classes\PlayerOverworld.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="NC">
+      <UniqueIdentifier>{05a6bb22-31aa-4375-b4ac-ee429958a978}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NC\ParticleEffectManager">
+      <UniqueIdentifier>{a0406d98-7f05-47dc-b477-f2f17ce25ae0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

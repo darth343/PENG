@@ -40,7 +40,7 @@ void GridSystem::GenerateGrid(Size playingSize, unsigned numCol, unsigned numRow
 			{
 				gridMap[i][j].SetIdentity("Enemy_Grid");
 			}
-			gridMap[i][j].SetPosition(Vec2(halfWidth + (j * (int)gridWidth), halfHeight + (i * (int)gridHeight)));
+			gridMap[i][j].SetPosition(Vec2(halfWidth + (j * (int)gridWidth), halfHeight + (i * (int)gridHeight) + 100));
 		}
 	}
 }
@@ -68,7 +68,7 @@ void GridSystem::GenerateGrid(Size playingSize, unsigned numCol, unsigned numRow
 		for (int j = 0; j < numCol; ++j)
 		{
 			gridMap[i][j].SetCoord(Vec2(j, i));
-			gridMap[i][j].SetPosition(Vec2(halfWidth + (j * gridWidth), halfHeight + (i * gridHeight)));
+			gridMap[i][j].SetPosition(Vec2(halfWidth + (j * gridWidth), halfHeight + (i * gridHeight) + 100));
 			if (i < numPlayerRow && j < numPlayerCol)
 				gridMap[i][j].SetBelongsToPlayer(true);
 		}
