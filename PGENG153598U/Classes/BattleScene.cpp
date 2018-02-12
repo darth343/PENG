@@ -262,18 +262,6 @@ bool BattleScene::init()
 	PostprocTexture->setScale(1.f);
 	PostprocTexture->clear(0, 0, 0, 255);
 
-	{ //Testing some particle effect code
-		NC::ParticleEffectManager::getInstance().Init(this);
-		NC::ParticleEffectManager::getInstance().CreateParticleEffect(1, Vec2(100, 300), 1);
-		NC::ParticleEffectManager::getInstance().CreateParticleEffect(2, Vec2(200, 300), 1);
-		NC::ParticleEffectManager::getInstance().CreateParticleEffect(3, Vec2(300, 300), 1);
-
-		auto Particlefire = ParticleFire::create();
-		Particlefire->setPosition(300, 200);
-		Particlefire->setDuration(3.f);
-		this->addChild(Particlefire,10);
-	}
-
 	this->addChild(PostprocTexture);
 
 	this->addChild(RootNode);
