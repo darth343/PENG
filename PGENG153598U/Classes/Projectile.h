@@ -8,7 +8,7 @@ class Projectile : public Entity
 public:
 	static Projectile* Create(const std::string& fileName, Vec2 direction, float speed, bool isFriendly, int damage = 1);
 	Projectile(const std::string& fileName);
-	~Projectile();
+	virtual ~Projectile();
 
 	virtual void OnCollisionEnter(Entity* other);
 

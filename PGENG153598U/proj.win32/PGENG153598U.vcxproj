@@ -165,6 +165,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\PlayerEntity.cpp" />
     <ClCompile Include="..\Classes\PlayerInfo.cpp" />
     <ClCompile Include="..\Classes\PlayerOverworld.cpp" />
+    <ClCompile Include="..\Classes\PlayerProjectile2.cpp" />
     <ClCompile Include="..\Classes\PostProcessing.cpp" />
     <ClCompile Include="..\Classes\Projectile.cpp" />
     <ClCompile Include="..\Classes\SceneManager.cpp" />
@@ -191,6 +192,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\PlayerEntity.h" />
     <ClInclude Include="..\Classes\PlayerInfo.h" />
     <ClInclude Include="..\Classes\PlayerOverworld.h" />
+    <ClInclude Include="..\Classes\PlayerProjectile2.h" />
     <ClInclude Include="..\Classes\PostProcessing.h" />
     <ClInclude Include="..\Classes\Projectile.h" />
     <ClInclude Include="..\Classes\SceneManager.h" />

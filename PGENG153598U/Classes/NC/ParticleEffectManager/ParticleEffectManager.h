@@ -1,10 +1,8 @@
 #ifndef PARTICLE_EFFECT_MANAGER_H_
 #define PARTICLE_EFFECT_MANAGER_H_
 
-#include <vector>
 #include "cocos2d.h"
 
-using std::vector;
 using cocos2d::Vec3;
 using cocos2d::Vec2;
 
@@ -37,8 +35,6 @@ namespace NC
 		ParticleEffectManager(ParticleEffectManager const&);
 		void operator= (ParticleEffectManager const&);
 
-
-		vector<ParticleSystemQuad*> ParticleList;
 		CCNode* node;
 	};
 

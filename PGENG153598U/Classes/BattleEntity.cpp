@@ -3,6 +3,7 @@
 #include "GridSystem.h"
 #include "AnimationManager.h"
 #include "SpriteManager.h"
+#include "NC\ParticleEffectManager\ParticleEffectManager.h"
 
 BattleEntity::BattleEntity(const std::string& fileName):
 	Entity(fileName)
@@ -38,6 +39,7 @@ void BattleEntity::TakeDamage(int amount)
 
 void BattleEntity::Die()
 {
+	NC::ParticleEffectManager::getInstance().CreateParticleEffect(2, this->getPosition(), 1);
 	this->getPhysicsBody()->removeFromWorld();
 	this->stopAllActions();
 	this->RunAnimate(AnimationManager::GetInstance(spriteName)->GetAnimate("DIE"));

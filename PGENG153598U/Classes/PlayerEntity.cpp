@@ -4,6 +4,7 @@
 #include "GameInfo.h"
 #include "AnimationManager.h"
 #include "Projectile.h"
+#include "PlayerProjectile2.h"
 #include "GridSystem.h"
 
 PlayerEntity::PlayerEntity(const std::string& fileName, Vec2 gridPos):
@@ -69,7 +70,7 @@ void PlayerEntity::Fire2(Vec2 dir)
 			CallFunc::create([&, dir]()
 		{
 			canMoveFlag = true;
-			auto proj = Projectile::Create("playerFire2.png", dir, PLAYER_ATTACK2_SPEED, true, 3);
+			auto proj = PlayerProjectile2::Create("playerFire2.png", dir, PLAYER_ATTACK2_SPEED, true, 3);
 			this->getParent()->addChild(proj);
 			proj->setPosition(this->getPosition());
 

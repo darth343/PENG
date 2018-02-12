@@ -4,6 +4,8 @@
 #include "Ghost1.h"
 #include "Orc2.h"
 
+#include "NC\ParticleEffectManager\ParticleEffectManager.h"
+
 WaveSpawner::WaveSpawner()
 {
 
@@ -18,6 +20,7 @@ void WaveSpawner::ActivateWaves()
 {
 	SetWavenumber(3);
 	SetWavetimer(5.0f);
+	particleSpawned = false;
 	for (int i = 0; i < GetWavenumber(); i++)
 	{
 		vector<EnemyEntity*> Wave_List = vector<EnemyEntity*>(3);
@@ -70,6 +73,20 @@ void WaveSpawner::ControlEnemyWave(float delta, Node* node)
 	if (getCollectiveHP() <= 0)
 	{
 		Nextwavetimer -= delta;
+		if (!particleSpawned && wavecount <= 1)
+		{
+			particleSpawned = true;
+			int fireworkCount = 10;//random amount 5-10
+			for (int i = 0; i < fireworkCount; ++i)
+			{
+				Vec2 randPoint = Vec2(
+					cocos2d::random() % GridSystem::GetInstance()->GetNumCol(),
+					cocos2d::random() % GridSystem::GetInstance()->GetNumRow()
+				);
+				randPoint = GridSystem::GetInstance()->GetGrid(randPoint.x, randPoint.y).GetPosition();
+				NC::ParticleEffectManager::getInstance().CreateParticleEffect(3, randPoint, 2);
+			}
+		}
 	}
 	if (Nextwavetimer <= 0 && GetWavenumber() > 0)
 	{
