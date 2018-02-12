@@ -155,10 +155,12 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\BattleScene.cpp" />
     <ClCompile Include="..\Classes\EnemyEntity.cpp" />
     <ClCompile Include="..\Classes\Entity.cpp" />
+    <ClCompile Include="..\Classes\Ghost1.cpp" />
     <ClCompile Include="..\Classes\Grid.cpp" />
     <ClCompile Include="..\Classes\GridSystem.cpp" />
     <ClCompile Include="..\Classes\Input.cpp" />
     <ClCompile Include="..\Classes\NC\ParticleEffectManager\ParticleEffectManager.cpp" />
+    <ClCompile Include="..\Classes\Orc2.cpp" />
     <ClCompile Include="..\Classes\OverworldScene.cpp" />
     <ClCompile Include="..\Classes\PlayerEntity.cpp" />
     <ClCompile Include="..\Classes\PlayerInfo.cpp" />
@@ -179,10 +181,12 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\EnemyEntity.h" />
     <ClInclude Include="..\Classes\Entity.h" />
     <ClInclude Include="..\Classes\GameInfo.h" />
+    <ClInclude Include="..\Classes\Ghost1.h" />
     <ClInclude Include="..\Classes\Grid.h" />
     <ClInclude Include="..\Classes\GridSystem.h" />
     <ClInclude Include="..\Classes\Input.h" />
     <ClInclude Include="..\Classes\NC\ParticleEffectManager\ParticleEffectManager.h" />
+    <ClInclude Include="..\Classes\Orc2.h" />
     <ClInclude Include="..\Classes\OverworldScene.h" />
     <ClInclude Include="..\Classes\PlayerEntity.h" />
     <ClInclude Include="..\Classes\PlayerInfo.h" />

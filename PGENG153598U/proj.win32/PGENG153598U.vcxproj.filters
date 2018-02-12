@@ -18,13 +18,15 @@
     <ClCompile Include="..\Classes\SceneManager.cpp" />
     <ClCompile Include="..\Classes\SceneSplashScreen.cpp" />
     <ClCompile Include="..\Classes\SpriteManager.cpp" />
-    <ClCompile Include="..\Classes\WaveSpawner.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="..\Classes\NC\ParticleEffectManager\ParticleEffectManager.cpp">
       <Filter>NC\ParticleEffectManager</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\OverworldScene.cpp" />
     <ClCompile Include="..\Classes\PlayerOverworld.cpp" />
+    <ClCompile Include="..\Classes\WaveSpawner.cpp" />
+    <ClCompile Include="..\Classes\Ghost1.cpp" />
+    <ClCompile Include="..\Classes\Orc2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AnimationManager.h" />
@@ -48,13 +50,15 @@
     <ClInclude Include="..\Classes\SingletonTemplate.h" />
     <ClInclude Include="..\Classes\SpriteManager.h" />
     <ClInclude Include="..\Classes\temptest.h" />
-    <ClInclude Include="..\Classes\WaveSpawner.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="..\Classes\NC\ParticleEffectManager\ParticleEffectManager.h">
       <Filter>NC\ParticleEffectManager</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\OverworldScene.h" />
     <ClInclude Include="..\Classes\PlayerOverworld.h" />
+    <ClInclude Include="..\Classes\WaveSpawner.h" />
+    <ClInclude Include="..\Classes\Ghost1.h" />
+    <ClInclude Include="..\Classes\Orc2.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc" />
